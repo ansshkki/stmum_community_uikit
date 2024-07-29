@@ -216,12 +216,12 @@ class CommunityWidget extends StatelessWidget {
                                 package: "amity_uikit_beta_service")),
                   ),
                   title: Text(
-                    community.displayName ?? "Community",
+                    community.displayName ?? "مجتمع", //Community
                     style: theme.textTheme.bodyLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    " ${community.membersCount} members",
+                    " ${community.membersCount} أعضاء", //members
                     style: theme.textTheme.bodyLarge!
                         .copyWith(color: Colors.grey, fontSize: 11),
                   ),
@@ -277,8 +277,8 @@ class CommunityWidget extends StatelessWidget {
                       }
                     },
                     child: Text(community.isJoined != null
-                        ? (community.isJoined! ? "Leave" : "Join")
-                        : "Join"),
+                        ? (community.isJoined! ? "أترك" : "انضم") //Leave //JOIN
+                        : "انضم"), //Join
                   )),
             ],
           ),
