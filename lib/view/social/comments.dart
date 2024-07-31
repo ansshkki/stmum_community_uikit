@@ -905,7 +905,7 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                 ),
                                                               )
                                                             : const Text(
-                                                                "إعجاب", //Like
+                                                                " إعجاب ", //Like
                                                                 style:
                                                                     TextStyle(
                                                                   fontWeight:
@@ -1449,7 +1449,7 @@ class ReplyCommentComponent extends StatelessWidget {
                                                   ),
                                                 )
                                               : const Text(
-                                                  "إعجاب", //Like
+                                                  " إعجاب ", //Like
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xff898E9E),
