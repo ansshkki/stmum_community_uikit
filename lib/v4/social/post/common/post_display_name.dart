@@ -58,7 +58,7 @@ class PostDisplayName extends StatelessWidget {
               if (isModerator) const CommunityModeratorBadge(),
               if (isModerator)
                 Container(
-                    padding: const EdgeInsets.only(left: 2),
+                    padding: const EdgeInsetsDirectional.only(start: 2),
                     child: Text(
                       "• ",
                       style: TextStyle(
@@ -68,7 +68,7 @@ class PostDisplayName extends StatelessWidget {
                       ),
                     )),
               Container(
-                alignment: Alignment.topLeft,
+                alignment: AlignmentDirectional.topStart,
                 child: Text(
                   timestampText,
                   style: TextStyle(

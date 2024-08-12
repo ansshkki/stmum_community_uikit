@@ -65,7 +65,7 @@ class CommentItem extends BaseElement {
     });
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 4, bottom: 12),
+      padding: const EdgeInsetsDirectional.only(start: 0, end: 0, top: 4, bottom: 12),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -92,7 +92,7 @@ class CommentItem extends BaseElement {
                 (!isEditing)
                     ? IntrinsicWidth(
                         child: Container(
-                          alignment: Alignment.centerLeft,
+                          alignment: AlignmentDirectional.centerStart,
                           padding: const EdgeInsets.all(12),
                           decoration: ShapeDecoration(
                             color: theme.baseColorShade4,
@@ -223,7 +223,7 @@ class CommentItem extends BaseElement {
                         ),
                       )
                     : Container(
-                        alignment: Alignment.topLeft,
+                        alignment: AlignmentDirectional.topStart,
                         height: 120,
                         decoration: ShapeDecoration(
                           color: theme.baseColorShade4,
@@ -435,7 +435,7 @@ class CommentItem extends BaseElement {
           },
           child: Container(
             padding:
-                const EdgeInsets.only(top: 5, left: 8, right: 12, bottom: 5),
+                const EdgeInsetsDirectional.only(top: 5, start: 8, end: 12, bottom: 5),
             decoration: ShapeDecoration(
               color: theme.backgroundColor,
               shape: RoundedRectangleBorder(

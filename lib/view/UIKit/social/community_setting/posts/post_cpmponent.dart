@@ -58,9 +58,9 @@ class PostMedia extends StatelessWidget {
                       ),
                     ),
               isEditPost
-                  ? Positioned(
+                  ? PositionedDirectional(
                       top: 0,
-                      right: 0,
+                      end: 0,
                       child: IconButton(
                         icon: const Icon(
                           Icons.close,
