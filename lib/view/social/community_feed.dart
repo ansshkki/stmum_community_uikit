@@ -191,7 +191,7 @@ class CommunityScreenState extends State<CommunityScreen> {
                           return PostWidget(
                             isPostDetail: false,
                             showCommunity: false,
-                            showlatestComment: true,
+                            showlatestComment: false,
                             isFromFeed: true,
                             post: snapshot.data!,
                             theme: theme,
