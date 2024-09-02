@@ -1507,7 +1507,7 @@ class ReplyCommentComponent extends StatelessWidget {
                                         ? const SizedBox()
                                         : ListTile(
                                             title: const Text(
-                                              'تقرير', //Report
+                                              'تبليغ', //Report
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500),
                                             ),

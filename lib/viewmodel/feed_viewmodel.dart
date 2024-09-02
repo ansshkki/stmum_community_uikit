@@ -193,6 +193,73 @@ class FeedVM extends ChangeNotifier {
     }
   }
 
+// Future<void> initAmityGlobalfeed({bool isCustomPostRanking = false}) async {
+// isLoading = true;
+// notifyListeners();
+// print("isloading1: $isLoading");
+// print("isCustomPostRanking:$isCustomPostRanking");
+//
+// if (isCustomPostRanking) {
+// _controllerGlobal = PagingController(
+// pageFuture: (token) => AmitySocialClient.newFeedRepository()
+//     .getCustomRankingGlobalFeed()
+//     .getPagingData(token: token, limit: 5),
+// pageSize: 5,
+// )..addListener(
+// () async {
+// log("getCustomRankingGlobalFeed listener...");
+// if (_controllerGlobal?.error == null) {
+// _amityGlobalFeedPosts.clear();
+// _amityGlobalFeedPosts.addAll(_controllerGlobal!.loadedItems);
+//
+// // isLoading = false;
+// // notifyListeners();
+// } else {
+// //Error on pagination controller
+// // isLoading = false;
+//
+// // notifyListeners();
+// log("error: ${_controllerGlobal!.error.toString()}");
+// // await AmityDialog().showAlertErrorDialog(
+// //     title: "Error!",
+// //     message: _controllerGlobal!.error.toString());
+// }
+// if (_controllerGlobal?.isFetching == false) {
+// isLoading = false;
+// notifyListeners();
+// }
+// },
+// );
+// } else {
+// _controllerGlobal = PagingController(
+// pageFuture: (token) => AmitySocialClient.newFeedRepository()
+//     .getGlobalFeed()
+//     .getPagingData(token: token, limit: 5),
+// pageSize: 5,
+// )..addListener(
+// () async {
+// log("initAmityGlobalfeed listener...");
+// if (_controllerGlobal?.error == null) {
+// _amityGlobalFeedPosts.clear();
+// _amityGlobalFeedPosts.addAll(_controllerGlobal!.loadedItems);
+// } else {
+// log("error: ${_controllerGlobal!.error.toString()}");
+// }
+// if (_controllerGlobal?.isFetching == false) {
+// isLoading = false;
+// notifyListeners();
+// }
+// },
+// );
+// }
+//
+// await Future.delayed(Duration.zero, () async {
+// await _controllerGlobal?.fetchNextPage();
+// });
+//
+// scrollcontroller.addListener(loadnextpage);
+// }
+
   void loadnextpage() async {
     isLoading = true;
 
