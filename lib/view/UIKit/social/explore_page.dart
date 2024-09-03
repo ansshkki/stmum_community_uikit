@@ -176,7 +176,7 @@ class _CommunityPageState extends State<CommunityPage> {
             // ),
             tabs: const [
               Tab(text: "My feed"), //Newsfeed
-              Tab(text: "استكشف"), //Explore
+              Tab(text: "استكشفي"), //Explore
               Tab(text: "المجموعات"),
             ],
           ),
@@ -239,6 +239,16 @@ class ExplorePage extends StatelessWidget {
     final theme = Theme.of(context);
     return Consumer<FeedVM>(
       builder: (context, vm, _) {
+        if (vm.getAmityPosts.isEmpty) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.only(
+              top: 0,
+              bottom: MediaQuery.paddingOf(context).bottom + 24,
+            ),
+            child: const CategorySection(max: 16),
+          );
+        }
+
         return ListView.builder(
           controller: vm.scrollcontroller,
           padding: EdgeInsets.only(
@@ -654,7 +664,9 @@ class TrendingSection extends StatelessWidget {
 }
 
 class CategorySection extends StatelessWidget {
-  const CategorySection({Key? key}) : super(key: key);
+  final int max;
+
+  const CategorySection({super.key, this.max = 8});
 
   @override
   Widget build(BuildContext context) {
@@ -711,8 +723,8 @@ class CategorySection extends StatelessWidget {
                   crossAxisSpacing: 8,
                 ),
                 padding: EdgeInsets.zero,
-                itemCount: vm.amityCategories.length > 8
-                    ? 8
+                itemCount: vm.amityCategories.length > max
+                    ? max
                     : vm.amityCategories.length,
                 // Limit to maximum 8 items (2x4 grid)
                 itemBuilder: (context, index) {
