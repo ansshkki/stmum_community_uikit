@@ -13,21 +13,23 @@ class NotificationPage extends StatelessWidget {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-        appBar: TabBar(
-          tabAlignment: TabAlignment.start,
-          physics: const BouncingScrollPhysics(),
-          isScrollable: true,
-          indicatorColor: theme.primaryColor,
-          labelColor: theme.primaryColor,
-          unselectedLabelColor:
-              Provider.of<AmityUIConfiguration>(context).primaryColor,
-          indicatorSize: TabBarIndicatorSize.label,
-          tabs: const [
-            Tab(text: "الكل"),// all
-            // Tab(text: S.of(context).likes),
-            // Tab(text: S.of(context).comments),
-            // Tab(text: S.of(context).repost),
-          ],
+        appBar: AppBar(
+          bottom: TabBar(
+            tabAlignment: TabAlignment.start,
+            physics: const BouncingScrollPhysics(),
+            isScrollable: true,
+            indicatorColor: theme.primaryColor,
+            labelColor: theme.primaryColor,
+            unselectedLabelColor:
+                Provider.of<AmityUIConfiguration>(context).primaryColor,
+            indicatorSize: TabBarIndicatorSize.label,
+            tabs: const [
+              Tab(text: "الكل"),// all
+              // Tab(text: S.of(context).likes),
+              // Tab(text: S.of(context).comments),
+              // Tab(text: S.of(context).repost),
+            ],
+          ),
         ),
         body: const TabBarView(
           physics: BouncingScrollPhysics(),

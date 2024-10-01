@@ -17,7 +17,7 @@ class AmityNotificationRepoImp implements AmityNotificationRepo {
           callback) async {
     var dio = Dio();
     final response = await dio.get(
-      "https://beta.amity.services/notifications/history",
+      "https://beta.amity.services/notifications/v3/history",
       options: Options(
         headers: {
           "Authorization": "Bearer $accessToken" // set content-length
