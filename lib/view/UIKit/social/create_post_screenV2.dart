@@ -10,6 +10,7 @@ import 'package:amity_uikit_beta_service/viewmodel/create_postV2_viewmodel.dart'
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared/shared.dart';
 
 import '../../../viewmodel/community_feed_viewmodel.dart';
 import '../../../viewmodel/community_member_viewmodel.dart';
@@ -421,6 +422,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                                 });
                           }
                         }
+                        context.read<RateCubit>().checkRate("community");
                       }
                           : null,
                       style: ElevatedButton.styleFrom(

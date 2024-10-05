@@ -19,11 +19,14 @@ import '../../components/custom_user_avatar.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/post_viewmodel.dart';
 
+import "package:shared/src/provider/rate/rate_cubit.dart";
+
 class CommentScreen extends StatefulWidget {
   final AmityPost amityPost;
   final ThemeData theme;
   final bool isFromFeed;
   final FeedType feedType;
+
   const CommentScreen({
     Key? key,
     required this.amityPost,
@@ -122,7 +125,8 @@ class CommentScreenState extends State<CommentScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 20), // Spacing between buttons
+                      const SizedBox(width: 20),
+                      // Spacing between buttons
                       // Like Button
                       GestureDetector(
                         onTap: () {
@@ -136,6 +140,9 @@ class CommentScreenState extends State<CommentScreen> {
                                       Provider.of<PostVM>(context,
                                               listen: false)
                                           .removePostReaction(widget.amityPost);
+                                      context
+                                          .read<RateCubit>()
+                                          .checkRate("community");
                                     },
                                     child: Row(
                                       children: [
@@ -160,6 +167,9 @@ class CommentScreenState extends State<CommentScreen> {
                                       Provider.of<PostVM>(context,
                                               listen: false)
                                           .addPostReaction(widget.amityPost);
+                                      context
+                                          .read<RateCubit>()
+                                          .checkRate("community");
                                     },
                                     child: Row(
                                       children: [
@@ -186,12 +196,14 @@ class CommentScreenState extends State<CommentScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20), // Spacing between buttons
+                      const SizedBox(width: 20),
+                      // Spacing between buttons
 
                       // Comment Button
                       GestureDetector(
                         onTap: () {
                           // Logic to navigate to comments section
+                          context.read<RateCubit>().checkRate("community");
                         },
                         child: const Row(
                           children: [
@@ -205,7 +217,8 @@ class CommentScreenState extends State<CommentScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20), // Spacing between buttons
+                      const SizedBox(width: 20),
+                      // Spacing between buttons
 
                       // Share Button
                       // GestureDetector(
@@ -319,7 +332,7 @@ class CommentScreenState extends State<CommentScreen> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "الرد على ${Provider.of<ReplyVM>(context).replyToObject?.replyingToUser.displayName}",// Replying to
+                                          "الرد على ${Provider.of<ReplyVM>(context).replyToObject?.replyingToUser.displayName}", // Replying to
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               color: Color(0xff636878)),
@@ -387,6 +400,7 @@ class CommentTextField extends StatelessWidget {
   final String postId;
   final VoidCallback navigateToFullCommentPage;
   final FeedType feedType;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -431,7 +445,8 @@ class CommentTextField extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.only(top: 10),
+                              padding:
+                                  const EdgeInsetsDirectional.only(top: 10),
                               child: Transform(
                                 alignment: Alignment.center,
                                 transform: Matrix4.identity()
@@ -452,7 +467,8 @@ class CommentTextField extends StatelessWidget {
                       hintStyle: Theme.of(context).textTheme.labelMedium,
                       fillColor: Theme.of(context).colorScheme.surfaceVariant,
                       // Set the background color to grey
-                      filled: true, // Enable the fill color
+                      filled: true,
+                      // Enable the fill color
                       border: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(50.0), // Rounded border
@@ -481,6 +497,7 @@ class CommentTextField extends StatelessWidget {
                   HapticFeedback.heavyImpact();
                   await Provider.of<PostVM>(context, listen: false)
                       .createComment(postId, commentTextEditController.text);
+                  context.read<RateCubit>().checkRate("community");
                 } else {
                   ///Create Comment with Reply
                   print("الرد على التعليق"); //reply comment
@@ -550,6 +567,7 @@ class FullCommentPage extends StatelessWidget {
   final String postId;
   final VoidCallback postCallback;
   final FeedType feedType;
+
   const FullCommentPage({
     super.key,
     required this.commentTextEditController,
@@ -557,6 +575,7 @@ class FullCommentPage extends StatelessWidget {
     required this.postCallback,
     required this.feedType,
   });
+
   @override
   Widget build(BuildContext context) {
     final focusNode = FocusNode();
@@ -574,10 +593,14 @@ class FullCommentPage extends StatelessWidget {
             if (true) {
               ConfirmationDialog().show(
                 context: context,
-                title: 'تجاهل المنشور؟', //Discard Post?
-                detailText: 'هل تريد تجاهل منشورك؟', //Do you want to discard your post?
-                leftButtonText: 'إلغاء', //Cancel
-                rightButtonText: 'تجاهل', //Discard
+                title: 'تجاهل المنشور؟',
+                //Discard Post?
+                detailText: 'هل تريد تجاهل منشورك؟',
+                //Do you want to discard your post?
+                leftButtonText: 'إلغاء',
+                //Cancel
+                rightButtonText: 'تجاهل',
+                //Discard
                 onConfirm: () {
                   Navigator.of(context).pop();
                 },
@@ -595,6 +618,7 @@ class FullCommentPage extends StatelessWidget {
           TextButton(
             onPressed: () async {
               postCallback();
+              context.read<RateCubit>().checkRate("community");
             },
             child: Text(
               'نشر', //Post
@@ -616,9 +640,11 @@ class FullCommentPage extends StatelessWidget {
               controller: commentTextEditController,
               focusNode: focusNode,
               keyboardType: TextInputType.multiline,
-              maxLines: null, // Allows for any number of lines
+              maxLines: null,
+              // Allows for any number of lines
               decoration: const InputDecoration(
-                  hintText: 'اكتب الرسالة', border: InputBorder.none), //Type message
+                  hintText: 'اكتب الرسالة',
+                  border: InputBorder.none), //Type message
             ),
           ),
         ),
@@ -632,6 +658,7 @@ class EditCommentPage extends StatefulWidget {
   final VoidCallback postCallback;
   final String initailText;
   final FeedType feedType;
+
   const EditCommentPage({
     super.key,
     required this.initailText,
@@ -646,6 +673,7 @@ class EditCommentPage extends StatefulWidget {
 
 class _EditCommentPageState extends State<EditCommentPage> {
   TextEditingController textEditingController = TextEditingController();
+
   @override
   void initState() {
     textEditingController.text = widget.initailText;
@@ -743,6 +771,7 @@ class _CommentComponentState extends State<CommentComponent> {
   }
 
   final _editcommentTextEditController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PostVM>(builder: (context, vm, _) {
@@ -811,7 +840,8 @@ class _CommentComponentState extends State<CommentComponent> {
                                         height: 16,
                                       ),
                                       Container(
-                                          padding: const EdgeInsetsDirectional.only(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
                                             start: 16,
                                           ),
                                           child: CustomListTile(
@@ -827,9 +857,11 @@ class _CommentComponentState extends State<CommentComponent> {
                                         height: 4,
                                       ),
                                       Container(
-                                        padding: const EdgeInsetsDirectional.all(10),
-                                        margin: const EdgeInsetsDirectional.only(
-                                            start: 70.0, end: 16),
+                                        padding:
+                                            const EdgeInsetsDirectional.all(10),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 70.0, end: 16),
                                         decoration: BoxDecoration(
                                           color:
                                               Provider.of<AmityUIConfiguration>(
@@ -858,8 +890,9 @@ class _CommentComponentState extends State<CommentComponent> {
                                         height: 8,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.only(
-                                            start: 70.0, bottom: 16),
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 70.0, bottom: 16),
                                         child: Row(
                                           children: [
                                             // Like Button
@@ -868,6 +901,10 @@ class _CommentComponentState extends State<CommentComponent> {
                                                     onTap: () {
                                                       vm.removeCommentReaction(
                                                           comments);
+                                                      context
+                                                          .read<RateCubit>()
+                                                          .checkRate(
+                                                              "community");
                                                     },
                                                     child: Row(
                                                       children: [
@@ -898,6 +935,10 @@ class _CommentComponentState extends State<CommentComponent> {
                                                     onTap: () {
                                                       vm.addCommentReaction(
                                                           comments);
+                                                      context
+                                                          .read<RateCubit>()
+                                                          .checkRate(
+                                                              "community");
                                                     },
                                                     child: Row(
                                                       children: [
@@ -1028,13 +1069,24 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                     .pop();
                                                                 Navigator.of(
                                                                         context)
-                                                                    .push(MaterialPageRoute(
-                                                                        builder: (context) => EditCommentPage(
-                                                                              feedType: widget.feedType,
-                                                                              initailText: commentData.text!,
-                                                                              comment: comments,
-                                                                              postCallback: () async {},
-                                                                            )));
+                                                                    .push(
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            EditCommentPage(
+                                                                      feedType:
+                                                                          widget
+                                                                              .feedType,
+                                                                      initailText:
+                                                                          commentData
+                                                                              .text!,
+                                                                      comment:
+                                                                          comments,
+                                                                      postCallback:
+                                                                          () async {},
+                                                                    ),
+                                                                  ),
+                                                                );
                                                               },
                                                             ),
                                                       comments.user?.userId! !=
@@ -1051,18 +1103,15 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                             .w500),
                                                               ),
                                                               onTap: () async {
-                                                                ConfirmationDialog()
-                                                                    .show(
-                                                                        context:
-                                                                            context,
-                                                                        title:
-                                                                            "حذف هذا التعليق", //Delete this comment
-                                                                        detailText:
-                                                                            "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه", // This comment will be permanently deleted. You'll no longer to see and find this comment
-                                                                        onConfirm:
-                                                                            () {
-                                                                          vm.deleteComment(
-                                                                              comments);
+                                                                ConfirmationDialog().show(
+                                                                    context: context,
+                                                                    title: "حذف هذا التعليق",
+                                                                    //Delete this comment
+                                                                    detailText: "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه",
+                                                                    // This comment will be permanently deleted. You'll no longer to see and find this comment
+                                                                    onConfirm: () {
+                                                                      vm.deleteComment(
+                                                                          comments);
 
                                                                           Navigator.pop(
                                                                               context);
@@ -1076,8 +1125,9 @@ class _CommentComponentState extends State<CommentComponent> {
                                         ),
                                       ),
                                       Container(
-                                        padding: const EdgeInsetsDirectional.only(
-                                            start: 70, end: 15, top: 0),
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 70, end: 15, top: 0),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -1127,8 +1177,8 @@ class _CommentComponentState extends State<CommentComponent> {
                                                     },
                                                     child: Container(
                                                       margin:
-                                                          const EdgeInsetsDirectional.all(
-                                                              12),
+                                                          const EdgeInsetsDirectional
+                                                              .all(12),
                                                       decoration: BoxDecoration(
                                                           color: Provider.of<
                                                                       AmityUIConfiguration>(
@@ -1141,8 +1191,8 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                       .circular(
                                                                           4))),
                                                       padding:
-                                                          const EdgeInsetsDirectional.all(
-                                                              5.0),
+                                                          const EdgeInsetsDirectional
+                                                              .all(5.0),
                                                       child: const Wrap(
                                                         crossAxisAlignment:
                                                             WrapCrossAlignment
@@ -1314,11 +1364,13 @@ class _CommentComponentState extends State<CommentComponent> {
 class ReplyCommentComponent extends StatelessWidget {
   final AmityComment comment;
   final FeedType feedType;
+
   const ReplyCommentComponent({
     super.key,
     required this.comment,
     required this.feedType,
   });
+
   bool isLiked(AsyncSnapshot<AmityComment> snapshot) {
     var comments = snapshot.data!;
     return comments.myReactions?.isNotEmpty ?? false;
@@ -1379,8 +1431,8 @@ class ReplyCommentComponent extends StatelessWidget {
                 //     ),
                 //   )
                 : Container(
-                    padding:
-                        const EdgeInsetsDirectional.symmetric(vertical: 0, horizontal: 0),
+                    padding: const EdgeInsetsDirectional.symmetric(
+                        vertical: 0, horizontal: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1393,7 +1445,8 @@ class ReplyCommentComponent extends StatelessWidget {
                             user: comments.user!),
                         Container(
                           padding: const EdgeInsetsDirectional.all(10.0),
-                          margin: const EdgeInsetsDirectional.only(start: 50.0, top: 8),
+                          margin: const EdgeInsetsDirectional.only(
+                              start: 50.0, top: 8),
                           decoration: BoxDecoration(
                             color: Provider.of<AmityUIConfiguration>(context)
                                 .appColors
@@ -1414,7 +1467,8 @@ class ReplyCommentComponent extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.only(start: 50.0, top: 8),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 50.0, top: 8),
                           child: Row(
                             children: [
                               // Like Button
@@ -1451,6 +1505,7 @@ class ReplyCommentComponent extends StatelessWidget {
                                   : GestureDetector(
                                       onTap: () {
                                         vm.addCommentReaction(comment);
+                                        context.read<RateCubit>().checkRate("community");
                                       },
                                       child: Row(
                                         children: [
@@ -1557,9 +1612,11 @@ class ReplyCommentComponent extends StatelessWidget {
                                             onTap: () async {
                                               ConfirmationDialog().show(
                                                   context: context,
-                                                  title: "حذف هذا التعليق", //Delete this comment
+                                                  title: "حذف هذا التعليق",
+                                                  //Delete this comment
                                                   detailText:
-                                                      "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه",// This comment will be permanently deleted. You'll no longer to see and find this comment
+                                                      "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه",
+                                                  // This comment will be permanently deleted. You'll no longer to see and find this comment
                                                   onConfirm: () {
                                                     vm.deleteComment(comment);
                                                     AmitySuccessDialog
