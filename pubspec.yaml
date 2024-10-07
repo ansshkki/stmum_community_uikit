@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  shared:
-    path: ../../packages/shared
+#  shared:
+#    path: ../../packages/shared
 
   plugin_platform_interface: ^2.0.2
   animation_wrappers: ^3.0.0

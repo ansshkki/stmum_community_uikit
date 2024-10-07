@@ -16,9 +16,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shared/shared.dart';
+// import 'package:shared/shared.dart';
 
 import '../../components/custom_user_avatar.dart';
+import '../../provider/rate/rate_cubit.dart';
 import '../../viewmodel/community_feed_viewmodel.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/edit_post_viewmodel.dart';

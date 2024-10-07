@@ -16,10 +16,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/custom_user_avatar.dart';
+import '../../provider/rate/rate_cubit.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/post_viewmodel.dart';
 
-import "package:shared/src/provider/rate/rate_cubit.dart";
+// import "package:shared/src/provider/rate/rate_cubit.dart";
 
 class CommentScreen extends StatefulWidget {
   final AmityPost amityPost;
@@ -1113,9 +1114,9 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                       vm.deleteComment(
                                                                           comments);
 
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        });
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    });
                                                               },
                                                             ),
                                                     ]);
@@ -1505,7 +1506,9 @@ class ReplyCommentComponent extends StatelessWidget {
                                   : GestureDetector(
                                       onTap: () {
                                         vm.addCommentReaction(comment);
-                                        context.read<RateCubit>().checkRate("community");
+                                        context
+                                            .read<RateCubit>()
+                                            .checkRate("community");
                                       },
                                       child: Row(
                                         children: [
