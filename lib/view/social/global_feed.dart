@@ -55,14 +55,15 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
   void initState() {
     super.initState();
     if (!widget.isInit) {
-    Future.delayed(Duration.zero, () {
-      var globalFeedProvider = Provider.of<FeedVM>(context, listen: false);
-      var myCommunityList = Provider.of<MyCommunityVM>(context, listen: false);
+      Future.delayed(Duration.zero, () {
+        var globalFeedProvider = Provider.of<FeedVM>(context, listen: false);
+        var myCommunityList =
+            Provider.of<MyCommunityVM>(context, listen: false);
 
-      myCommunityList.initMyCommunityFeed();
+        myCommunityList.initMyCommunityFeed();
 
         globalFeedProvider.initAmityGlobalfeed();
-          });
+      });
     }
   }
 
@@ -164,7 +165,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "صفحتك فارغة!",
+              "يبدو أنكِ لم تنضمي لأي مجتمع 😓",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -173,7 +174,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "قم باستكشاف المجتمعات",
+              "خذي جولة واختاري المجتمع الذي تريدين",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -185,8 +186,8 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
               onPressed: () {
                 DefaultTabController.of(context).animateTo(2);
               },
-              icon: Icon(Icons.search),
-              label: Text("استكشف المجتمعات"),
+              icon: const Icon(Icons.search),
+              label: const Text("اكتشفي مجتمعات سبيستون مام"),
             ),
           ),
         ],
@@ -253,7 +254,7 @@ class _PostWidgetState
     final isFlaggedByMe = widget.post.isFlaggedByMe;
     List<String> postOwnerMenu = ['تعديل', 'حذف'];
     List<String> otherPostMenu = [
-      isFlaggedByMe ? 'إلغاء التبليغ' : 'التبليغ',
+      isFlaggedByMe ? 'إلغاء التبليغ' : 'إبلاغ؛ التعليق غير مناسب',
       // 'حظر المستخدم'
     ];
 
@@ -654,7 +655,7 @@ class _PostWidgetState
                                     widget.post.targetType ==
                                         AmityPostTargetType.COMMUNITY) ...[
                                   TextSpan(
-                                    text: " نشر/ت في ",
+                                    text: " نشرت",
                                     style: TextStyle(
                                         color:
                                             Provider.of<AmityUIConfiguration>(
@@ -904,8 +905,8 @@ class _PostWidgetState
                                                   Text(
                                                       widget.post.reactionCount! >
                                                               1
-                                                          ? "إعجابات" //likes
-                                                          : "إعجاب", //like
+                                                          ? "أمهات وجدنه مفيداَ" //likes
+                                                          : "أم وجدته مفيداَ", //like
                                                       style: TextStyle(
                                                           color: widget
                                                                       .feedType ==
@@ -990,7 +991,6 @@ class _PostWidgetState
                                 )
                               : const SizedBox()
                           : Container(
-
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -999,7 +999,6 @@ class _PostWidgetState
                                       feedType: widget.feedType,
                                       feedReactionCountSize:
                                           feedReactionCountSize),
-
 
                                   GestureDetector(
                                     onTap: () {
@@ -1416,7 +1415,7 @@ class CommentActionComponent extends StatelessWidget {
                                     ),
                                   )
                                 : const Text(
-                                    "إعجاب", //Like
+                                    "مفيد", //Like
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff898E9E),
@@ -1445,7 +1444,7 @@ class CommentActionComponent extends StatelessWidget {
                                         ),
                                       )
                                     : const Text(
-                                        "إعجاب", //Like
+                                        "مفيد", //Like
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff898E9E),
@@ -1525,7 +1524,7 @@ class CommentActionComponent extends StatelessWidget {
                           ? const SizedBox()
                           : ListTile(
                               title: const Text(
-                                'تعديل التعليق', //Edit Comment
+                                'تعليقي يحتاج بعض التعديلات', //Edit Comment
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                               onTap: () async {
@@ -1546,7 +1545,7 @@ class CommentActionComponent extends StatelessWidget {
                           ? const SizedBox()
                           : ListTile(
                               title: const Text(
-                                'حذف التعليق', // Delete Comment
+                                ' تعليقي لم يعجبني أود حذفه.', // Delete Comment
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                               onTap: () async {

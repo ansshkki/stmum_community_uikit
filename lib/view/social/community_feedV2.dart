@@ -23,6 +23,7 @@ class CommunityScreen extends StatefulWidget {
   final AmityCommunity community;
   final bool isFromFeed;
   static const routeName = '/CommunityScreen';
+
   const CommunityScreen(
       {Key? key, required this.community, this.isFromFeed = false})
       : super(key: key);
@@ -271,8 +272,8 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                         fontSize: 18,
                       ),
                 ),
-                child: Text(
-                  "انضم الآن", //Join
+                child: const Text(
+                  "انضمي إلينا", //Join
                 ),
               )
         : InkWell(
@@ -471,7 +472,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                           .base,
                     ),
                   ),
-                  Text("الأعضاء",
+                  Text("أم داعمة",
                       //member //members
                       style: const TextStyle(
                           fontSize: 13, color: Color(0xff898E9E)))
@@ -495,7 +496,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                           .appColors
                           .base,
                     )),
-                const Text('منشور', //posts
+                const Text('مشاركات', //posts
                     style: TextStyle(fontSize: 13, color: Color(0xff898E9E)))
               ],
             ),

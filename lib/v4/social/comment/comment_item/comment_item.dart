@@ -374,7 +374,7 @@ class CommentItem extends BaseElement {
               ),
             )
           : Text(
-              'إعجاب',
+              'مفيد',
               style: TextStyle(
                 color: theme.primaryColor,
                 fontSize: 13,
@@ -403,7 +403,7 @@ class CommentItem extends BaseElement {
         },
         child: (hasMyReaction)
             ? Text(
-                'إعجاب',
+                'مفيد',
                 style: TextStyle(
                   color: theme.primaryColor,
                   fontSize: 13,

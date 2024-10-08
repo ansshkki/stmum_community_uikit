@@ -181,9 +181,9 @@ class _CommunityPageState extends State<CommunityPage> {
             //   fontFamily: 'SF Pro Text',
             // ),
             tabs: const [
-              Tab(text: "صفحتي"), //Newsfeed
-              Tab(text: "استكشفي"), //Explore
-              Tab(text: "المجموعات"),
+              Tab(text: "يومياتي"), //Newsfeed
+              Tab(text: "مشاركات"), //Explore
+              Tab(text: "مجتمعات "),
             ],
           ),
         ),
@@ -313,7 +313,7 @@ class RecommendationSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsetsDirectional.only(start: 16),
                 child: Text(
-                  'المجموعات التي قد تعجبك', //Recommended for you
+                  'مجموعات مُختارة لكِ', //Recommended for you
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -438,7 +438,7 @@ class TrendingSection extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 16, top: 20),
               child: Text(
-                "المجموعات المقترحة", //Today\'s Trending
+                "اكتشفي مجموعات تناسبكِ", //Today\'s Trending
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -697,7 +697,7 @@ class CategorySection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'الفئات', //Categories
+                      'تصنيفات المجتمعات', //Categories
                       style: Provider.of<AmityUIConfiguration>(context)
                           .titleTextStyle
                           .copyWith(
@@ -975,10 +975,10 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             .primaryShade3,
                         shape: BoxShape.circle,
                       ),
-                      child:  const Icon(
-                              Icons.category,
-                              color: Colors.white,
-                            ),
+                      child: const Icon(
+                        Icons.category,
+                        color: Colors.white,
+                      ),
                     ),
                     title: Text(category.name ?? ''),
                   );
@@ -1179,7 +1179,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                     },
                               child: Text(community.isJoined ?? false
                                   ? "منضم"
-                                  : "انضم"),
+                                  : "كوني معنا"),
                             ),
                           ],
                         ),

@@ -30,7 +30,8 @@ class _PostToPageState extends State<PostToPage> {
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        elevation: 0.0, // Add this line to remove the shadow
+        elevation: 0.0,
+        // Add this line to remove the shadow
         leading: IconButton(
           icon: Icon(
             Icons.close,
@@ -39,7 +40,7 @@ class _PostToPageState extends State<PostToPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "النشر إلى", //Post to
+          "اذهب بها إلى مجتمع..", //Post to
           style: Provider.of<AmityUIConfiguration>(context)
               .titleTextStyle
               .copyWith(
@@ -103,7 +104,7 @@ class _PostToPageState extends State<PostToPage> {
                 Padding(
                   padding: const EdgeInsetsDirectional.all(16.0),
                   child: Text(
-                    "مجتمعاتي", //My community
+                    "المجتمعات التي انضممت إليها:", //My community
                     style: TextStyle(
                         fontSize: 15,
                         color: Provider.of<AmityUIConfiguration>(context)
@@ -152,7 +153,8 @@ class _PostToPageState extends State<PostToPage> {
                             children: [
                               !community.isPublic!
                                   ? Padding(
-                                      padding: const EdgeInsetsDirectional.only(start: 7.0),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 7.0),
                                       child: Icon(
                                         Icons.lock,
                                         color:
@@ -178,7 +180,8 @@ class _PostToPageState extends State<PostToPage> {
                               ),
                               community.isOfficial!
                                   ? Padding(
-                                      padding: const EdgeInsetsDirectional.only(start: 7.0),
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 7.0),
                                       child: Provider.of<AmityUIConfiguration>(
                                               context)
                                           .iconConfig
