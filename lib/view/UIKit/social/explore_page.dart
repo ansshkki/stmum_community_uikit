@@ -573,8 +573,9 @@ class TrendingSection extends StatelessWidget {
                                     }
                                   }
                                 },
-                          child: Text(
-                              community.isJoined ?? false ? "منضم" : "انضم"),
+                          child: Text(community.isJoined ?? false
+                              ? "منضم"
+                              : "كوني معنا"),
                         ),
                       ],
                     ),
