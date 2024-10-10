@@ -17,7 +17,8 @@ import 'package:provider/provider.dart';
 class CommunitySettingPage extends StatelessWidget {
   final AmityCommunity community;
 
-  const CommunitySettingPage({Key? key, required this.community}) : super(key: key);
+  const CommunitySettingPage({Key? key, required this.community})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,25 @@ class CommunitySettingPage extends StatelessWidget {
         builder: (context, snapshot) {
           var livecommunity = snapshot.data ?? community;
           return Scaffold(
-            backgroundColor: Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
+            backgroundColor: Provider.of<AmityUIConfiguration>(context)
+                .appColors
+                .baseBackground,
             appBar: AppBar(
-              backgroundColor: Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
+              backgroundColor: Provider.of<AmityUIConfiguration>(context)
+                  .appColors
+                  .baseBackground,
               elevation: 0.0,
-              title: Text(snapshot.data?.displayName ?? community.displayName!, style: Provider.of<AmityUIConfiguration>(context).titleTextStyle.copyWith(color: Provider.of<AmityUIConfiguration>(context).appColors.base)),
-              iconTheme: IconThemeData(color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+              title: Text(snapshot.data?.displayName ?? community.displayName!,
+                  style: Provider.of<AmityUIConfiguration>(context)
+                      .titleTextStyle
+                      .copyWith(
+                          color: Provider.of<AmityUIConfiguration>(context)
+                              .appColors
+                              .base)),
+              iconTheme: IconThemeData(
+                  color: Provider.of<AmityUIConfiguration>(context)
+                      .appColors
+                      .base),
             ),
             body: ListView(
               children: [
@@ -42,7 +56,9 @@ class CommunitySettingPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 17,
-                        color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                        color: Provider.of<AmityUIConfiguration>(context)
+                            .appColors
+                            .base,
                       )),
                 ),
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
@@ -51,43 +67,66 @@ class CommunitySettingPage extends StatelessWidget {
                         leading: Container(
                             padding: const EdgeInsetsDirectional.all(5),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4), // Adjust radius to your need
-                              color: const Color(0xfff1f1f1), // Choose the color to fit your design
+                              borderRadius: BorderRadius.circular(4),
+                              // Adjust radius to your need
+                              color: const Color(
+                                  0xfff1f1f1), // Choose the color to fit your design
                             ),
                             child: Icon(
                               Icons.edit,
-                              color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                              color: Provider.of<AmityUIConfiguration>(context)
+                                  .appColors
+                                  .base,
                             )),
                         title: Text(
                           "تعديل الملف الشخصي", //Edit Profile
                           style: TextStyle(
-                            color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                            color: Provider.of<AmityUIConfiguration>(context)
+                                .appColors
+                                .base,
                           ),
                         ),
-                        trailing: Icon(Icons.chevron_right, color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+                        trailing: Icon(Icons.chevron_right,
+                            color: Provider.of<AmityUIConfiguration>(context)
+                                .appColors
+                                .base),
                         onTap: () {
                           // Navigate to Edit Profile Page or perform an action
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => AmityEditCommunityScreen(livecommunity)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  AmityEditCommunityScreen(livecommunity)));
                         },
                       ),
                 ListTile(
                     leading: Container(
                         padding: const EdgeInsetsDirectional.all(5),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4), // Adjust radius to your need
-                          color: const Color(0xfff1f1f1), // Choose the color to fit your design
+                          borderRadius: BorderRadius.circular(4),
+                          // Adjust radius to your need
+                          color: const Color(
+                              0xfff1f1f1), // Choose the color to fit your design
                         ),
-                        child: Icon(Icons.people, color: Provider.of<AmityUIConfiguration>(context).appColors.base)),
+                        child: Icon(Icons.people,
+                            color: Provider.of<AmityUIConfiguration>(context)
+                                .appColors
+                                .base)),
                     title: Text(
-                      "الأعضاء", //Members
+                      "أم داعمة", //Members
                       style: TextStyle(
-                        color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                        color: Provider.of<AmityUIConfiguration>(context)
+                            .appColors
+                            .base,
                       ),
                     ),
-                    trailing: Icon(Icons.chevron_right, color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+                    trailing: Icon(Icons.chevron_right,
+                        color: Provider.of<AmityUIConfiguration>(context)
+                            .appColors
+                            .base),
                     onTap: () {
                       // Navigate to Members Page or perform an action
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MemberManagementPage(communityId: livecommunity.communityId!)));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MemberManagementPage(
+                              communityId: livecommunity.communityId!)));
                     }),
                 // ListTile(
                 //   leading: Container(
@@ -133,9 +172,12 @@ class CommunitySettingPage extends StatelessWidget {
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
                     : Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 16, end: 16),
                         child: Divider(
-                          color: Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
+                          color: Provider.of<AmityUIConfiguration>(context)
+                              .appColors
+                              .baseShade4,
                           thickness: 1,
                         ),
                       ),
@@ -145,7 +187,14 @@ class CommunitySettingPage extends StatelessWidget {
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsetsDirectional.all(16.0),
-                        child: Text("أذونات المجتمع", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17, color: Provider.of<AmityUIConfiguration>(context).appColors.base)),
+                        child: Text("أذونات المجتمع",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                color:
+                                    Provider.of<AmityUIConfiguration>(context)
+                                        .appColors
+                                        .base)),
                       ),
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
@@ -153,18 +202,31 @@ class CommunitySettingPage extends StatelessWidget {
                         leading: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4), // Adjust radius to your need
-                              color: const Color(0xfff1f1f1), // Choose the color to fit your design
+                              borderRadius: BorderRadius.circular(4),
+                              // Adjust radius to your need
+                              color: const Color(
+                                  0xfff1f1f1), // Choose the color to fit your design
                             ),
-                            child: Icon(Icons.fact_check, color: Provider.of<AmityUIConfiguration>(context).appColors.base)),
+                            child: Icon(Icons.fact_check,
+                                color:
+                                    Provider.of<AmityUIConfiguration>(context)
+                                        .appColors
+                                        .base)),
                         title: Text("مراجعة المنشور",
                             style: TextStyle(
-                              color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                              color: Provider.of<AmityUIConfiguration>(context)
+                                  .appColors
+                                  .base,
                             )),
-                        trailing: Icon(Icons.chevron_right, color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+                        trailing: Icon(Icons.chevron_right,
+                            color: Provider.of<AmityUIConfiguration>(context)
+                                .appColors
+                                .base),
                         onTap: () {
                           // Navigate to Post Review Page or perform an action
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PostReviewPage(community: livecommunity)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  PostReviewPage(community: livecommunity)));
                         },
                       ),
                 //! DO NOT REMOVE
@@ -174,8 +236,10 @@ class CommunitySettingPage extends StatelessWidget {
                         leading: Container(
                             padding: const EdgeInsetsDirectional.all(5),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4), // Adjust radius to your need
-                              color: const Color(0xfff1f1f1), // Choose the color to fit your design
+                              borderRadius: BorderRadius.circular(4),
+                              // Adjust radius to your need
+                              color: const Color(
+                                  0xfff1f1f1), // Choose the color to fit your design
                             ),
                             child: SvgPicture.asset(
                               "assets/Icons/ic_create_stroy_black.svg",
@@ -185,12 +249,19 @@ class CommunitySettingPage extends StatelessWidget {
                             )),
                         title: Text("Story comments",
                             style: TextStyle(
-                              color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                              color: Provider.of<AmityUIConfiguration>(context)
+                                  .appColors
+                                  .base,
                             )),
-                        trailing: Icon(Icons.chevron_right, color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+                        trailing: Icon(Icons.chevron_right,
+                            color: Provider.of<AmityUIConfiguration>(context)
+                                .appColors
+                                .base),
                         onTap: () {
                           // Navigate to Post Review Page or perform an action
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => StoryCommentSettingPage(community: livecommunity)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => StoryCommentSettingPage(
+                                  community: livecommunity)));
                         },
                       ),
                 !community.isJoined!
@@ -198,23 +269,37 @@ class CommunitySettingPage extends StatelessWidget {
                     : ListTile(
                         title: const Text(
                           "مغادرة المجتمع", //Leave Community
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.red),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: Colors.red),
                         ),
                         onTap: () async {
                           await ConfirmationDialog().show(
                               context: context,
-                              title: "مغادرة المجتمع", //Leave community
-                              detailText: "لن تتمكن بعد الآن من النشر والتفاعل في هذا المجتمع بعد مغادرته.", //You won't no longer be able to post and interact in this community after leaving.
+                              title: "مغادرة المجتمع",
+                              //Leave community
+                              detailText:
+                                  "لن تتمكن بعد الآن من النشر والتفاعل في هذا المجتمع بعد مغادرته.",
+                              //You won't no longer be able to post and interact in this community after leaving.
                               onConfirm: () async {
                                 // Perform Leave Community action
-                                final communityVm = Provider.of<CommunityVM>(context, listen: false);
-                                communityVm.leaveCommunity(community.communityId!, callback: (bool isSuccess) {
+                                final communityVm = Provider.of<CommunityVM>(
+                                    context,
+                                    listen: false);
+                                communityVm
+                                    .leaveCommunity(community.communityId!,
+                                        callback: (bool isSuccess) {
                                   if (isSuccess) {
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
-                                    Provider.of<MyCommunityVM>(context, listen: false).initMyCommunity();
+                                    Provider.of<MyCommunityVM>(context,
+                                            listen: false)
+                                        .initMyCommunity();
 
-                                    Provider.of<ExplorePageVM>(context, listen: false).getRecommendedCommunities();
+                                    Provider.of<ExplorePageVM>(context,
+                                            listen: false)
+                                        .getRecommendedCommunities();
                                   }
                                 });
                               });
@@ -223,7 +308,9 @@ class CommunitySettingPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
                   child: Divider(
-                    color: Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
+                    color: Provider.of<AmityUIConfiguration>(context)
+                        .appColors
+                        .baseShade4,
                     thickness: 1,
                   ),
                 ),
@@ -243,7 +330,8 @@ class CommunitySettingPage extends StatelessWidget {
                         subtitle: const Padding(
                           padding: EdgeInsetsDirectional.only(top: 8.0),
                           child: Text(
-                            "سيؤدي إغلاق هذا المجتمع إلى إزالة صفحة المجتمع وجميع محتوياتها وتعليقاتها.", //Closing this community will remove the community page and all its content and comments.
+                            "سيؤدي إغلاق هذا المجتمع إلى إزالة صفحة المجتمع وجميع محتوياتها وتعليقاتها.",
+                            //Closing this community will remove the community page and all its content and comments.
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
@@ -256,17 +344,28 @@ class CommunitySettingPage extends StatelessWidget {
 
                           ConfirmationDialog().show(
                             context: context,
-                            title: 'إغلاق المجتمع', //Close community?
-                            detailText: 'سيتم حذف جميع الأعضاء من المجتمع و حذف جميع المنشورات والرسائل والتفاعلات والوسائط المشتركة في المجتمع. لا يمكن التراجع عن هذا.', //All members will be removed from the community. All posts, messages, reactions, and media shared in community will be deleted. This cannot be undone.
-                            leftButtonText: 'إلغاء', //Cancel
-                            rightButtonText: 'إغلاق', //Close
+                            title: 'إغلاق المجتمع',
+                            //Close community?
+                            detailText:
+                                'سيتم حذف جميع الأعضاء من المجتمع و حذف جميع المنشورات والرسائل والتفاعلات والوسائط المشتركة في المجتمع. لا يمكن التراجع عن هذا.',
+                            //All members will be removed from the community. All posts, messages, reactions, and media shared in community will be deleted. This cannot be undone.
+                            leftButtonText: 'إلغاء',
+                            //Cancel
+                            rightButtonText: 'إغلاق',
+                            //Close
                             onConfirm: () {
-                              final communityVm = Provider.of<CommunityVM>(context, listen: false);
-                              communityVm.deleteCommunity(community.communityId!, callback: (bool isSuccess) {
+                              final communityVm = Provider.of<CommunityVM>(
+                                  context,
+                                  listen: false);
+                              communityVm
+                                  .deleteCommunity(community.communityId!,
+                                      callback: (bool isSuccess) {
                                 log("onConfirm");
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
-                                Provider.of<MyCommunityVM>(context, listen: false).initMyCommunity();
+                                Provider.of<MyCommunityVM>(context,
+                                        listen: false)
+                                    .initMyCommunity();
                               });
                             },
                           );
@@ -276,9 +375,12 @@ class CommunitySettingPage extends StatelessWidget {
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
                     : Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 16, end: 16),
                         child: Divider(
-                          color: Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
+                          color: Provider.of<AmityUIConfiguration>(context)
+                              .appColors
+                              .baseShade4,
                           thickness: 1,
                         ),
                       ),

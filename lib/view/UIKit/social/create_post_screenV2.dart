@@ -70,7 +70,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
           elevation: 0,
           centerTitle: false,
           title: Text(
-            "منشور جديد", //My Feed
+            "مشاركة جديدة", //My Feed
             style: Provider.of<AmityUIConfiguration>(context)
                 .titleTextStyle
                 .copyWith(
@@ -204,7 +204,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                             maxLines: null,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "اكتب شيئاً لنشره",
+                              hintText: "ما الذي تودين مشاركته معنا اليوم؟ ( تجربتكِ، نصيحة، تحدّي..)",
                               //Write something to post
                               hintStyle: TextStyle(
                                   color:
@@ -254,7 +254,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                     children: [
                       Expanded(
                         child: Text(
-                          "النشر إلى: ${community?.displayName ?? "صفحتي الشخصية"}",
+                          "اذهب بها إلى مجتمع.. ${community?.displayName ?? "صفحتي الشخصية"}",
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -418,7 +418,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40),
                             ),
-                            child: const Text("نشر"),
+                            child: const Text("مشاركة"),
                           ),
                   ],
                 ),

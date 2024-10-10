@@ -154,7 +154,8 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
               children: [
                 TabBar(
                   tabAlignment: TabAlignment.start,
-                  isScrollable: true, // Ensure that the TabBar is scrollable
+                  isScrollable: true,
+                  // Ensure that the TabBar is scrollable
                   dividerColor: Provider.of<AmityUIConfiguration>(context)
                       .appColors
                       .baseBackground,
@@ -172,7 +173,7 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
                   // ),
 
                   tabs: const [
-                    Tab(text: "الأعضاء"), //Members
+                    Tab(text: "أم داعمة"), //Members
                     Tab(text: "المشرفون"), //Moderators
                   ],
                 ),
@@ -364,7 +365,9 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                           ),
                     ListTile(
                       title: Text(
-                        member.user!.isFlaggedByMe ? "التراجع عن التبليغ" : "تبليغ", //Undo Report //Report
+                        member.user!.isFlaggedByMe
+                            ? "التراجع عن التبليغ"
+                            : "إبلاغ؛ التعليق غير مناسب", //Undo Report //Report
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       onTap: () async {
@@ -401,9 +404,11 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                         Navigator.pop(context);
                         await ConfirmationDialog().show(
                           context: context,
-                          title: 'إخراج المستخدم من المجتمع ؟', //Remove user from Community?
+                          title: 'إخراج المستخدم من المجتمع ؟',
+                          //Remove user from Community?
                           detailText:
-                              "لن يتمكن هذا المستخدم بعد الآن من البحث والنشر والتفاعل في هذا المجتمع", //This user won't no longer be able to search, post and interact in this community
+                              "لن يتمكن هذا المستخدم بعد الآن من البحث والنشر والتفاعل في هذا المجتمع",
+                          //This user won't no longer be able to search, post and interact in this community
                           onConfirm: () {
                             viewModel.removeMembers(
                                 viewModel.communityId, [member.userId!]);

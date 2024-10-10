@@ -84,7 +84,7 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
               children: [
                 Text(community.postsCount.toString(),
                     style: const TextStyle(fontSize: 16)),
-                const Text('المنشورات', //posts
+                const Text('مشاركات', //posts
                     style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
             ),
@@ -101,7 +101,7 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
                   community.membersCount.toString(),
                   style: const TextStyle(fontSize: 16),
                 ),
-                const Text('الأعضاء', //members
+                const Text('أم داعمة', //members
                     style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
             ),

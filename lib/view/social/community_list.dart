@@ -277,8 +277,8 @@ class CommunityWidget extends StatelessWidget {
                       }
                     },
                     child: Text(community.isJoined != null
-                        ? (community.isJoined! ? "أترك" : "انضم") //Leave //JOIN
-                        : "انضم"), //Join
+                        ? (community.isJoined! ? "أترك" : "كوني معنا") //Leave //JOIN
+                        : "كوني معنا"), //Join
                   )),
             ],
           ),

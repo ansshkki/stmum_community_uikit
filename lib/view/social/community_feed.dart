@@ -488,7 +488,7 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                       ),
                       SizedBox(width: 8.0), // Space between icon and text
                       Text(
-                        "انضم", //Join
+                        "كوني معنا", //Join
                         style: TextStyle(
                           color: Colors.white, // Text color
                         ),

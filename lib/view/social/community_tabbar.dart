@@ -25,7 +25,7 @@ class CommunityTabbar extends StatelessWidget {
           tabs: const [
             Tab(text: "موصى بها"), //Recommended
             Tab(text: "شائع"), //Trending
-            Tab(text: "انضم"), //Joined
+            Tab(text: "كوني معنا"), //Joined
           ],
         ),
         body: const TabBarView(

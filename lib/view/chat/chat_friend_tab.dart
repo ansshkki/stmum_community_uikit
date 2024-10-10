@@ -1,6 +1,7 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/custom_user_avatar.dart';
@@ -50,10 +51,11 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
       convertedTimestamp,
     );
 
-    if (result == "0 seconds ago") { //0 seconds ago
-      return "الآن"; //just now
+    if (result == "0 seconds ago") {
+      //0 seconds ago
+      return "نشر للتو"; //just now
     } else {
-      return result;
+      return DateFormat('d / MMMM', "ar").format(convertedTimestamp);
     }
   }
 
@@ -114,8 +116,8 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                             leading: Stack(
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 5, 0),
                                   child: FadedScaleAnimation(
                                     child: getCommuAvatarImage(null,
                                         fileId: vm
@@ -135,8 +137,8 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                                                 .primaryColor,
                                             shape: BoxShape.circle,
                                           ),
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              4, 0, 4, 2),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(4, 0, 4, 2),
                                           child: Center(
                                             child: Text(
                                               vm
