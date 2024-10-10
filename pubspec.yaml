@@ -11,9 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-#  shared:
-#    path: ../../packages/shared
-
   plugin_platform_interface: ^2.0.2
   animation_wrappers: ^3.0.0
   font_awesome_flutter: ^10.1.0
@@ -64,10 +61,6 @@ dependencies:
   palette_generator: ^0.3.3+4
   ffi: ^2.1.3
   in_app_review: ^2.0.9
-
-
-
-
 
 dev_dependencies:
   flutter_test:

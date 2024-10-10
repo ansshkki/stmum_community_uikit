@@ -1,6 +1,7 @@
-import 'package:amity_uikit_beta_service/provider/rate/repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+
+import 'rate_repository.dart';
 
 part 'rate_state.dart';
 
@@ -11,8 +12,7 @@ class RateCubit extends Cubit<RateState> {
     required this.rateRepository,
   }) : super(RateInitial());
 
-  checkRate(String route) async {
-    print("+++ in cubit");
-    rateRepository.reviewRequest(route);
+  Future<void> checkRate(String route) async {
+    await rateRepository.reviewRequest(route);
   }
 }

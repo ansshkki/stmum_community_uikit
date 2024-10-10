@@ -2,15 +2,11 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:in_app_review/in_app_review.dart';
-// import 'package:shared/shared.dart';
 
 class RateRepository {
   final SharedPreferences sharedPreferences;
 
-  // final StorageHelper storageHelper;
-
   RateRepository({
-    // required this.storageHelper,
     required this.sharedPreferences,
   });
 
@@ -18,9 +14,7 @@ class RateRepository {
     final InAppReview inAppReview = InAppReview.instance;
     try {
       if (checkRateDate(route) && await inAppReview.isAvailable()) {
-        await inAppReview.requestReview().then((value) {
-          print("+++ in app review");
-        });
+        await inAppReview.requestReview();
         setRateCallNum();
         setLastRateDate(DateTime.now());
         return true;
