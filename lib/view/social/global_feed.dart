@@ -657,7 +657,7 @@ class _PostWidgetState
                                     widget.post.targetType ==
                                         AmityPostTargetType.COMMUNITY) ...[
                                   TextSpan(
-                                    text: " نشرت",
+                                    text: " نشرت في ",
                                     style: TextStyle(
                                         color:
                                             Provider.of<AmityUIConfiguration>(

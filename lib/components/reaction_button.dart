@@ -80,6 +80,7 @@ class ReactionWidget extends StatelessWidget {
                         ),
                       )
                     : Container(
+                  margin: EdgeInsetsDirectional.only(end: 8),
                         child: TextButton(
                           onPressed: () {
                             print(post.myReactions);
@@ -101,6 +102,7 @@ class ReactionWidget extends StatelessWidget {
                                             .userProfileTextColor
                                         : Colors.grey,
                                   ),
+                              SizedBox(width: 4),
                               Text(
                                 'مفيد',
                                 style: TextStyle(
