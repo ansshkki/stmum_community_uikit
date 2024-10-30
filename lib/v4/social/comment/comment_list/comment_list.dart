@@ -15,11 +15,11 @@ class CommentList extends NewBaseComponent with ChangeNotifier {
   final CommentAction commentAction;
 
   CommentList({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.scrollController,
     required this.commentAction,
-  }) : super(key: key, pageId: pageId, componentId: "comment_list_component");
+  }) : super(componentId: "comment_list_component");
 
   @override
   Widget buildComponent(BuildContext context) {

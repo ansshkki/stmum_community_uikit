@@ -2,6 +2,7 @@ import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_event.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_community_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +12,7 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
 
   @override
   Widget buildElement(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -21,7 +22,7 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
             width: 160,
             height: 160,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: SvgPicture.asset(
               'assets/Icons/amity_ic_global_feed_empty.svg',
               package: 'amity_uikit_beta_service',
@@ -29,13 +30,13 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
               height: 160,
             ),
           ),
-          Container(
+          SizedBox(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -44,7 +45,7 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                       SizedBox(
                         width: 252,
                         child: Text(
-                          'Your feed is empty',
+                          "feed.empty".tr(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: theme.baseColorShade1,
@@ -54,7 +55,7 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                         ),
                       ),
                       Text(
-                        'Find community or create your own ',
+                        "community.find".tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: theme.baseColorShade1,
@@ -66,18 +67,16 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                   ),
                 ),
                 const SizedBox(height: 17),
-                Container(
+                SizedBox(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          context
-                              .read<SocialHomeBloc>()
-                              .add(TabSelectedEvent(1));
-                        },
+                        onTap: () => context
+                            .read<SocialHomeBloc>()
+                            .add(TabSelectedEvent(1)),
                         child: Container(
                           width: 220,
                           padding: const EdgeInsetsDirectional.only(
@@ -118,9 +117,9 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                                   ],
                                 ),
                               ),
-                              const Text(
-                                'Explore community',
-                                style: TextStyle(
+                              Text(
+                                "community.initialize_community".tr(),
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -132,11 +131,11 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                       ),
                       const SizedBox(height: 4),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
                               builder: (context) =>
-                                  const CreateCommunityPage()));
-                        },
+                                  const CreateCommunityPage()),
+                        ),
                         child: Container(
                           width: 220,
                           padding: const EdgeInsets.symmetric(
@@ -147,7 +146,7 @@ class AmityEmptyNewsFeedComponent extends BaseElement {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Create community',
+                                "community.create".tr(),
                                 style: TextStyle(
                                   color: theme.primaryColor,
                                   fontSize: 15,

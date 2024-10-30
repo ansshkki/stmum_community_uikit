@@ -5,7 +5,10 @@ class RotatingSvgPicture extends StatefulWidget {
   final String iconAsset;
   final bool shouldRotate;
 
-  RotatingSvgPicture({required this.iconAsset, required this.shouldRotate});
+  RotatingSvgPicture({
+    required this.iconAsset,
+    required this.shouldRotate,
+  });
 
   @override
   _RotatingSvgPictureState createState() =>

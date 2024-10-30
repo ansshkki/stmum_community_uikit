@@ -43,10 +43,10 @@ class AmityChatRepoImp implements AmityChatRepo {
       "options": {"last": limit, "token": paginationToken}
     }, ack: (data) {
       var amityResponse = AmityResponse.fromJson(data);
-      var responsedata = amityResponse.data;
+      var responseData = amityResponse.data;
       if (amityResponse.status == "success") {
         //success
-        var amityMessages = AmityMessage.fromJson(responsedata!.json!);
+        var amityMessages = AmityMessage.fromJson(responseData!.json!);
 
         callback(amityMessages, null);
       } else {
@@ -99,11 +99,11 @@ class AmityChatRepoImp implements AmityChatRepo {
       "data": {"text": text}
     }, ack: (data) {
       var amityResponse = AmityResponse.fromJson(data);
-      var responsedata = amityResponse.data;
+      var responseData = amityResponse.data;
       if (amityResponse.status == "success") {
         //success
-        log(responsedata!.json.toString());
-        var amityMessages = AmityMessage.fromJson(responsedata.json!);
+        log(responseData!.json.toString());
+        var amityMessages = AmityMessage.fromJson(responseData.json!);
 
         callback(amityMessages, null);
       } else {
@@ -128,10 +128,10 @@ class AmityChatRepoImp implements AmityChatRepo {
       }
     }, ack: (data) {
       var amityResponse = AmityResponse.fromJson(data);
-      var responsedata = amityResponse.data;
+      var responseData = amityResponse.data;
       if (amityResponse.status == "success") {
         //success
-        var amityChannels = ChannelList.fromJson(responsedata!.json!);
+        var amityChannels = ChannelList.fromJson(responseData!.json!);
 
         callback(amityChannels, null);
       } else {
@@ -247,10 +247,10 @@ class AmityChatRepoImp implements AmityChatRepo {
     log("getChannelById...");
     socket.emitWithAck('v3/channel.get', {"channelId": channelId}, ack: (data) {
       var amityResponse = AmityResponse.fromJson(data);
-      var responsedata = amityResponse.data;
+      var responseData = amityResponse.data;
       if (amityResponse.status == "success") {
         //success
-        var channel = ChannelList.fromJson(responsedata!.json!);
+        var channel = ChannelList.fromJson(responseData!.json!);
 
         callback(channel, null);
       } else {

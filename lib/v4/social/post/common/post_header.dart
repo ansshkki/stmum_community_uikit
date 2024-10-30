@@ -8,6 +8,7 @@ import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_compo
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_page.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:amity_uikit_beta_service/viewmodel/edit_post_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,6 +28,7 @@ class AmityPostHeader extends StatelessWidget {
     this.action,
   });
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 52,
@@ -37,8 +39,12 @@ class AmityPostHeader extends StatelessWidget {
           Container(
             width: 48,
             height: 48,
-            padding:
-                const EdgeInsetsDirectional.only(top: 8, start: 12, end: 4, bottom: 8),
+            padding: const EdgeInsetsDirectional.only(
+              top: 8,
+              start: 12,
+              end: 4,
+              bottom: 8,
+            ),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(color: theme.backgroundColor),
             child: SizedBox(
@@ -59,8 +65,8 @@ class AmityPostHeader extends StatelessWidget {
             child: Container(
               width: 44,
               height: double.infinity,
-              padding:
-                  const EdgeInsetsDirectional.only(top: 8, start: 4, end: 16, bottom: 8),
+              padding: const EdgeInsetsDirectional.only(
+                  top: 8, start: 4, end: 16, bottom: 8),
               child: isShowOption ? getPostOptionIcon() : Container(),
             ),
           ),
@@ -158,7 +164,7 @@ class AmityPostHeader extends StatelessWidget {
                         width: 36,
                         height: 4,
                         decoration: ShapeDecoration(
-                          color: Color(0xFFA5A9B5),
+                          color: const Color(0xFFA5A9B5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -193,9 +199,9 @@ class AmityPostHeader extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              const Text(
-                                'Report post',
-                                style: TextStyle(
+                              Text(
+                                "report.report_post".tr(),
+                                style: const TextStyle(
                                   color: Color(0xFF292B32),
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -230,9 +236,9 @@ class AmityPostHeader extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              const Text(
-                                'Unreport post',
-                                style: TextStyle(
+                              Text(
+                                "report.unReport_post".tr(),
+                                style: const TextStyle(
                                   color: Color(0xFF292B32),
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -242,7 +248,7 @@ class AmityPostHeader extends StatelessWidget {
                           ),
                         ),
                       ),
-                if (isModerator) _getDeletetedPost(context, post, onDelete)
+                if (isModerator) _getDeletedPost(context, post, onDelete)
               ],
             ),
           );
@@ -251,7 +257,7 @@ class AmityPostHeader extends StatelessWidget {
 
   void showPostOwnerAction(BuildContext context, AmityPost post,
       AmityThemeColor theme, bool isModerator) {
-  final editOption = AmityPostComposerOptions.editOptions(post: post);
+    final editOption = AmityPostComposerOptions.editOptions(post: post);
 
     onEdit() => {
           Navigator.of(context).push(MaterialPageRoute(
@@ -297,7 +303,7 @@ class AmityPostHeader extends StatelessWidget {
                         width: 36,
                         height: 4,
                         decoration: ShapeDecoration(
-                          color: Color(0xFFA5A9B5),
+                          color: const Color(0xFFA5A9B5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -330,9 +336,9 @@ class AmityPostHeader extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        const Text(
-                          'Edit post',
-                          style: TextStyle(
+                        Text(
+                          "change.post".tr(),
+                          style: const TextStyle(
                             color: Color(0xFF292B32),
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -342,14 +348,14 @@ class AmityPostHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                _getDeletetedPost(context, post, onDelete),
+                _getDeletedPost(context, post, onDelete),
               ],
             ),
           );
         });
   }
 
-  Widget _getDeletetedPost(
+  Widget _getDeletedPost(
       BuildContext context, AmityPost post, Function onDelete) {
     return GestureDetector(
       onTap: () {
@@ -358,12 +364,12 @@ class AmityPostHeader extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: const Text("Delete post"),
-              content: const Text("This post will be permanently deleted."),
+              title: Text("delete.post.title".tr()),
+              content: Text("delete.post.content".tr()),
               actions: [
                 CupertinoDialogAction(
-                  child: const Text("Cancel",
-                      style: TextStyle(
+                  child: Text("external.cancel".tr(),
+                      style: const TextStyle(
                         color: Color(0xFF007AFF),
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -374,7 +380,7 @@ class AmityPostHeader extends StatelessWidget {
                 ),
                 CupertinoDialogAction(
                   child: Text(
-                    "Delete",
+                    "external.delete".tr(),
                     style: TextStyle(
                       color: theme.alertColor,
                       fontSize: 17,
@@ -412,7 +418,7 @@ class AmityPostHeader extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              'Delete post',
+              'delete.post'.tr(),
               style: TextStyle(
                 color: theme.alertColor,
                 fontSize: 15,

@@ -1,13 +1,12 @@
-import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class AmityStoryGradientRingElement extends StatefulWidget {
   final List<Color> colors;
   final Widget child;
   final bool isIndeterminate;
-  final Color backgoundColor;
+  final Color backgroundColor;
   const AmityStoryGradientRingElement(
-      {super.key, required this.colors, required this.backgoundColor ,required this.child , required this.isIndeterminate});
+      {super.key, required this.colors, required this.backgroundColor ,required this.child , required this.isIndeterminate});
 
   @override
   State<AmityStoryGradientRingElement> createState() =>
@@ -71,7 +70,7 @@ class _AmityStoryGradientRingElementState
               padding: const EdgeInsets.all(2),
               decoration:  BoxDecoration(
                 shape: BoxShape.circle,
-                color: widget.backgoundColor,
+                color: widget.backgroundColor,
               ),
               child: widget.child,
             ),

@@ -35,7 +35,7 @@ class StoryDraftPage extends NewBasePage {
 
   @override
   Widget buildPage(BuildContext context) {
-    return StoryDarftPageBuilder(
+    return StoryDraftPageBuilder(
       mediaType: mediaType,
       targetId: targetId,
       targetType: targetType,
@@ -44,13 +44,13 @@ class StoryDraftPage extends NewBasePage {
   }
 }
 
-class StoryDarftPageBuilder extends StatefulWidget {
+class StoryDraftPageBuilder extends StatefulWidget {
   final AmityStoryMediaType mediaType;
   final String targetId;
   final AmityStoryTargetType targetType;
   bool? isFromGallery = false;
 
-  StoryDarftPageBuilder({
+  StoryDraftPageBuilder({
     super.key,
     required this.mediaType,
     required this.targetId,
@@ -59,10 +59,10 @@ class StoryDarftPageBuilder extends StatefulWidget {
   });
 
   @override
-  State<StoryDarftPageBuilder> createState() => _StoryDarftPageBuilderState();
+  State<StoryDraftPageBuilder> createState() => _StoryDraftPageBuilderState();
 }
 
-class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
+class _StoryDraftPageBuilderState extends State<StoryDraftPageBuilder> {
   @override
   void initState() {
     super.initState();
@@ -75,7 +75,8 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
             imageDisplayMode: AmityStoryImageDisplayMode.FILL,
           ));
     }
-    context.read<StoryDraftBloc>().add(ObserveStoryTargetEvent(communityId: widget.targetId, targetType: widget.targetType));
+    context.read<StoryDraftBloc>().add(ObserveStoryTargetEvent(
+        communityId: widget.targetId, targetType: widget.targetType));
   }
 
   @override
@@ -102,14 +103,16 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                             height: double.infinity,
                             decoration: const BoxDecoration(
                               color: Colors.black,
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
                             ),
                             child: Container(
                               width: double.infinity,
                               height: double.infinity,
                               decoration: const BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
                               ),
                               child: getContent(state.imageDisplayMode),
                             ),
@@ -119,7 +122,8 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                             right: 16,
                             child: GestureDetector(
                               onTap: () {
-                                if (state is HyperlinkAddedState && state.hyperlink != null) {
+                                if (state is HyperlinkAddedState &&
+                                    state.hyperlink != null) {
                                   AmityCustomSnackBar.show(
                                     context,
                                     'Can\'t add more than one link to your story.',
@@ -133,13 +137,19 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                                   );
                                 } else {
                                   showHyperLinkBottomSheet(
-                                      hyperLink: state is HyperlinkAddedState ? state.hyperlink : null,
+                                      hyperLink: state is HyperlinkAddedState
+                                          ? state.hyperlink
+                                          : null,
                                       context: context,
                                       onHyperLinkAdded: (hyperLink) {
-                                        context.read<StoryDraftBloc>().add(OnHyperlinkAddedEvent(hyperlink: hyperLink));
+                                        context.read<StoryDraftBloc>().add(
+                                            OnHyperlinkAddedEvent(
+                                                hyperlink: hyperLink));
                                       },
                                       onHyperLinkRemoved: () {
-                                        context.read<StoryDraftBloc>().add(OnHyperlinkRemovedEvent());
+                                        context
+                                            .read<StoryDraftBloc>()
+                                            .add(OnHyperlinkRemovedEvent());
                                       });
                                 }
                               },
@@ -160,13 +170,24 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                               ),
                             ),
                           ),
-                          (widget.mediaType is AmityStoryMediaTypeImage && (widget.isFromGallery ?? false))
+                          (widget.mediaType is AmityStoryMediaTypeImage &&
+                                  (widget.isFromGallery ?? false))
                               ? Positioned(
                                   top: 16,
                                   right: 52,
                                   child: GestureDetector(
                                     onTap: () {
-                                      context.read<StoryDraftBloc>().add(FillFitToggleEvent(imageDisplayMode: state.imageDisplayMode == AmityStoryImageDisplayMode.FILL ? AmityStoryImageDisplayMode.FIT : AmityStoryImageDisplayMode.FILL));
+                                      context.read<StoryDraftBloc>().add(
+                                            FillFitToggleEvent(
+                                                imageDisplayMode: state
+                                                            .imageDisplayMode ==
+                                                        AmityStoryImageDisplayMode
+                                                            .FILL
+                                                    ? AmityStoryImageDisplayMode
+                                                        .FIT
+                                                    : AmityStoryImageDisplayMode
+                                                        .FILL),
+                                          );
                                     },
                                     child: Container(
                                       height: 32,
@@ -204,10 +225,19 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                                             hyperLink: state.hyperlink,
                                             context: context,
                                             onHyperLinkAdded: (hyperLink) {
-                                              context.read<StoryDraftBloc>().add(OnHyperlinkAddedEvent(hyperlink: hyperLink));
+                                              context
+                                                  .read<StoryDraftBloc>()
+                                                  .add(
+                                                    OnHyperlinkAddedEvent(
+                                                        hyperlink: hyperLink),
+                                                  );
                                             },
                                             onHyperLinkRemoved: () {
-                                              context.read<StoryDraftBloc>().add(OnHyperlinkRemovedEvent());
+                                              context
+                                                  .read<StoryDraftBloc>()
+                                                  .add(
+                                                    OnHyperlinkRemovedEvent(),
+                                                  );
                                             },
                                           );
                                         },
@@ -224,7 +254,8 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                                 ConfirmationDialog().show(
                                   context: context,
                                   title: 'Discard this Story?',
-                                  detailText: 'The story will be permanently deleted. It cannot be undone.',
+                                  detailText:
+                                      'The story will be permanently deleted. It cannot be undone.',
                                   leftButtonText: 'Cancel',
                                   rightButtonText: 'Discard',
                                   onConfirm: () {
@@ -269,15 +300,19 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                             pageId: 'create_story_page',
                             onClick: () {
                               HapticFeedback.heavyImpact();
-                              BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
-                              AmityStorySingleSegmentTimerElement.currentValue = -1;
-                              BlocProvider.of<CreateStoryBloc>(context).add(CreateStory(
-                                mediaType: widget.mediaType,
-                                targetId: widget.targetId,
-                                targetType: widget.targetType,
-                                imageMode: state.imageDisplayMode,
-                                hyperlink: state.hyperlink,
-                              ));
+                              BlocProvider.of<StoryVideoPlayerBloc>(context)
+                                  .add(const DisposeStoryVideoPlayerEvent());
+                              AmityStorySingleSegmentTimerElement.currentValue =
+                                  -1;
+                              BlocProvider.of<CreateStoryBloc>(context).add(
+                                CreateStory(
+                                  mediaType: widget.mediaType,
+                                  targetId: widget.targetId,
+                                  targetType: widget.targetType,
+                                  imageMode: state.imageDisplayMode,
+                                  hyperlink: state.hyperlink,
+                                ),
+                              );
                               Navigator.of(context).pop();
                             },
                           )
@@ -297,7 +332,8 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
 
   Widget getContent(AmityStoryImageDisplayMode imageDisplayMode) {
     if (widget.mediaType is AmityStoryMediaTypeImage) {
-      return AmityStoryImageViewWidget(imageDisplayMode: imageDisplayMode, mediaType: widget.mediaType);
+      return AmityStoryImageViewWidget(
+          imageDisplayMode: imageDisplayMode, mediaType: widget.mediaType);
     }
     try {
       if (widget.mediaType is AmityStoryMediaTypeVideo) {
@@ -317,9 +353,9 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
                 onInitialize: () {},
                 onPause: () {},
                 onPlay: () {},
-                onWidgetDispose: () {
-                  BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
-                },
+                onWidgetDispose: () =>
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const DisposeStoryVideoPlayerEvent()),
               ),
             ),
           ),
@@ -335,6 +371,7 @@ class _StoryDarftPageBuilderState extends State<StoryDarftPageBuilder> {
 class AmityStoryImageViewWidget extends StatefulWidget {
   final AmityStoryImageDisplayMode imageDisplayMode;
   final AmityStoryMediaType mediaType;
+
   const AmityStoryImageViewWidget({
     super.key,
     required this.mediaType,
@@ -342,12 +379,13 @@ class AmityStoryImageViewWidget extends StatefulWidget {
   });
 
   @override
-  State<AmityStoryImageViewWidget> createState() => _AmityStoryImageViewWidgetState();
+  State<AmityStoryImageViewWidget> createState() =>
+      _AmityStoryImageViewWidgetState();
 }
 
 class _AmityStoryImageViewWidgetState extends State<AmityStoryImageViewWidget> {
   Color _dominantColor = Colors.black; // Default color
-  Color _vibrantColor = Colors.white; // Default color 
+  Color _vibrantColor = Colors.white; // Default color
   late PaletteGenerator _paletteGenerator;
 
   @override
@@ -358,14 +396,18 @@ class _AmityStoryImageViewWidgetState extends State<AmityStoryImageViewWidget> {
 
   Future<void> _updatePalette() async {
     // Load the image from assets
-    final imageProvider = FileImage((widget.mediaType as AmityStoryMediaTypeImage).file);
+    final imageProvider =
+        FileImage((widget.mediaType as AmityStoryMediaTypeImage).file);
     _paletteGenerator = await PaletteGenerator.fromImageProvider(
       imageProvider,
       size: const Size(200, 200), // Set the size to reduce computation time
     );
     setState(() {
-      _dominantColor = _paletteGenerator.vibrantColor?.color.withOpacity(0.7) ?? Colors.black;
-      _vibrantColor = _paletteGenerator.darkVibrantColor?.color.withOpacity(0.7) ?? Colors.white;
+      _dominantColor = _paletteGenerator.vibrantColor?.color.withOpacity(0.7) ??
+          Colors.black;
+      _vibrantColor =
+          _paletteGenerator.darkVibrantColor?.color.withOpacity(0.7) ??
+              Colors.white;
     });
   }
 
@@ -401,7 +443,10 @@ class _AmityStoryImageViewWidgetState extends State<AmityStoryImageViewWidget> {
                 color: Colors.transparent,
                 child: Image.file(
                   (widget.mediaType as AmityStoryMediaTypeImage).file,
-                  fit: widget.imageDisplayMode == AmityStoryImageDisplayMode.FILL ? BoxFit.cover : BoxFit.contain,
+                  fit:
+                      widget.imageDisplayMode == AmityStoryImageDisplayMode.FILL
+                          ? BoxFit.cover
+                          : BoxFit.contain,
                 ),
               ),
             ],
@@ -414,7 +459,10 @@ class _AmityStoryImageViewWidgetState extends State<AmityStoryImageViewWidget> {
 
 Widget getProfileIcon(AmityStoryTarget? storyTarget) {
   if (storyTarget == null) {
-    return const AmityNetworkImage(imageUrl: "", placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg");
+    return const AmityNetworkImage(
+        imageUrl: "",
+        placeHolderPath:
+            "assets/Icons/amity_ic_community_avatar_placeholder.svg");
   }
   if (storyTarget is AmityStoryTargetCommunity) {
     return storyTarget.community?.avatarImage != null
@@ -422,12 +470,14 @@ Widget getProfileIcon(AmityStoryTarget? storyTarget) {
             borderRadius: BorderRadius.circular(100),
             child: AmityNetworkImage(
               imageUrl: storyTarget.community!.avatarImage!.fileUrl!,
-              placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg",
+              placeHolderPath:
+                  "assets/Icons/amity_ic_community_avatar_placeholder.svg",
             ),
           )
         : const AmityNetworkImage(
             imageUrl: "",
-            placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg",
+            placeHolderPath:
+                "assets/Icons/amity_ic_community_avatar_placeholder.svg",
           );
   }
 
@@ -442,7 +492,17 @@ class ShareButton extends BaseElement {
   final AmityStoryTarget? storyTarget;
   final String? componentId;
   final String? pageId;
-  ShareButton({super.key, required this.onClick, required this.storyTarget, this.componentId, this.pageId}) : super(pageId: pageId, componentId: componentId, elementId: "share_story_button");
+
+  ShareButton(
+      {super.key,
+      required this.onClick,
+      required this.storyTarget,
+      this.componentId,
+      this.pageId})
+      : super(
+            pageId: pageId,
+            componentId: componentId,
+            elementId: "share_story_button");
 
   @override
   Widget buildElement(BuildContext context) {

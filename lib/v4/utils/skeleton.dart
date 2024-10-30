@@ -6,14 +6,13 @@ class SkeletonText extends StatelessWidget {
   final BorderRadius borderRadius;
   final Color? color;
 
-  const SkeletonText(
-      {Key? key,
-      required this.width,
-      this.color = Colors.black,
-      this.height = 8,
-      this.borderRadius = const BorderRadius.all(Radius.circular(16))})
-      : super(key: key);
-
+  const SkeletonText({
+    super.key,
+    required this.width,
+    this.color = Colors.black,
+    this.height = 8,
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +35,13 @@ class SkeletonImage extends StatelessWidget {
   final double borderRadius;
   final Color? color;
 
-  const SkeletonImage(
-      {Key? key,
-      required this.width,
-      required this.height,
-      this.color = Colors.black,
-      required this.borderRadius})
-      : super(key: key);
+  const SkeletonImage({
+    super.key,
+    required this.width,
+    required this.height,
+    this.color = Colors.black,
+    required this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {

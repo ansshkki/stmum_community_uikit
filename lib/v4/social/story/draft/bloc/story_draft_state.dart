@@ -18,13 +18,14 @@ class LoadingState extends StoryDraftState {
 
 class HyperlinkAddedState extends StoryDraftState {
   HyperlinkAddedState();
+
   @override
   List<Object?> get props => [storyTarget, hyperlink, imageDisplayMode];
 }
 
-
 class FitFillToggleState extends StoryDraftState {
   FitFillToggleState();
+
   @override
   List<Object?> get props => [storyTarget, hyperlink, imageDisplayMode];
 }
@@ -33,4 +34,3 @@ class StoryPostedState extends StoryDraftState {
   @override
   List<Object?> get props => [storyTarget, hyperlink, imageDisplayMode];
 }
-

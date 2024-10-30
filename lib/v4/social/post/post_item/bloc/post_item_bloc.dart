@@ -2,10 +2,12 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/amity_uikit_toast.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/bloc/amity_uikit_toast_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/common/post_action.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'post_item_events.dart';
+
 part 'post_item_state.dart';
 
 class PostItemBloc extends Bloc<PostItemEvent, PostItemState> {
@@ -48,8 +50,10 @@ class PostItemBloc extends Bloc<PostItemEvent, PostItemState> {
     on<PostItemFlag>((event, emit) async {
       final flag = await event.post.report().flag();
       if (flag) {
-        event.toastBloc.add(const AmityToastShort(
-            message: "Post reported.", icon: AmityToastIcon.success));
+        event.toastBloc.add(AmityToastShort(
+          message: "report.reported_post".tr(),
+          icon: AmityToastIcon.success,
+        ));
         var updatedPost = await AmitySocialClient.newPostRepository()
             .getPost(event.post.postId!);
         emit(PostItemStateLoaded(post: updatedPost));
@@ -59,8 +63,10 @@ class PostItemBloc extends Bloc<PostItemEvent, PostItemState> {
     on<PostItemUnFlag>((event, emit) async {
       final flag = await event.post.report().unflag();
       if (flag) {
-        event.toastBloc.add(const AmityToastShort(
-            message: "Post unreported.", icon: AmityToastIcon.success));
+        event.toastBloc.add(AmityToastShort(
+          message: "report.unReported_post".tr(),
+          icon: AmityToastIcon.success,
+        ));
         var updatedPost = await AmitySocialClient.newPostRepository()
             .getPost(event.post.postId!);
         emit(PostItemStateLoaded(post: updatedPost));

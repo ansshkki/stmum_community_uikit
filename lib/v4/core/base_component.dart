@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BaseComponent extends StatelessWidget {
   final Widget child;
 
-  const BaseComponent({Key? key, required this.child}) : super(key: key);
+  const BaseComponent({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,11 @@ abstract class NewBaseComponent extends StatelessWidget {
   late final AmityThemeColor theme;
   late final ConfigProvider configProvider;
 
-  NewBaseComponent({super.key, this.pageId, required this.componentId});
+  NewBaseComponent({
+    super.key,
+    this.pageId,
+    required this.componentId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +45,8 @@ abstract class NewBaseComponent extends StatelessWidget {
 
   bool isInitialized() {
     try {
-      configProvider; 
-      theme; 
+      configProvider;
+      theme;
       return true;
     } catch (e) {
       return false;

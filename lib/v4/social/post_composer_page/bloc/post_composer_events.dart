@@ -58,7 +58,7 @@ class PostComposerDeleteFileEvent extends PostComposerEvent {
     AmityFileInfoWithUploadStatus? fileInfo,
   }) {
     return PostComposerDeleteFileEvent(
-      filePath: this.filePath,
+      filePath: filePath,
     );
   }
 
@@ -75,7 +75,7 @@ class PostComposerGetImageUrlsEvent extends PostComposerEvent {
     List<String>? url,
   }) {
     return PostComposerGetImageUrlsEvent(
-      urls: this.urls,
+      urls: urls,
     );
   }
 
@@ -92,7 +92,7 @@ class PostComposerGetVideoUrlsEvent extends PostComposerEvent {
     List<String>? url,
   }) {
     return PostComposerGetVideoUrlsEvent(
-      videos: this.videos,
+      videos: videos,
     );
   }
 

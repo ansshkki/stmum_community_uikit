@@ -2,6 +2,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/view/social/global_feed.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/post_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +13,11 @@ class ReactionWidget extends StatelessWidget {
   final double feedReactionCountSize;
 
   const ReactionWidget({
-    Key? key,
+    super.key,
     required this.post,
     required this.feedType,
     required this.feedReactionCountSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class ReactionWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        if (post.myReactions!.contains("like")) {
+        if (post.myReactions!.contains("post.like".tr())) {
           print(post.myReactions);
           HapticFeedback.heavyImpact();
           Provider.of<PostVM>(context, listen: false).removePostReaction(post);
@@ -47,7 +48,7 @@ class ReactionWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                post.myReactions!.contains("like")
+                post.myReactions!.contains("post.like".tr())
                     ? TextButton(
                         onPressed: () {
                           print(post.myReactions);
@@ -67,7 +68,7 @@ class ReactionWidget extends StatelessWidget {
                                           .primaryColor,
                                 ),
                             Text(
-                              'مفيد',
+                              "post.useful".tr(),
                               style: TextStyle(
                                 color:
                                     Provider.of<AmityUIConfiguration>(context)
@@ -80,7 +81,7 @@ class ReactionWidget extends StatelessWidget {
                         ),
                       )
                     : Container(
-                  margin: EdgeInsetsDirectional.only(end: 8),
+                        margin: const EdgeInsetsDirectional.only(end: 8),
                         child: TextButton(
                           onPressed: () {
                             print(post.myReactions);
@@ -102,9 +103,9 @@ class ReactionWidget extends StatelessWidget {
                                             .userProfileTextColor
                                         : Colors.grey,
                                   ),
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Text(
-                                'مفيد',
+                                "post.useful".tr(),
                                 style: TextStyle(
                                   color: feedType == FeedType.user
                                       ? Provider.of<AmityUIConfiguration>(

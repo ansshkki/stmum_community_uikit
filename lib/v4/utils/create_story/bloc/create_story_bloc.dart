@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'create_story_event.dart';
+
 part 'create_story_state.dart';
 
 class CreateStoryBloc extends Bloc<CreateStoryEvent, CreateStoryState> {

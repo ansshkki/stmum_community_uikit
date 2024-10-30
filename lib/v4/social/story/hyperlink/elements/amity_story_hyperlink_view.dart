@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 class AmityStoryHyperlinkView extends StatelessWidget {
   final HyperLink hyperlink;
   final Function onClick;
+
   const AmityStoryHyperlinkView(
       {super.key, required this.hyperlink, required this.onClick});
 
@@ -24,7 +25,6 @@ class AmityStoryHyperlinkView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.7),
-                
                 borderRadius: const BorderRadius.all(
                   Radius.circular(
                     100,

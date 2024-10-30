@@ -1,4 +1,5 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class CustomButton extends StatelessWidget {
   final double? textSize;
   final Color? borderColor;
   final double? width;
+
   CustomButton({
     super.key,
     this.label,
@@ -45,13 +47,13 @@ class CustomButton extends StatelessWidget {
         child: Container(
           width: width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius ?? 8),
-            border: Border.all(
-                color: borderColor ?? Colors.transparent, width: 1.5),
-            color: color ??
-                Provider.of<AmityUIConfiguration>(context).primaryColor,
-          ),
-          padding: EdgeInsetsDirectional.all(padding ?? (icon != null ? 16.0 : 18.0)),
+              borderRadius: BorderRadius.circular(radius ?? 8),
+              border: Border.all(
+                  color: borderColor ?? Colors.transparent, width: 1.5),
+              color: color ??
+                  Provider.of<AmityUIConfiguration>(context).primaryColor),
+          padding: EdgeInsetsDirectional.all(
+              padding ?? (icon != null ? 16.0 : 18.0)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -68,14 +70,14 @@ class CustomButton extends StatelessWidget {
                             color: Colors.white,
                           ))
                       : Text(
-                          label ?? "التالي", //Next
+                          label ?? "external.next".tr(),
                           textAlign: TextAlign.center,
                           style: theme.textTheme.titleMedium!.copyWith(
                               color: textColor ?? theme.scaffoldBackgroundColor,
                               fontSize: textSize ?? 16),
                         ))
                   : Text(
-                      label ?? "التالي", //Next
+                      label ?? "external.next".tr(),
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium!.copyWith(
                           color: textColor ?? theme.scaffoldBackgroundColor,

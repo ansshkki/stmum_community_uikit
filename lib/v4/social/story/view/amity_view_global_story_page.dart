@@ -10,14 +10,15 @@ class AmityViewGlobalStoryPage extends StatefulWidget {
   final AmityStoryTarget selectedTarget;
   final List<AmityStoryTarget> targets;
 
-  AmityViewGlobalStoryPage({
+  const AmityViewGlobalStoryPage({
     super.key,
     required this.selectedTarget,
     required this.targets,
   });
 
   @override
-  State<AmityViewGlobalStoryPage> createState() => _AmityViewGlobalStoryPageState();
+  State<AmityViewGlobalStoryPage> createState() =>
+      _AmityViewGlobalStoryPageState();
 }
 
 class _AmityViewGlobalStoryPageState extends State<AmityViewGlobalStoryPage> {
@@ -57,17 +58,20 @@ class _AmityViewGlobalStoryPageState extends State<AmityViewGlobalStoryPage> {
               // createStory: widget.createStory,
               firstSegmentReached: () {
                 AmityStorySingleSegmentTimerElement.currentValue = -1;
-                BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                BlocProvider.of<StoryVideoPlayerBloc>(context)
+                    .add(const DisposeStoryVideoPlayerEvent());
                 moveTarget(
                   shouldMoveToNext: false,
                   totalTargets: widget.targets.length,
                   firstTargetReached: () {
-                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const DisposeStoryVideoPlayerEvent());
                     AmityStorySingleSegmentTimerElement.currentValue = -1;
                   },
                   lastTargetReached: () {
                     AmityStorySingleSegmentTimerElement.currentValue = -1;
-                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const DisposeStoryVideoPlayerEvent());
                   },
                 );
               },
@@ -77,11 +81,13 @@ class _AmityViewGlobalStoryPageState extends State<AmityViewGlobalStoryPage> {
                   totalTargets: widget.targets.length,
                   firstTargetReached: () {
                     AmityStorySingleSegmentTimerElement.currentValue = -1;
-                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const DisposeStoryVideoPlayerEvent());
                   },
                   lastTargetReached: () {
                     Navigator.of(context).pop();
-                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const DisposeStoryVideoPlayerEvent());
                     AmityStorySingleSegmentTimerElement.currentValue = -1;
                   },
                 );

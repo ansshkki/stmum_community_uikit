@@ -1,20 +1,20 @@
-
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AmityTopSearchBarComponent extends NewBaseComponent {
   final void Function(String)? onTextChanged;
-  TextEditingController textcontroller;
+  TextEditingController textController;
   String hintText;
 
   AmityTopSearchBarComponent({
-    Key? key,
-    String? pageId,
-    required this.textcontroller,
+    super.key,
+    super.pageId,
+    required this.textController,
     this.hintText = '',
     this.onTextChanged,
-  }) : super(key: key, pageId: pageId, componentId: 'top_search_bar');
+  }) : super(componentId: 'top_search_bar');
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -24,7 +24,7 @@ class AmityTopSearchBarComponent extends NewBaseComponent {
         children: [
           Expanded(
             child: TextField(
-              controller: textcontroller,
+              controller: textController,
               decoration: InputDecoration(
                 prefixIcon: Container(
                   width: 20,
@@ -59,7 +59,7 @@ class AmityTopSearchBarComponent extends NewBaseComponent {
                   borderSide: BorderSide.none,
                 ),
                 suffixIconColor: theme.baseColorShade3,
-                suffixIcon: textcontroller.text.isNotEmpty
+                suffixIcon: textController.text.isNotEmpty
                     ? Stack(
                         alignment: Alignment.center,
                         children: [
@@ -83,7 +83,7 @@ class AmityTopSearchBarComponent extends NewBaseComponent {
                               height: 17,
                             ),
                             onPressed: () {
-                              textcontroller.clear();
+                              textController.clear();
                               onTextChanged?.call('');
                             },
                           )
@@ -103,7 +103,7 @@ class AmityTopSearchBarComponent extends NewBaseComponent {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Cancel",
+                "external.cancel".tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 15,

@@ -5,13 +5,17 @@ import 'package:amity_uikit_beta_service/v4/social/global_search/view_model/glob
 import 'package:amity_uikit_beta_service/v4/social/top_search_bar/top_search_bar.dart';
 import 'package:amity_uikit_beta_service/v4/social/user_search_result/user_search_result.dart';
 import 'package:amity_uikit_beta_service/v4/utils/debouncer.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmitySocialGlobalSearchPage extends NewBasePage {
-  AmitySocialGlobalSearchPage({Key? key, String? pageId})
-      : super(key: key, pageId: 'social_global_search_page');
-  var textcontroller = TextEditingController();
+  AmitySocialGlobalSearchPage({
+    super.key,
+    super.pageId = 'social_global_search_page',
+  });
+
+  var textController = TextEditingController();
   final ScrollController communityScrollController = ScrollController();
   final ScrollController userScrollController = ScrollController();
 
@@ -49,11 +53,9 @@ class AmitySocialGlobalSearchPage extends NewBasePage {
             userSearchViewModel.updateUserModel(
                 users: state.users,
                 isFetching: state.isFetching,
-                loadMore: () {
-                  context
-                      .read<GlobalSearchBloc>()
-                      .add(const GlobalUserSearchLoadMoreEvent());
-                });
+                loadMore: () => context
+                    .read<GlobalSearchBloc>()
+                    .add(const GlobalUserSearchLoadMoreEvent()));
           }
 
           return DefaultTabController(
@@ -67,20 +69,20 @@ class AmitySocialGlobalSearchPage extends NewBasePage {
                     Column(
                       children: [
                         AmityTopSearchBarComponent(
-                          textcontroller: textcontroller,
-                          hintText: 'Search community and user',
-                          onTextChanged: (value) {
-                            _debouncer.run(() {
+                          textController: textController,
+                          hintText: "search.hint".tr(),
+                          onTextChanged: (value) => _debouncer.run(
+                            () {
                               context
                                   .read<GlobalSearchBloc>()
                                   .add(SearchCommunitiesEvent(value));
                               context
                                   .read<GlobalSearchBloc>()
                                   .add(SearchUsersEvent(value));
-                            });
-                          },
+                            },
+                          ),
                         ),
-                        if (textcontroller.text.isEmpty && !isLoaded)
+                        if (textController.text.isEmpty && !isLoaded)
                           const SizedBox()
                         else
                           Container(
@@ -111,9 +113,9 @@ class AmitySocialGlobalSearchPage extends NewBasePage {
                                 color: theme.baseColorShade3,
                                 fontFamily: 'SF Pro Text',
                               ),
-                              tabs: const [
-                                Tab(text: "Communities"),
-                                Tab(text: "Users"),
+                              tabs: [
+                                Tab(text: "community.communities".tr()),
+                                Tab(text: "user.users".tr()),
                               ],
                             ),
                           ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:amity_uikit_beta_service/components/custom_dialog.dart';
 import 'package:amity_uikit_beta_service/utils/navigation_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -92,8 +93,8 @@ class ConfirmationV4Dialog {
     required String title,
     required String detailText,
     Color? leftButtonColor = Colors.red,
-    String leftButtonText = 'Cancel',
-    String rightButtonText = 'Confirm',
+    String? leftButtonText,
+    String? rightButtonText,
     required Function onConfirm,
   }) async {
     // Check the platform
@@ -107,7 +108,7 @@ class ConfirmationV4Dialog {
             content: Text(detailText),
             actions: <Widget>[
               TextButton(
-                child: Text(leftButtonText),
+                child: Text(leftButtonText ?? "external.cancel".tr()),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -118,7 +119,7 @@ class ConfirmationV4Dialog {
                   onConfirm();
                 },
                 style: TextButton.styleFrom(foregroundColor: leftButtonColor),
-                child: Text(rightButtonText),
+                child: Text(rightButtonText ?? "external.ok".tr()),
               ),
             ],
           );
@@ -139,7 +140,7 @@ class ConfirmationV4Dialog {
               content: Text(detailText),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  child: Text(leftButtonText),
+                  child: Text(leftButtonText ?? "external.cancel".tr()),
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the dialog
                   },
@@ -151,7 +152,7 @@ class ConfirmationV4Dialog {
                     onConfirm();
                   },
                   isDefaultAction: true,
-                  child: Text(rightButtonText),
+                  child: Text(rightButtonText ?? "external.ok".tr()),
                 ),
               ],
             ),
@@ -167,8 +168,8 @@ class PermissionAlertV4Dialog {
     required BuildContext context,
     required String title,
     required String detailText,
-    String bottomButtonText = 'Cancel',
-    String topButtonText = 'Confirm',
+    String? bottomButtonText,
+    String? topButtonText,
     required Function onTopButtonAction,
   }) async {
     // Check the platform
@@ -182,7 +183,7 @@ class PermissionAlertV4Dialog {
             content: Text(detailText),
             actions: <Widget>[
               TextButton(
-                child: Text(bottomButtonText),
+                child: Text(bottomButtonText ?? "external.cancel".tr()),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -192,7 +193,7 @@ class PermissionAlertV4Dialog {
                   Navigator.of(context).pop();
                   onTopButtonAction();
                 },
-                child: Text(topButtonText),
+                child: Text(topButtonText ?? "external.ok".tr()),
               ),
             ],
           );
@@ -222,7 +223,7 @@ class PermissionAlertV4Dialog {
                   },
                   isDefaultAction: true,
                   child: Text(
-                    topButtonText,
+                    topButtonText ?? "external.ok".tr(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,
@@ -234,7 +235,7 @@ class PermissionAlertV4Dialog {
                 ),
                 CupertinoDialogAction(
                   child: Text(
-                    bottomButtonText,
+                    bottomButtonText ?? "external.cancel".tr(),
                     style: const TextStyle(
                       fontSize: 17,
                     ),

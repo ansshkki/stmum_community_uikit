@@ -2,12 +2,14 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/chat_room_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ChatRoomPage extends StatefulWidget {
   final String channelId;
+
   const ChatRoomPage({
     super.key,
     required this.channelId,
@@ -68,7 +70,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     final bHeight = mediaQuery.size.height -
         mediaQuery.padding.top -
         myAppBar.preferredSize.height;
-    const textfielHeight = 60.0;
+    const textFieldHeight = 60.0;
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -87,7 +89,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                       controller:
                           Provider.of<ChatRoomVM>(context).scrollcontroller,
                       child: MessageComponent(
-                        bheight: bHeight - textfielHeight,
+                        bheight: bHeight - textFieldHeight,
                         theme: theme,
                         mediaQuery: mediaQuery,
                         channelId: Provider.of<ChatRoomVM>(context)
@@ -102,7 +104,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               children: [
                 ChatTextFieldComponent(
                     theme: theme,
-                    textfielHeight: textfielHeight,
+                    textFieldHeight: textFieldHeight,
                     mediaQuery: mediaQuery),
               ],
             ),
@@ -115,14 +117,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
 
 class ChatTextFieldComponent extends StatelessWidget {
   const ChatTextFieldComponent({
-    Key? key,
+    super.key,
     required this.theme,
-    required this.textfielHeight,
+    required this.textFieldHeight,
     required this.mediaQuery,
-  }) : super(key: key);
+  });
 
   final ThemeData theme;
-  final double textfielHeight;
+  final double textFieldHeight;
   final MediaQueryData mediaQuery;
 
   @override
@@ -131,7 +133,7 @@ class ChatTextFieldComponent extends StatelessWidget {
       decoration: BoxDecoration(
           color: theme.canvasColor,
           border: Border(top: BorderSide(color: theme.highlightColor))),
-      height: textfielHeight,
+      height: textFieldHeight,
       width: mediaQuery.size.width,
       padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
       child: Row(
@@ -150,9 +152,9 @@ class ChatTextFieldComponent extends StatelessWidget {
             child: TextField(
               controller: Provider.of<ChatRoomVM>(context, listen: false)
                   .textEditingController,
-              decoration: const InputDecoration(
-                hintText: "أكتب رسالتك", //Write your message 
-                hintStyle: TextStyle(fontSize: 14),
+              decoration: InputDecoration(
+                hintText: "messages.write".tr(), //Write your message
+                hintStyle: const TextStyle(fontSize: 14),
                 border: InputBorder.none,
               ),
             ),
@@ -180,13 +182,14 @@ class ChatTextFieldComponent extends StatelessWidget {
 
 class MessageComponent extends StatelessWidget {
   const MessageComponent({
-    Key? key,
+    super.key,
     required this.theme,
     required this.mediaQuery,
     required this.channelId,
     required this.bheight,
     required this.channel,
-  }) : super(key: key);
+  });
+
   final String channelId;
   final AmityChannel channel;
 
@@ -212,85 +215,96 @@ class MessageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ChatRoomVM>(builder: (context, vm, _) {
-      return Container(
-        padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: vm.amitymessage.length,
-          itemBuilder: (context, index) {
-            var data = vm.amitymessage[index].data;
+    return Consumer<ChatRoomVM>(
+      builder: (context, vm, _) {
+        return Container(
+          padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: vm.amitymessage.length,
+            itemBuilder: (context, index) {
+              var data = vm.amitymessage[index].data;
 
-            bool isSendbyCurrentUser = vm.amitymessage[index].userId !=
-                AmityCoreClient.getCurrentUser().userId;
-            return Column(
-              crossAxisAlignment: isSendbyCurrentUser
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: isSendbyCurrentUser
-                      ? MainAxisAlignment.start
-                      : MainAxisAlignment.end,
-                  children: [
-                    if (!isSendbyCurrentUser)
-                      Text(
-                        getTimeStamp(vm.amitymessage[index]),
-                        style: const TextStyle(color: Colors.grey, fontSize: 8),
-                      ),
-                    vm.amitymessage[index].type != AmityMessageDataType.TEXT
-                        ? Container(
-                            margin: const EdgeInsetsDirectional.fromSTEB(10, 4, 10, 4),
-                            padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.red),
-                            child: const Text(" نوع الرسالة غير مدعوم😰", //Unsupport type message😰
-                                style: TextStyle(color: Colors.white)),
-                          )
-                        : Flexible(
-                            child: Container(
-                              constraints: BoxConstraints(
-                                  maxWidth: mediaQuery.size.width * 0.7),
-                              margin: const EdgeInsetsDirectional.fromSTEB(10, 4, 10, 4),
-                              padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
+              bool isSendbyCurrentUser = vm.amitymessage[index].userId !=
+                  AmityCoreClient.getCurrentUser().userId;
+              return Column(
+                crossAxisAlignment: isSendbyCurrentUser
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: isSendbyCurrentUser
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.end,
+                    children: [
+                      if (!isSendbyCurrentUser)
+                        Text(
+                          getTimeStamp(vm.amitymessage[index]),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 8),
+                        ),
+                      vm.amitymessage[index].type != AmityMessageDataType.TEXT
+                          ? Container(
+                              margin: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 4, 10, 4),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 5, 10, 5),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: isSendbyCurrentUser
-                                    ? const Color(0xfff1f1f1)
-                                    : Provider.of<AmityUIConfiguration>(context)
-                                        .primaryColor,
-                              ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.red),
                               child: Text(
-                                (vm.amitymessage[index].data!
-                                            as MessageTextData)
-                                        .text ??
-                                    "N/A",
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                    fontSize: 14.7,
-                                    color: isSendbyCurrentUser
-                                        ? Colors.black
-                                        : Colors.white),
+                                "messages.upSupport".tr(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            )
+                          : Flexible(
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: mediaQuery.size.width * 0.7),
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 4, 10, 4),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 5, 10, 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: isSendbyCurrentUser
+                                      ? const Color(0xfff1f1f1)
+                                      : Provider.of<AmityUIConfiguration>(
+                                              context)
+                                          .primaryColor,
+                                ),
+                                child: Text(
+                                  (vm.amitymessage[index].data!
+                                              as MessageTextData)
+                                          .text ??
+                                      "",
+                                  style: theme.textTheme.bodyLarge!.copyWith(
+                                      fontSize: 14.7,
+                                      color: isSendbyCurrentUser
+                                          ? Colors.black
+                                          : Colors.white),
+                                ),
                               ),
                             ),
-                          ),
-                    if (isSendbyCurrentUser)
-                      Text(
-                        getTimeStamp(vm.amitymessage[index]),
-                        style: TextStyle(color: Colors.grey[500], fontSize: 8),
-                      ),
-                  ],
-                ),
-                if (index + 1 == vm.amitymessage.length)
-                  const SizedBox(
-                    height: 90,
-                  )
-              ],
-            );
-          },
-        ),
-      );
-    });
+                      if (isSendbyCurrentUser)
+                        Text(
+                          getTimeStamp(vm.amitymessage[index]),
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 8),
+                        ),
+                    ],
+                  ),
+                  if (index + 1 == vm.amitymessage.length)
+                    const SizedBox(
+                      height: 90,
+                    )
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }

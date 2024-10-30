@@ -1,12 +1,12 @@
 import 'package:camera/camera.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AmityPostCameraScreen extends StatefulWidget {
   FileType? selectedFileType;
 
-  AmityPostCameraScreen({Key? key, FileType? selectedType}) : super(key: key) {
+  AmityPostCameraScreen({super.key, FileType? selectedType}) {
     selectedFileType = selectedType;
   }
 
@@ -22,7 +22,7 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
   bool isRecording = false;
   bool isFlashMode = false;
   String elapsedTime = "00:00:00";
-  Duration duration = Duration();
+  Duration duration = const Duration();
   int selectedCameraIndex = 0;
 
   FileType? selectedFileType;
@@ -98,7 +98,7 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
   }
 
   Widget _buildOverlayUI() {
-    return Container(
+    return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -122,9 +122,7 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
               controller?.setFlashMode(isFlashMode
                   ? FlashMode.off
                   : FlashMode.torch); // Toggle flash mode
-              setState(() {
-                isFlashMode = !isFlashMode;
-              });
+              setState(() => isFlashMode = !isFlashMode);
             },
           ),
           if (isVideoMode)
@@ -266,13 +264,9 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
           Padding(
             padding: EdgeInsets.only(right: selectedFileType == null ? 20 : 0),
             child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isVideoMode = true;
-                });
-              },
+              onTap: () => setState(() => isVideoMode = true),
               child: Text(
-                'VIDEO',
+                "media.video".tr(),
                 style: TextStyle(
                   color: isVideoMode ? Colors.yellow : Colors.white,
                   fontSize: 15,
@@ -283,13 +277,9 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
           ),
         if (selectedFileType == FileType.image || selectedFileType == null)
           GestureDetector(
-            onTap: () {
-              setState(() {
-                isVideoMode = false;
-              });
-            },
+            onTap: () => setState(() => isVideoMode = false),
             child: Text(
-              'PHOTO',
+              "media.photo".tr(),
               style: TextStyle(
                 color: !isVideoMode ? Colors.yellow : Colors.white,
                 fontSize: 15,
@@ -305,10 +295,7 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
     if (controller != null && !isRecording) {
       try {
         await controller!.startVideoRecording();
-
-        setState(() {
-          isRecording = true;
-        });
+        setState(() => isRecording = true);
         // Start a timer to update the elapsed time
         updateElapsedTime();
       } catch (e) {
@@ -321,9 +308,7 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
     if (controller != null && isRecording) {
       try {
         XFile videoFile = await controller!.stopVideoRecording();
-        setState(() {
-          isRecording = false;
-        });
+        setState(() => isRecording = false);
         return videoFile;
       } catch (e) {
         // Handle any errors

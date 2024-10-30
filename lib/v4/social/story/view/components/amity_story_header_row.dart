@@ -7,6 +7,7 @@ import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_sto
 import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_single_segment_timer_element.dart';
 import 'package:amity_uikit_beta_service/v4/utils/date_time_extension.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,7 +59,9 @@ class AmityStoryHeaderRow extends StatelessWidget {
                   shouldRestart: shouldRestartTimer,
                   totalSegments: totalSegments,
                   currentSegment: currentSegment,
-                  duration: story!.dataType == AmityStoryDataType.VIDEO ? (AmityStorySingleSegmentTimerElement.totalValue + 1) : 7,
+                  duration: story!.dataType == AmityStoryDataType.VIDEO
+                      ? (AmityStorySingleSegmentTimerElement.totalValue + 1)
+                      : 7,
                   moveToNextSegment: () {
                     moveToNextSegment();
                   },
@@ -133,11 +136,14 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                     fontFamily: "SF Pro Text",
                                   ),
                                 ),
-                                (state.community?.isOfficial != null && state.community?.isOfficial == true)?
-                                const SizedBox(
-                                  width: 5,
-                                ):const SizedBox(),
-                                (state.community?.isOfficial != null && state.community?.isOfficial == true)
+                                (state.community?.isOfficial != null &&
+                                        state.community?.isOfficial == true)
+                                    ? const SizedBox(
+                                        width: 5,
+                                      )
+                                    : const SizedBox(),
+                                (state.community?.isOfficial != null &&
+                                        state.community?.isOfficial == true)
                                     ? SvgPicture.asset(
                                         "assets/Icons/ic_verified_white.svg",
                                         height: 16,
@@ -170,7 +176,8 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "By ${story?.creator?.displayName}",
+                                  "story.created".tr(
+                                      args: ["${story?.creator?.displayName}"]),
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w400,
@@ -189,8 +196,10 @@ class AmityStoryHeaderRow extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Shimmer.fromColors(
-                                baseColor: const Color.fromARGB(255, 49, 49, 49),
-                                highlightColor: const Color.fromARGB(255, 80, 80, 80),
+                                baseColor:
+                                    const Color.fromARGB(255, 49, 49, 49),
+                                highlightColor:
+                                    const Color.fromARGB(255, 80, 80, 80),
                                 child: Container(
                                   height: 10,
                                   width: double.infinity,
@@ -206,8 +215,10 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                 height: 5,
                               ),
                               Shimmer.fromColors(
-                                baseColor: const Color.fromARGB(255, 49, 49, 49),
-                                highlightColor: const Color.fromARGB(255, 80, 80, 80),
+                                baseColor:
+                                    const Color.fromARGB(255, 49, 49, 49),
+                                highlightColor:
+                                    const Color.fromARGB(255, 80, 80, 80),
                                 child: Container(
                                   height: 10,
                                   width: 100,
@@ -226,12 +237,17 @@ class AmityStoryHeaderRow extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        (story?.creatorId == AmityCoreClient.getUserId() || state.hasManageStoryPermission)
+                        (story?.creatorId == AmityCoreClient.getUserId() ||
+                                state.hasManageStoryPermission)
                             ? IconButton(
                                 onPressed: () {
-                                  BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
-                                  if (story!.dataType == AmityStoryDataType.VIDEO) {
-                                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+                                  BlocProvider.of<ViewStoryBloc>(context)
+                                      .add(ShoudPauseEvent(shouldPause: true));
+                                  if (story!.dataType ==
+                                      AmityStoryDataType.VIDEO) {
+                                    BlocProvider.of<StoryVideoPlayerBloc>(
+                                            context)
+                                        .add(const PauseStoryVideoEvent());
                                   }
                                   amityStoryModalBottomSheetOverFlowMenu(
                                     context: context,
@@ -241,15 +257,26 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                     deleteClicked: (String storyId) {
                                       ConfirmationDialog().show(
                                         context: context,
-                                        title: 'Delete this story?',
-                                        detailText: 'This story will be permanently deleted.\n You’ll no longer to see and find this story',
-                                        leftButtonText: 'Cancel',
-                                        rightButtonText: 'Delete',
+                                        title: "delete.story".tr(),
+                                        detailText: "delete.story_content".tr(),
+                                        leftButtonText: "external.cancel".tr(),
+                                        rightButtonText: "external.delete".tr(),
                                         onConfirm: () {
-                                          BlocProvider.of<ViewStoryBloc>(context).add(DeleteStoryEvent(storyId: storyId));
-                                          BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
-                                          if (story!.dataType == AmityStoryDataType.VIDEO) {
-                                            BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                                          BlocProvider.of<ViewStoryBloc>(
+                                                  context)
+                                              .add(DeleteStoryEvent(
+                                                  storyId: storyId));
+                                          BlocProvider.of<ViewStoryBloc>(
+                                                  context)
+                                              .add(ShoudPauseEvent(
+                                                  shouldPause: false));
+                                          if (story!.dataType ==
+                                              AmityStoryDataType.VIDEO) {
+                                            BlocProvider.of<
+                                                        StoryVideoPlayerBloc>(
+                                                    context)
+                                                .add(
+                                                    const PlayStoryVideoEvent());
                                           }
                                           onStoryDelete();
                                         },
@@ -291,7 +318,10 @@ class AmityStoryHeaderRow extends StatelessWidget {
 
   Widget getProfileIcon(AmityCommunity? community) {
     if (community == null) {
-      return const AmityNetworkImage(imageUrl: "", placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg");
+      return const AmityNetworkImage(
+          imageUrl: "",
+          placeHolderPath:
+              "assets/Icons/amity_ic_community_avatar_placeholder.svg");
     }
 
     return community.avatarImage != null
@@ -299,12 +329,14 @@ class AmityStoryHeaderRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             child: AmityNetworkImage(
               imageUrl: community.avatarImage!.fileUrl!,
-              placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg",
+              placeHolderPath:
+                  "assets/Icons/amity_ic_community_avatar_placeholder.svg",
             ),
           )
         : const AmityNetworkImage(
             imageUrl: "",
-            placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg",
+            placeHolderPath:
+                "assets/Icons/amity_ic_community_avatar_placeholder.svg",
           );
   }
 }

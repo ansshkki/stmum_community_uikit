@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,6 +48,6 @@ Future<void> launchURL(String url) async {
     log("launching...: $url");
     await launchURL(url);
   } else {
-    throw ' لم يتمكن من تشغيل$url'; // Could not launch
+    throw "util.launch_error".tr(args: [url]); // Could not launch
   }
 }

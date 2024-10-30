@@ -34,13 +34,9 @@ class VideoPostPlayerStateInitial extends SingleVideoPlayerState {
 
 class VideoPostPlayerStateLoaded extends SingleVideoPlayerState {
   const VideoPostPlayerStateLoaded({
-    filePath,
-    fileUrl,
-    videoController,
+    super.filePath,
+    super.fileUrl,
+    super.videoController,
     initializeVideoPlayerFuture,
-  }) : super(
-          filePath: filePath,
-          fileUrl: fileUrl,
-          videoController: videoController,
-        );
+  });
 }

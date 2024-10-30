@@ -5,12 +5,17 @@ import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/hyperlink/elements/amity_hyper_link_text_field.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/hyperlink/bloc/hyperlink_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:validators/validators.dart';
 
-void showHyperLinkBottomSheet({required BuildContext context, HyperLink? hyperLink, required Function(HyperLink) onHyperLinkAdded, required Function() onHyperLinkRemoved}) {
+void showHyperLinkBottomSheet(
+    {required BuildContext context,
+    HyperLink? hyperLink,
+    required Function(HyperLink) onHyperLinkAdded,
+    required Function() onHyperLinkRemoved}) {
   showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -34,13 +39,14 @@ class HyperLinkBottomSheetContent extends NewBaseComponent {
   final HyperLink? hyperLink;
   final Function(HyperLink) onHyperLinkAdded;
   final Function() onHyperLinkRemoved;
+
   HyperLinkBottomSheetContent({
     super.key,
     this.hyperLink,
     required this.onHyperLinkAdded,
     required this.onHyperLinkRemoved,
-    String? pageId,
-  }) : super(pageId: pageId, componentId: "hyperlink_bottom_sheet");
+    super.pageId,
+  }) : super(componentId: "hyperlink_bottom_sheet");
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -58,6 +64,7 @@ class HyperLinkBottomSheetBuilder extends StatefulWidget {
   final Function(HyperLink) onHyperLinkAdded;
   final Function() onHyperLinkRemoved;
   AmityThemeColor theme;
+
   HyperLinkBottomSheetBuilder({
     super.key,
     this.hyperLink,
@@ -67,19 +74,23 @@ class HyperLinkBottomSheetBuilder extends StatefulWidget {
   });
 
   @override
-  State<HyperLinkBottomSheetBuilder> createState() => _HyperLinkBottomSheetBuilderState();
+  State<HyperLinkBottomSheetBuilder> createState() =>
+      _HyperLinkBottomSheetBuilderState();
 }
 
 class AmityColorTheme {}
 
-class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilder> {
+class _HyperLinkBottomSheetBuilderState
+    extends State<HyperLinkBottomSheetBuilder> {
   TextEditingController urlTextController = TextEditingController();
   TextEditingController customizedTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    context.read<HyperlinkBloc>().add(SetInitalStateEvent(hyperlink: widget.hyperLink));
+    context
+        .read<HyperlinkBloc>()
+        .add(SetInitalStateEvent(hyperlink: widget.hyperLink));
     if (widget.hyperLink != null) {
       urlTextController.text = widget.hyperLink!.url ?? "";
       customizedTextController.text = widget.hyperLink!.customText ?? "";
@@ -136,15 +147,22 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                       ),
                     ),
                     onPressed: () {
-                      if (widget.hyperLink == null && state.hyperLink == null && urlTextController.text.isEmpty && customizedTextController.text.isEmpty) {
+                      if (widget.hyperLink == null &&
+                          state.hyperLink == null &&
+                          urlTextController.text.isEmpty &&
+                          customizedTextController.text.isEmpty) {
                         Navigator.of(context).pop();
-                      } else if (urlTextController.text == (state.hyperLink?.url ?? "") && customizedTextController.text == (state.hyperLink?.customText ?? "")) {
+                      } else if (urlTextController.text ==
+                              (state.hyperLink?.url ?? "") &&
+                          customizedTextController.text ==
+                              (state.hyperLink?.customText ?? "")) {
                         Navigator.of(context).pop();
                       } else {
                         ConfirmationDialog().show(
                           context: context,
                           title: 'Unsaved changes',
-                          detailText: 'are you sure you want to cancel? Your Changes won\'t be saved.',
+                          detailText:
+                              'are you sure you want to cancel? Your Changes won\'t be saved.',
                           leftButtonText: 'No',
                           rightButtonText: 'Yes',
                           confrimColor: Colors.blue,
@@ -155,7 +173,7 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                       }
                     },
                     child: Text(
-                      'Cancel',
+                      "external.cancel".tr(),
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "SF Pro Text",
@@ -176,13 +194,16 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                         ),
                   DoneButton(
                     componentId: "hyperlink_bottom_sheet",
-                    onPressed: (state is HyperlinkErrorState && (state.urlError != null || state.customizedError != null))
+                    onPressed: (state is HyperlinkErrorState &&
+                            (state.urlError != null ||
+                                state.customizedError != null))
                         ? null
                         : () {
                             context.read<HyperlinkBloc>().add(
                                   VerifyAndSaveHyperLinkEvent(
                                     urlText: urlTextController.text,
-                                    customizedText: customizedTextController.text,
+                                    customizedText:
+                                        customizedTextController.text,
                                   ),
                                 );
                           },
@@ -200,8 +221,12 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
               child: Row(
                 children: [
                   Text(
-                    "URL",
-                    style: TextStyle(fontFamily: "SF Pro Text", fontSize: 17, color: widget.theme.baseColor, fontWeight: FontWeight.w600),
+                    "media.url".tr(),
+                    style: TextStyle(
+                        fontFamily: "SF Pro Text",
+                        fontSize: 17,
+                        color: widget.theme.baseColor,
+                        fontWeight: FontWeight.w600),
                   ),
                   const Text(
                     "*",
@@ -226,11 +251,14 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                 textEditingController: urlTextController,
                 onChanged: (value) {
                   setState(() {
-                    var isValid = isURL(value, requireTld: true, requireProtocol: false);
+                    var isValid =
+                        isURL(value, requireTld: true, requireProtocol: false);
                     if (!isValid) {
-                      BlocProvider.of<HyperlinkBloc>(context).add(OnURLErrorEvent(error: "Please enter a valid URL."));
+                      BlocProvider.of<HyperlinkBloc>(context).add(
+                          OnURLErrorEvent(error: "util.url_format_error".tr()));
                     } else {
-                      BlocProvider.of<HyperlinkBloc>(context).add(OnURLErrorEvent(error: null));
+                      BlocProvider.of<HyperlinkBloc>(context)
+                          .add(OnURLErrorEvent(error: null));
                     }
                     urlTextController.text = value;
                   });
@@ -249,7 +277,11 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                   children: [
                     Text(
                       "Customize link text",
-                      style: TextStyle(fontFamily: "SF Pro Text", color: widget.theme.baseColor, fontSize: 17, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontFamily: "SF Pro Text",
+                          color: widget.theme.baseColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
                     ),
                     Text(
                       "${customizedTextController.text.length}/30",
@@ -272,11 +304,14 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                 hintColor: widget.theme.baseColorShade3,
                 borderColor: widget.theme.baseColorShade3,
                 textEditingController: customizedTextController,
-                error: state is HyperlinkErrorState ? (state).customizedError : null,
+                error: state is HyperlinkErrorState
+                    ? (state).customizedError
+                    : null,
                 maxCharacters: 30,
                 onChanged: (value) {
                   setState(() {
-                    BlocProvider.of<HyperlinkBloc>(context).add(OnCustmizedErrorEvent(error: null));
+                    BlocProvider.of<HyperlinkBloc>(context)
+                        .add(OnCustmizedErrorEvent(error: null));
                     customizedTextController.text = value;
                   });
                 },
@@ -286,7 +321,8 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                 ? Container()
                 : Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                     child: const Text(
                       "This text will show on the link instead of URL.",
                       style: TextStyle(
@@ -308,7 +344,9 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
                             leftButtonText: 'Cancel',
                             rightButtonText: 'Remove',
                             onConfirm: () {
-                              context.read<HyperlinkBloc>().add(OnRemoveHyperLink());
+                              context
+                                  .read<HyperlinkBloc>()
+                                  .add(OnRemoveHyperLink());
                               Navigator.of(context).pop();
                             },
                           );
@@ -359,7 +397,11 @@ class _HyperLinkBottomSheetBuilderState extends State<HyperLinkBottomSheetBuilde
 
 class DoneButton extends BaseElement {
   final VoidCallback? onPressed;
-  DoneButton({super.key, required this.onPressed, String? pageId, String? componentId}) : super(pageId: pageId, componentId: componentId, elementId: "done_button");
+
+  DoneButton(
+      {super.key, required this.onPressed, String? pageId, String? componentId})
+      : super(
+            pageId: pageId, componentId: componentId, elementId: "done_button");
 
   @override
   Widget buildElement(BuildContext context) {
@@ -367,12 +409,11 @@ class DoneButton extends BaseElement {
       style: TextButton.styleFrom(
         foregroundColor: theme.primaryColor,
         textStyle: const TextStyle(fontSize: 15, fontFamily: "SF Pro Text"),
-        disabledForegroundColor: theme.primaryColor.blend(ColorBlendingOption.shade2),
+        disabledForegroundColor:
+            theme.primaryColor.blend(ColorBlendingOption.shade2),
       ),
       onPressed: onPressed,
-      child: const Text(
-        'Done',
-      ),
+      child: Text("external.done".tr()),
     );
   }
 }

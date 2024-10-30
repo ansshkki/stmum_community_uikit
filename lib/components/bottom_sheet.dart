@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +29,7 @@ void showOptionsBottomSheet(
                 children: [
                   user.isFlaggedByMe
                       ? ListTile(
-                          title: const Text(
-                              'إلغاء الإبلاغ عن المستخدم'), //Unreport User
+                          title: Text("report.unReport_user".tr()),
                           onTap: () {
                             Provider.of<UserVM>(context, listen: false)
                                 .reportOrUnReportUser(user);
@@ -37,8 +37,7 @@ void showOptionsBottomSheet(
                           },
                         )
                       : ListTile(
-                          title:
-                              const Text('الإبلاغ عن المستخدم'), //Report user
+                          title: Text("report.report_user".tr()),
                           onTap: () {
                             Provider.of<UserVM>(context, listen: false)
                                 .reportOrUnReportUser(user);

@@ -4,6 +4,7 @@ import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_event.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_state.dart';
 import 'package:amity_uikit_beta_service/v4/utils/config_provider_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,11 +19,14 @@ class TabContent extends StatelessWidget {
         if (tabIndex == 0) {
           context.read<SocialHomeBloc>().add(TabSelectedEvent(0));
           return const NewsFeedComponentConfigProviderWidget(
-              pageId: 'social_home_page');
+            pageId: 'social_home_page',
+          );
         } else if (tabIndex == 1) {
           context.read<SocialHomeBloc>().add(TabSelectedEvent(1));
           return ExploreComponent(
-              pageId: 'pageId2', componentId: 'explorePage');
+            pageId: 'pageId2',
+            componentId: 'explorePage',
+          );
         } else {
           context.read<SocialHomeBloc>().add(TabSelectedEvent(2));
           return AmityMyCommunitiesComponent(
@@ -35,12 +39,14 @@ class TabContent extends StatelessWidget {
 }
 
 class ExploreComponent extends NewBaseComponent {
-  ExploreComponent(
-      {Key? key, required String pageId, required String componentId})
-      : super(key: key, pageId: pageId, componentId: componentId);
+  ExploreComponent({
+    super.key,
+    required super.pageId,
+    required super.componentId,
+  });
 
   @override
   Widget buildComponent(BuildContext context) {
-    return const Center(child: Text('Explore Content'));
+    return  Center(child: Text("community.initialize_content".tr()));
   }
 }

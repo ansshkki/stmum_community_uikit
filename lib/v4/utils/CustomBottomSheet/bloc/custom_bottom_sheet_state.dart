@@ -3,7 +3,7 @@ part of 'custom_bottom_sheet_bloc.dart';
 abstract class CustomBottomSheetState extends Equatable {
   final double extent;
 
-  CustomBottomSheetState(this.extent);
+  const CustomBottomSheetState(this.extent);
 
   @override
   List<Object?> get props => [extent];

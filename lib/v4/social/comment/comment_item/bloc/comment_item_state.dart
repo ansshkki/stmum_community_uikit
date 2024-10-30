@@ -16,7 +16,13 @@ class CommentItemState {
   final String editedText; // Added editedText field
 
   @override
-  List<Object?> get props => [comment, isReacting, isExpanded, isEditing, editedText];
+  List<Object?> get props => [
+        comment,
+        isReacting,
+        isExpanded,
+        isEditing,
+        editedText,
+      ];
 
   CommentItemState copyWith({
     AmityComment? comment,

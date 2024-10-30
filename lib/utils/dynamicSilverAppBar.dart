@@ -43,7 +43,7 @@ class DynamicSliverAppBar extends StatefulWidget {
   final GlobalKey flexibleSpaceKey = GlobalKey();
 
   DynamicSliverAppBar({
-    Key? key,
+    super.key,
     this.flexibleSpace,
     this.leading,
     this.automaticallyImplyLeading = true,
@@ -80,7 +80,7 @@ class DynamicSliverAppBar extends StatefulWidget {
     this.forceMaterialTransparency = false,
     this.clipBehavior,
     this.expandedHeight,
-  }) : super(key: key);
+  });
 
   @override
   _DynamicSliverAppBarState createState() => _DynamicSliverAppBarState();

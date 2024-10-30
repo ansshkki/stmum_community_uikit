@@ -10,6 +10,7 @@ import 'package:amity_uikit_beta_service/view/social/post_content_widget.dart';
 import 'package:amity_uikit_beta_service/viewmodel/amity_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/reply_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,12 +30,12 @@ class CommentScreen extends StatefulWidget {
   final FeedType feedType;
 
   const CommentScreen({
-    Key? key,
+    super.key,
     required this.amityPost,
     required this.theme,
     required this.isFromFeed,
     required this.feedType,
-  }) : super(key: key);
+  });
 
   @override
   CommentScreenState createState() => CommentScreenState();
@@ -62,10 +63,7 @@ class CommentScreenState extends State<CommentScreen> {
 
   bool isMediaPosts() {
     final childrenPosts =
-        Provider
-            .of<PostVM>(context, listen: false)
-            .amityPost
-            .children;
+        Provider.of<PostVM>(context, listen: false).amityPost.children;
     if (childrenPosts != null && childrenPosts.isNotEmpty) {
       return true;
     }
@@ -75,9 +73,7 @@ class CommentScreenState extends State<CommentScreen> {
 
   Widget mediaPostWidgets() {
     AmityPost parentPost =
-        Provider
-            .of<PostVM>(context, listen: false)
-            .amityPost;
+        Provider.of<PostVM>(context, listen: false).amityPost;
     List<AmityPost> childrenPosts = parentPost.children ?? [];
     if (childrenPosts.isNotEmpty) {
       return AmityPostWidget(
@@ -108,16 +104,14 @@ class CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
     var postData =
-    Provider
-        .of<PostVM>(context, listen: false)
-        .amityPost
-        .data as TextData;
+        Provider.of<PostVM>(context, listen: false).amityPost.data as TextData;
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     final bHeight = mediaQuery.size.height - mediaQuery.padding.top;
 
-    return Consumer<PostVM>(builder: (context, vm, _) {
-      return StreamBuilder<AmityPost>(
+    return Consumer<PostVM>(
+      builder: (context, vm, _) {
+        return StreamBuilder<AmityPost>(
           key: Key(postData.postId),
           stream: vm.amityPost.listen.stream,
           initialData: vm.amityPost,
@@ -127,10 +121,9 @@ class CommentScreenState extends State<CommentScreen> {
               children: [
                 Container(
                   color: widget.feedType == FeedType.user
-                      ? Provider
-                      .of<AmityUIConfiguration>(context)
-                      .appColors
-                      .userProfileBGColor
+                      ? Provider.of<AmityUIConfiguration>(context)
+                          .appColors
+                          .userProfileBGColor
                       : Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -160,16 +153,16 @@ class CommentScreenState extends State<CommentScreen> {
                                           "assets/Icons/like.svg",
                                           package: 'amity_uikit_beta_service',
                                         ),
-                                        const Text(
-                                          "مفيد", //Like
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff898E9E),
+                                        Text(
+                                          "post.useful".tr(), //Like
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff898E9E),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
+                                  )
                                 : GestureDetector(
                                     onTap: () {
                                       log(widget.amityPost.myReactions!
@@ -189,20 +182,19 @@ class CommentScreenState extends State<CommentScreen> {
                                           size: 16,
                                         ),
                                         Text(
-                                          "مفيد", //Like
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Provider
-                                          .of<
-                                          AmityUIConfiguration>(
-                                          context)
-                                          .appColors
-                                          .baseShade4,
+                                          "post.useful".tr(), //Like
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Provider.of<
+                                                        AmityUIConfiguration>(
+                                                    context)
+                                                .appColors
+                                                .baseShade4,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
                             const SizedBox(width: 4),
                           ],
                         ),
@@ -216,14 +208,15 @@ class CommentScreenState extends State<CommentScreen> {
                           // Logic to navigate to comments section
                           context.read<RateCubit>().checkRate("community");
                         },
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Icon(Icons.chat_bubble_outline, color: Colors.grey),
-                            SizedBox(width: 4),
+                            const Icon(Icons.chat_bubble_outline,
+                                color: Colors.grey),
+                            const SizedBox(width: 4),
                             Text(
-                              "تعليق", //Comment
+                              "comment.comment".tr(), //Comment
                               // snapshot.data!.commentCount.toString(),
-                              style: TextStyle(color: Colors.grey),
+                              style: const TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -252,8 +245,7 @@ class CommentScreenState extends State<CommentScreen> {
             );
 
             return Scaffold(
-              backgroundColor: Provider
-                  .of<AmityUIConfiguration>(context)
+              backgroundColor: Provider.of<AmityUIConfiguration>(context)
                   .appColors
                   .baseBackground,
               body: FadedSlideAnimation(
@@ -270,8 +262,7 @@ class CommentScreenState extends State<CommentScreen> {
                             Navigator.of(context).pop();
                           },
                           icon: Icon(Icons.chevron_left,
-                              color: Provider
-                                  .of<AmityUIConfiguration>(context)
+                              color: Provider.of<AmityUIConfiguration>(context)
                                   .appColors
                                   .base,
                               size: 35),
@@ -299,15 +290,15 @@ class CommentScreenState extends State<CommentScreen> {
                                     // decoration: BoxDecoration(),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                          CrossAxisAlignment.stretch,
                                       children: [
                                         // Text("${snapshot.data!.targetType!}"),
                                         PostWidget(
                                           isPostDetail: true,
                                           feedType: widget.feedType,
                                           showCommunity: snapshot
-                                              .data?.targetType ==
-                                              AmityPostTargetType.COMMUNITY
+                                                      .data?.targetType ==
+                                                  AmityPostTargetType.COMMUNITY
                                               ? true
                                               : false,
                                           showlatestComment: false,
@@ -336,63 +327,57 @@ class CommentScreenState extends State<CommentScreen> {
                       ),
                       Column(
                         children: [
-                          Provider
-                              .of<ReplyVM>(context)
-                              .replyToObject == null
+                          Provider.of<ReplyVM>(context).replyToObject == null
                               ? const SizedBox()
                               : Container(
-                            color: Colors.grey[200],
-                            padding: const EdgeInsetsDirectional.all(10),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "الرد على ${Provider
-                                        .of<ReplyVM>(context)
-                                        .replyToObject
-                                        ?.replyingToUser
-                                        .displayName}", // Replying to
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff636878)),
+                                  color: Colors.grey[200],
+                                  padding: const EdgeInsetsDirectional.all(10),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "${"comment.replaying".tr()} ${Provider.of<ReplyVM>(context).replyToObject?.replyingToUser.displayName}", // Replying to
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: Color(0xff636878)),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            Provider.of<ReplyVM>(context,
+                                                    listen: false)
+                                                .clearReplyAndUpdateUI();
+                                          },
+                                          child: const Icon(Icons.close,
+                                              color: Color(0xff636878)))
+                                    ],
                                   ),
                                 ),
-                                GestureDetector(
-                                    onTap: () {
-                                      Provider.of<ReplyVM>(context,
-                                          listen: false)
-                                          .clearReplyAndUpdateUI();
-                                    },
-                                    child: const Icon(Icons.close,
-                                        color: Color(0xff636878)))
-                              ],
-                            ),
-                          ),
                           CommentTextField(
                             postId: snapshot.data!.postId!,
                             feedType: widget.feedType,
                             commentTextEditController:
-                            _commentTextEditController,
+                                _commentTextEditController,
                             navigateToFullCommentPage: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      FullCommentPage(
-                                        feedType: widget.feedType,
-                                        commentTextEditController:
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => FullCommentPage(
+                                    feedType: widget.feedType,
+                                    commentTextEditController:
                                         _commentTextEditController,
-                                        postId: snapshot.data!.postId!,
-                                        postCallback: () async {
-                                          Navigator.of(context).pop();
-                                          HapticFeedback.heavyImpact();
-                                          await Provider.of<PostVM>(context,
+                                    postId: snapshot.data!.postId!,
+                                    postCallback: () async {
+                                      Navigator.of(context).pop();
+                                      HapticFeedback.heavyImpact();
+                                      await Provider.of<PostVM>(context,
                                               listen: false)
-                                              .createComment(
-                                              snapshot.data!.postId!,
-                                              _commentTextEditController
-                                                  .text);
-                                          _commentTextEditController.clear();
-                                        },
-                                      )));
+                                          .createComment(snapshot.data!.postId!,
+                                              _commentTextEditController.text);
+                                      _commentTextEditController.clear();
+                                    },
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         ],
@@ -402,8 +387,10 @@ class CommentScreenState extends State<CommentScreen> {
                 ),
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }
 
@@ -425,8 +412,7 @@ class CommentTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Provider
-              .of<AmityUIConfiguration>(context)
+          color: Provider.of<AmityUIConfiguration>(context)
               .appColors
               .baseBackground,
           boxShadow: const [
@@ -440,19 +426,14 @@ class CommentTextField extends StatelessWidget {
           horizontalTitleGap: 0,
           contentPadding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
           leading: getAvatarImage(
-              Provider
-                  .of<AmityVM>(context)
-                  .currentamityUser
-                  ?.avatarUrl),
+              Provider.of<AmityVM>(context).currentamityUser?.avatarUrl),
           title: ConstrainedBox(
             constraints: const BoxConstraints(
               maxHeight: 200.0, // Maximum height for the text field
             ),
             child: Row(
               children: [
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: TextField(
                     controller: commentTextEditController,
@@ -470,8 +451,7 @@ class CommentTextField extends StatelessWidget {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsetsDirectional.only(
-                                  top: 10),
+                                  const EdgeInsetsDirectional.only(top: 10),
                               child: Transform(
                                 alignment: Alignment.center,
                                 transform: Matrix4.identity()
@@ -487,22 +467,16 @@ class CommentTextField extends StatelessWidget {
                         ),
                         onPressed: navigateToFullCommentPage,
                       ),
-                      hintText: 'لديكِ نصيحة أو حل؟',
+                      hintText: "messages.help".tr(),
                       //Say something nice...
-                      hintStyle: Theme
-                          .of(context)
-                          .textTheme
-                          .labelMedium,
-                      fillColor: Theme
-                          .of(context)
-                          .colorScheme
-                          .surfaceVariant,
+                      hintStyle: Theme.of(context).textTheme.labelMedium,
+                      fillColor: Theme.of(context).colorScheme.surfaceVariant,
                       // Set the background color to grey
                       filled: true,
                       // Enable the fill color
                       border: OutlineInputBorder(
                         borderRadius:
-                        BorderRadius.circular(50.0), // Rounded border
+                            BorderRadius.circular(50.0), // Rounded border
                         borderSide: BorderSide.none, // No border side
                       ),
                       contentPadding: const EdgeInsetsDirectional.symmetric(
@@ -522,9 +496,8 @@ class CommentTextField extends StatelessWidget {
                 if (commentTextEditController.text.isEmpty) {
                   return;
                 }
-                if (Provider
-                    .of<ReplyVM>(context, listen: false)
-                    .replyToObject ==
+                if (Provider.of<ReplyVM>(context, listen: false)
+                        .replyToObject ==
                     null) {
                   HapticFeedback.heavyImpact();
                   await Provider.of<PostVM>(context, listen: false)
@@ -534,8 +507,7 @@ class CommentTextField extends StatelessWidget {
                   ///Create Comment with Reply
                   print("الرد على التعليق"); //reply comment
                   var replyingComment =
-                      Provider
-                          .of<ReplyVM>(context, listen: false)
+                      Provider.of<ReplyVM>(context, listen: false)
                           .replyToObject
                           ?.replyToComment
                           .commentId;
@@ -543,55 +515,54 @@ class CommentTextField extends StatelessWidget {
                   print(replyingComment!);
                   Provider.of<ReplyVM>(context, listen: false)
                       .createReplyComment(
-                      postId: postId,
-                      commentId: replyingComment,
-                      text: commentTextEditController.text);
+                          postId: postId,
+                          commentId: replyingComment,
+                          text: commentTextEditController.text);
                 }
 
                 commentTextEditController.clear();
               },
               child: Text(
-                "مشاركة", //Post
+                "external.share".tr(), //Post
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
-                    color: Provider
-                        .of<AmityUIConfiguration>(context)
+                    color: Provider.of<AmityUIConfiguration>(context)
                         .primaryColor),
               ))
 
-        // GestureDetector(
-        //     onTap: () async {
-        //       if (Provider.of<ReplyVM>(context, listen: false).replyToObject ==
-        //           null) {
-        //         HapticFeedback.heavyImpact();
-        //         await Provider.of<PostVM>(context, listen: false)
-        //             .createComment(postId, commentTextEditController.text);
-        //       } else {
-        //         ///Create Comment with Reply
-        //         print("reply comment");
-        //         var replyingComment =
-        //             Provider.of<ReplyVM>(context, listen: false)
-        //                 .replyToObject
-        //                 ?.replyToComment
-        //                 .commentId;
-        //         HapticFeedback.heavyImpact();
-        //         print(replyingComment!);
-        //         Provider.of<ReplyVM>(context, listen: false).createReplyComment(
-        //             postId: postId,
-        //             commentId: replyingComment,
-        //             text: commentTextEditController.text);
-        //       }
+          // GestureDetector(
+          //     onTap: () async {
+          //       if (Provider.of<ReplyVM>(context, listen: false).replyToObject ==
+          //           null) {
+          //         HapticFeedback.heavyImpact();
+          //         await Provider.of<PostVM>(context, listen: false)
+          //             .createComment(postId, commentTextEditController.text);
+          //       } else {
+          //         ///Create Comment with Reply
+          //         print("reply comment");
+          //         var replyingComment =
+          //             Provider.of<ReplyVM>(context, listen: false)
+          //                 .replyToObject
+          //                 ?.replyToComment
+          //                 .commentId;
+          //         HapticFeedback.heavyImpact();
+          //         print(replyingComment!);
+          //         Provider.of<ReplyVM>(context, listen: false).createReplyComment(
+          //             postId: postId,
+          //             commentId: replyingComment,
+          //             text: commentTextEditController.text);
+          //       }
 
-        //       commentTextEditController.clear();
-        //     },
-        //     child: Text("Post  ",
-        //         style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             color: Provider.of<AmityUIConfiguration>(context)
-        //                 .primaryColor))),
+          //       commentTextEditController.clear();
+          //     },
+          //     child: Text("Post  ",
+          //         style: TextStyle(
+          //             fontWeight: FontWeight.bold,
+          //             color: Provider.of<AmityUIConfiguration>(context)
+          //                 .primaryColor))),
 
-      ),
+          ),
     );
   }
 }
@@ -615,10 +586,7 @@ class FullCommentPage extends StatelessWidget {
     final focusNode = FocusNode();
     return Scaffold(
       backgroundColor:
-      Provider
-          .of<AmityUIConfiguration>(context)
-          .appColors
-          .baseBackground,
+          Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
         shadowColor: Colors.transparent,
         leading: IconButton(
@@ -630,17 +598,11 @@ class FullCommentPage extends StatelessWidget {
             if (true) {
               ConfirmationDialog().show(
                 context: context,
-                title: 'تجاهل المنشور؟',
-                //Discard Post?
-                detailText: 'هل تريد تجاهل منشورك؟',
-                //Do you want to discard your post?
-                leftButtonText: 'إلغاء',
-                //Cancel
-                rightButtonText: 'تجاهل',
-                //Discard
-                onConfirm: () {
-                  Navigator.of(context).pop();
-                },
+                title: "messages.discard.title".tr(),
+                detailText: "messages.discard.content".tr(),
+                leftButtonText: "external.cancel".tr(),
+                rightButtonText: "external.discard".tr(),
+                onConfirm: () => Navigator.of(context).pop(),
               );
             } else {
               Navigator.of(context).pop();
@@ -648,10 +610,8 @@ class FullCommentPage extends StatelessWidget {
           },
         ),
         title: Text(
-          "ترك تعليق", //Add Comment
-          style: Provider
-              .of<AmityUIConfiguration>(context)
-              .titleTextStyle,
+          "comment.leave".tr(), //Add Comment
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
         ),
         actions: <Widget>[
           TextButton(
@@ -660,12 +620,10 @@ class FullCommentPage extends StatelessWidget {
               context.read<RateCubit>().checkRate("community");
             },
             child: Text(
-              'مشاركة', //Post
+              "external.share".tr(), //Post
               style: TextStyle(
                   color:
-                  Provider
-                      .of<AmityUIConfiguration>(context)
-                      .primaryColor),
+                      Provider.of<AmityUIConfiguration>(context).primaryColor),
             ),
           ),
         ],
@@ -683,9 +641,10 @@ class FullCommentPage extends StatelessWidget {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               // Allows for any number of lines
-              decoration: const InputDecoration(
-                  hintText: 'اكتب الرسالة',
-                  border: InputBorder.none), //Type message
+              decoration: InputDecoration(
+                hintText: "messages.write".tr(),
+                border: InputBorder.none,
+              ), //Type message
             ),
           ),
         ),
@@ -697,12 +656,12 @@ class FullCommentPage extends StatelessWidget {
 class EditCommentPage extends StatefulWidget {
   final AmityComment comment;
   final VoidCallback postCallback;
-  final String initailText;
+  final String initialText;
   final FeedType feedType;
 
   const EditCommentPage({
     super.key,
-    required this.initailText,
+    required this.initialText,
     required this.comment,
     required this.postCallback,
     required this.feedType,
@@ -717,7 +676,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
   @override
   void initState() {
-    textEditingController.text = widget.initailText;
+    textEditingController.text = widget.initialText;
     super.initState();
   }
 
@@ -725,16 +684,12 @@ class _EditCommentPageState extends State<EditCommentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-      Provider
-          .of<AmityUIConfiguration>(context)
-          .appColors
-          .baseBackground,
+          Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
         backgroundColor: widget.feedType == FeedType.user
-            ? Provider
-            .of<AmityUIConfiguration>(context)
-            .appColors
-            .userProfileBGColor
+            ? Provider.of<AmityUIConfiguration>(context)
+                .appColors
+                .userProfileBGColor
             : Colors.white,
         shadowColor: Colors.transparent,
         leading: IconButton(
@@ -745,10 +700,8 @@ class _EditCommentPageState extends State<EditCommentPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          "تعليقي يحتاج بعض التعديلات", //Edit Comment
-          style: Provider
-              .of<AmityUIConfiguration>(context)
-              .titleTextStyle,
+          "comment.edit".tr(), //Edit Comment
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
         ),
         actions: <Widget>[
           TextButton(
@@ -761,12 +714,10 @@ class _EditCommentPageState extends State<EditCommentPage> {
               widget.postCallback();
             },
             child: Text(
-              'حفظ', //Save
+              "external.save".tr(), //Save
               style: TextStyle(
                   color:
-                  Provider
-                      .of<AmityUIConfiguration>(context)
-                      .primaryColor),
+                      Provider.of<AmityUIConfiguration>(context).primaryColor),
             ),
           ),
         ],
@@ -778,7 +729,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
           keyboardType: TextInputType.multiline,
           maxLines: null, // Allows for any number of lines
           decoration: InputDecoration(
-              hintText: widget.initailText, border: InputBorder.none),
+              hintText: widget.initialText, border: InputBorder.none),
         ),
       ),
     );
@@ -786,11 +737,12 @@ class _EditCommentPageState extends State<EditCommentPage> {
 }
 
 class CommentComponent extends StatefulWidget {
-  const CommentComponent({Key? key,
-    required this.postId,
-    required this.theme,
-    required this.feedType})
-      : super(key: key);
+  const CommentComponent(
+      {super.key,
+      required this.postId,
+      required this.theme,
+      required this.feedType});
+
   final FeedType feedType;
   final String postId;
   final ThemeData theme;
@@ -822,296 +774,309 @@ class _CommentComponentState extends State<CommentComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PostVM>(builder: (context, vm, _) {
-      return vm.amityComments.isEmpty
-          ? const SizedBox(
-        height: 50,
-      )
-          : vm.controller.isFetching
-          ? SizedBox(height: 500, child: LoadingSkeleton(context: context))
-          : ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: vm.amityComments.length,
-        itemBuilder: (context, index) {
-          return StreamBuilder<AmityComment>(
-            key: Key(vm.amityComments[index].commentId!),
-            stream: vm.amityComments[index].listen.stream,
-            initialData: vm.amityComments[index],
-            builder: (context, snapshot) {
-              var comments = snapshot.data!;
-              var commentData = comments.data as CommentTextData;
+    return Consumer<PostVM>(
+      builder: (context, vm, _) {
+        return vm.amityComments.isEmpty
+            ? const SizedBox(
+                height: 50,
+              )
+            : vm.controller.isFetching
+                ? SizedBox(
+                    height: 500, child: LoadingSkeleton(context: context))
+                : ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: vm.amityComments.length,
+                    itemBuilder: (context, index) {
+                      return StreamBuilder<AmityComment>(
+                        key: Key(vm.amityComments[index].commentId!),
+                        stream: vm.amityComments[index].listen.stream,
+                        initialData: vm.amityComments[index],
+                        builder: (context, snapshot) {
+                          var comments = snapshot.data!;
+                          var commentData = comments.data as CommentTextData;
 
-                        return comments.isDeleted!
-                            ? SizedBox()
-                            // ? Container(
-                            //     child: const Column(
-                            //       crossAxisAlignment: CrossAxisAlignment.start,
-                            //       children: [
-                            //         Padding(
-                            //           padding: EdgeInsetsDirectional.all(16.0),
-                            //           child: Row(
-                            //             children: [
-                            //               SizedBox(
-                            //                 width: 14,
-                            //               ),
-                            //               Icon(
-                            //                 Icons.remove_circle_outline,
-                            //                 size: 15,
-                            //                 color: Color(0xff636878),
-                            //               ),
-                            //               SizedBox(
-                            //                 width: 14,
-                            //               ),
-                            //               Text(
-                            //                 "هذا التعليق تم حذفه", //This comment  has been deleted
-                            //                 style: TextStyle(
-                            //                     color: Color(0xff636878),
-                            //                     fontSize: 13),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //         Divider(
-                            //           height: 0,
-                            //         )
-                            //       ],
-                            //     ),
-                            //   )
-                            : Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Container(
+                          return comments.isDeleted!
+                              ? const SizedBox()
+                              // ? Container(
+                              //     child: const Column(
+                              //       crossAxisAlignment: CrossAxisAlignment.start,
+                              //       children: [
+                              //         Padding(
+                              //           padding: EdgeInsetsDirectional.all(16.0),
+                              //           child: Row(
+                              //             children: [
+                              //               SizedBox(
+                              //                 width: 14,
+                              //               ),
+                              //               Icon(
+                              //                 Icons.remove_circle_outline,
+                              //                 size: 15,
+                              //                 color: Color(0xff636878),
+                              //               ),
+                              //               SizedBox(
+                              //                 width: 14,
+                              //               ),
+                              //               Text(
+                              //                 "هذا التعليق تم حذفه", //This comment  has been deleted
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff636878),
+                              //                     fontSize: 13),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //         Divider(
+                              //           height: 0,
+                              //         )
+                              //       ],
+                              //     ),
+                              //   )
+                              : Column(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Container(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(
+                                              start: 16,
+                                            ),
+                                            child: CustomListTile(
+                                                avatarUrl:
+                                                    comments.user!.avatarUrl,
+                                                displayName:
+                                                    comments.user!.displayName!,
+                                                createdAt: comments.createdAt!,
+                                                editedAt: comments.editedAt!,
+                                                userId: comments.user!.userId!,
+                                                user: comments.user!)),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          padding:
+                                              const EdgeInsetsDirectional.all(
+                                                  10),
+                                          margin:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 70.0, end: 16),
+                                          decoration: BoxDecoration(
+                                            color: Provider.of<
+                                                        AmityUIConfiguration>(
+                                                    context)
+                                                .appColors
+                                                .baseShade4,
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            commentData.text!,
+                                            style: widget
+                                                .theme.textTheme.bodyMedium!
+                                                .copyWith(
+                                                    color: Provider.of<
+                                                                AmityUIConfiguration>(
+                                                            context)
+                                                        .appColors
+                                                        .base),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Padding(
                                           padding:
                                               const EdgeInsetsDirectional.only(
-                                            start: 16,
-                                          ),
-                                          child: CustomListTile(
-                                              avatarUrl:
-                                                  comments.user!.avatarUrl,
-                                              displayName:
-                                                  comments.user!.displayName!,
-                                              createdAt: comments.createdAt!,
-                                              editedAt: comments.editedAt!,
-                                              userId: comments.user!.userId!,
-                                              user: comments.user!)),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Container(
-                                        padding:
-                                            const EdgeInsetsDirectional.all(10),
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 70.0, end: 16),
-                                        decoration: BoxDecoration(
-                                          color:
-                                              Provider.of<AmityUIConfiguration>(
-                                                      context)
-                                                  .appColors
-                                                  .baseShade4,
-                                          borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          commentData.text!,
-                                          style: widget
-                                              .theme.textTheme.bodyMedium!
-                                              .copyWith(
-                                                  color: Provider.of<
-                                                              AmityUIConfiguration>(
-                                                          context)
-                                                      .appColors
-                                                      .base),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 70.0, bottom: 16),
-                                        child: Row(
-                                          children: [
-                                            // Like Button
-                                            isLiked(snapshot)
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      vm.removeCommentReaction(
-                                                          comments);
-                                                      context
-                                                          .read<RateCubit>()
-                                                          .checkRate(
-                                                              "community");
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        Provider.of<AmityUIConfiguration>(
-                                                                context)
-                                                            .iconConfig
-                                                            .likedIcon(
-                                                                color: Provider.of<
-                                                                            AmityUIConfiguration>(
-                                                                        context)
-                                                                    .primaryColor),
-                                                        Text(
-                                                          " ${snapshot.data?.reactionCount ?? 0}",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Provider.of<
-                                                                        AmityUIConfiguration>(
-                                                                    context)
-                                                                .appColors
-                                                                .primary,
+                                                  start: 70.0, bottom: 16),
+                                          child: Row(
+                                            children: [
+                                              // Like Button
+                                              isLiked(snapshot)
+                                                  ? GestureDetector(
+                                                      onTap: () {
+                                                        vm.removeCommentReaction(
+                                                            comments);
+                                                        context
+                                                            .read<RateCubit>()
+                                                            .checkRate(
+                                                                "community");
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Provider.of<AmityUIConfiguration>(
+                                                                  context)
+                                                              .iconConfig
+                                                              .likedIcon(
+                                                                  color: Provider.of<
+                                                                              AmityUIConfiguration>(
+                                                                          context)
+                                                                      .primaryColor),
+                                                          Text(
+                                                            " ${snapshot.data?.reactionCount ?? 0}",
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Provider.of<
+                                                                          AmityUIConfiguration>(
+                                                                      context)
+                                                                  .appColors
+                                                                  .primary,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : GestureDetector(
+                                                      onTap: () {
+                                                        vm.addCommentReaction(
+                                                            comments);
+                                                        context
+                                                            .read<RateCubit>()
+                                                            .checkRate(
+                                                                "community");
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Provider.of<AmityUIConfiguration>(
+                                                                  context)
+                                                              .iconConfig
+                                                              .likeIcon(
+                                                                  iconSize: 16),
+                                                          snapshot.data!
+                                                                      .reactionCount! >
+                                                                  0
+                                                              ? Text(
+                                                                  " ${snapshot.data!.reactionCount!}",
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Color(
+                                                                        0xff898E9E),
+                                                                  ),
+                                                                )
+                                                              : Text(
+                                                                  "post.useful"
+                                                                      .tr(), //Like
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Color(
+                                                                        0xff898E9E),
+                                                                  ),
+                                                                ),
+                                                        ],
+                                                      )),
+
+                                              const SizedBox(width: 8),
+                                              // Reply Button
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Provider.of<ReplyVM>(context,
+                                                          listen: false)
+                                                      .selectReplyComment(
+                                                          comment: comments);
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Provider.of<AmityUIConfiguration>(
+                                                            context)
+                                                        .iconConfig
+                                                        .replyIcon(
+                                                            iconSize: 16),
+                                                    const SizedBox(
+                                                      width: 5,
                                                     ),
-                                                  )
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      vm.addCommentReaction(
-                                                          comments);
-                                                      context
-                                                          .read<RateCubit>()
-                                                          .checkRate(
-                                                              "community");
-                                },
-                                child: Row(
-                                  children: [
-                                    Provider
-                                        .of<AmityUIConfiguration>(
-                                        context)
-                                        .iconConfig
-                                        .likeIcon(
-                                        iconSize: 16),
-                                    snapshot.data!
-                                        .reactionCount! >
-                                        0
-                                        ? Text(
-                                      " ${snapshot.data!.reactionCount!}",
-                                      style:
-                                      const TextStyle(
-                                        fontWeight:
-                                        FontWeight
-                                            .bold,
-                                        color: Color(
-                                            0xff898E9E),
-                                      ),
-                                    )
-                                        : const Text(
-                                      "مفيد", //Like
-                                      style:
-                                      TextStyle(
-                                        fontWeight:
-                                        FontWeight
-                                            .bold,
-                                        color: Color(
-                                            0xff898E9E),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-
-                            const SizedBox(width: 8),
-                            // Reply Button
-                            GestureDetector(
-                              onTap: () {
-                                Provider.of<ReplyVM>(context,
-                                    listen: false)
-                                    .selectReplyComment(
-                                    comment: comments);
-                              },
-                              child: Row(
-                                children: [
-                                  Provider
-                                      .of<AmityUIConfiguration>(
-                                      context)
-                                      .iconConfig
-                                      .replyIcon(iconSize: 16),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  const Text(
-                                    "رد", //Reply
-                                    style: TextStyle(
-                                        fontWeight:
-                                        FontWeight.w600,
-                                        color:
-                                        Color(0xff898E9E),
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            // More Options Button
-                            GestureDetector(
-                              child: const Icon(
-                                Icons.more_horiz,
-                                color: Color(0xff898E9E),
-                              ),
-                              onTap: () {
-                                AmityGeneralCompomemt
-                                    .showOptionsBottomSheet(
-                                    context,
-                                    [
-                                      comments.user?.userId! ==
-                                          AmityCoreClient
-                                              .getCurrentUser()
-                                              .userId
-                                          ? const SizedBox()
-                                          : ListTile(
-                                        title: Text(
-                                          comments.isFlaggedByMe
-                                              ? 'إلغاء التبليغ' //Undo Report
-                                              : 'إبلاغ؛ التعليق غير مناسب',
-                                          //Report
-                                          style: const TextStyle(
-                                              fontWeight:
-                                              FontWeight
-                                                  .w500),
-                                        ),
-                                        onTap: () async {
-                                          if (!comments
-                                              .isFlaggedByMe) {
-                                            vm.flagComment(
-                                                comments,
-                                                context);
-                                          } else {
-                                            vm.unFlagComment(
-                                                comments,
-                                                context);
-                                          }
-                                          Navigator.pop(
-                                              context);
-                                        },
-                                      ),
-
-                                      ///check admin
-                                      comments.user?.userId! !=
-                                          AmityCoreClient
-                                              .getCurrentUser()
-                                              .userId
-                                          ? const SizedBox()
-                                          : ListTile(
-                                        title: const Text(
-                                          'تعليقي يحتاج بعض التعديلات', //Edit Comment
-                                                                style: TextStyle(
+                                                    Text(
+                                                      "comment.reply"
+                                                          .tr(), //Reply
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              Color(0xff898E9E),
+                                                          fontSize: 15),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              // More Options Button
+                                              GestureDetector(
+                                                child: const Icon(
+                                                  Icons.more_horiz,
+                                                  color: Color(0xff898E9E),
+                                                ),
+                                                onTap: () {
+                                                  AmityGeneralCompomemt
+                                                      .showOptionsBottomSheet(
+                                                    context,
+                                                    [
+                                                      comments.user?.userId! ==
+                                                              AmityCoreClient
+                                                                      .getCurrentUser()
+                                                                  .userId
+                                                          ? const SizedBox()
+                                                          : ListTile(
+                                                              title: Text(
+                                                                comments
+                                                                        .isFlaggedByMe
+                                                                    ? "report.unReport_comment"
+                                                                        .tr() //Undo Report
+                                                                    : "report.report_comment"
+                                                                        .tr(),
+                                                                //Report
+                                                                style: const TextStyle(
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500),
+                                                              ),
+                                                              onTap: () async {
+                                                                if (!comments
+                                                                    .isFlaggedByMe) {
+                                                                  vm.flagComment(
+                                                                      comments,
+                                                                      context);
+                                                                } else {
+                                                                  vm.unFlagComment(
+                                                                      comments,
+                                                                      context);
+                                                                }
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                            ),
+
+                                                      ///check admin
+                                                      comments.user?.userId! !=
+                                                              AmityCoreClient
+                                                                      .getCurrentUser()
+                                                                  .userId
+                                                          ? const SizedBox()
+                                                          : ListTile(
+                                                              title: Text(
+                                                                "comment.edit"
+                                                                    .tr(),
+                                                                //Edit Comment
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
                                                               ),
                                                               onTap: () async {
                                                                 Navigator.of(
@@ -1127,7 +1092,7 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                       feedType:
                                                                           widget
                                                                               .feedType,
-                                                                      initailText:
+                                                                      initialText:
                                                                           commentData
                                                                               .text!,
                                                                       comment:
@@ -1145,152 +1110,164 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                   .userId
                                                           ? const SizedBox()
                                                           : ListTile(
-                                                              title: const Text(
-                                                                'تعليقي لم يعجبني أود حذفه.', //Delete Comment
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                              title: Text(
+                                                                "comment.delete"
+                                                                    .tr(),
+                                                                //Delete Comment
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
                                                               ),
                                                               onTap: () async {
-                                                                ConfirmationDialog().show(
-                                                                    context: context,
-                                                                    title: "حذف هذا التعليق",
-                                                                    //Delete this comment
-                                                                    detailText: "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه",
-                                                                    // This comment will be permanently deleted. You'll no longer to see and find this comment
-                                                                    onConfirm: () {
-                                                                      vm.deleteComment(
-                                                                          comments);
-
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
+                                                                ConfirmationDialog()
+                                                                    .show(
+                                                                  context:
+                                                                      context,
+                                                                  title:
+                                                                      "delete.comment"
+                                                                          .tr(),
+                                                                  //Delete this comment
+                                                                  detailText:
+                                                                      "delete.comment_content"
+                                                                          .tr(),
+                                                                  // This comment will be permanently deleted. You'll no longer to see and find this comment
+                                                                  onConfirm:
+                                                                      () {
+                                                                    vm.deleteComment(
+                                                                        comments);
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                );
                                                               },
                                                             ),
-                                                    ]);
-                                              },
-                                            ),
-                                          ],
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 70, end: 15, top: 0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Provider.of<ReplyVM>(context)
-                                                            .amityReplyCommentsMap[
-                                                        comments.commentId] ==
-                                                    null
-                                                ? const SizedBox()
-                                                : ListView.builder(
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    itemCount: Provider.of<
-                                                            ReplyVM>(context)
-                                                        .amityReplyCommentsMap[
-                                                            comments.commentId]!
-                                                        .length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      var replyComment = Provider
-                                                                  .of<ReplyVM>(
-                                                                      context)
+                                        Container(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 70, end: 15, top: 0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Provider.of<ReplyVM>(context)
                                                               .amityReplyCommentsMap[
-                                                          comments
-                                                              .commentId]![index];
-                                                      return ReplyCommentComponent(
-                                                        comment: replyComment,
-                                                        feedType:
-                                                            widget.feedType,
-                                                      );
-                                                    },
-                                                  ),
-                                            Provider.of<ReplyVM>(context)
-                                                    .replyHaveNextPage(
-                                                        comments.commentId!)
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      HapticFeedback
-                                                          .mediumImpact();
-                                                      Provider.of<ReplyVM>(
-                                                              context,
-                                                              listen: false)
-                                                          .loadReplynextpage(
-                                                        comments.commentId!,
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      margin:
-                                                          const EdgeInsetsDirectional
-                                                              .all(12),
-                                                      decoration: BoxDecoration(
-                                                          color: Provider.of<
-                                                                      AmityUIConfiguration>(
-                                                                  context)
-                                                              .appColors
-                                                              .baseShade4,
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          4))),
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                    .all(5.0),
-                                child: const Wrap(
-                                  crossAxisAlignment:
-                                  WrapCrossAlignment
-                                      .center,
-                                  children: [
-                                    SizedBox(
-                                      width: 14,
+                                                          comments.commentId] ==
+                                                      null
+                                                  ? const SizedBox()
+                                                  : ListView.builder(
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      itemCount: Provider.of<
+                                                              ReplyVM>(context)
+                                                          .amityReplyCommentsMap[
+                                                              comments
+                                                                  .commentId]!
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        var replyComment = Provider
+                                                                    .of<ReplyVM>(
+                                                                        context)
+                                                                .amityReplyCommentsMap[
+                                                            comments
+                                                                .commentId]![index];
+                                                        return ReplyCommentComponent(
+                                                          comment: replyComment,
+                                                          feedType:
+                                                              widget.feedType,
+                                                        );
+                                                      },
+                                                    ),
+                                              Provider.of<ReplyVM>(context)
+                                                      .replyHaveNextPage(
+                                                          comments.commentId!)
+                                                  ? GestureDetector(
+                                                      onTap: () {
+                                                        HapticFeedback
+                                                            .mediumImpact();
+                                                        Provider.of<ReplyVM>(
+                                                                context,
+                                                                listen: false)
+                                                            .loadReplynextpage(
+                                                          comments.commentId!,
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        margin:
+                                                            const EdgeInsetsDirectional
+                                                                .all(12),
+                                                        decoration: BoxDecoration(
+                                                            color: Provider.of<
+                                                                        AmityUIConfiguration>(
+                                                                    context)
+                                                                .appColors
+                                                                .baseShade4,
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            4))),
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .all(5.0),
+                                                        child: Wrap(
+                                                          crossAxisAlignment:
+                                                              WrapCrossAlignment
+                                                                  .center,
+                                                          children: [
+                                                            const SizedBox(
+                                                                width: 14),
+                                                            const Icon(
+                                                              Icons
+                                                                  .subdirectory_arrow_right,
+                                                              size: 15,
+                                                              color: Color(
+                                                                  0xff636878),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 14),
+                                                            Text(
+                                                              "comment.view_reply"
+                                                                  .tr(),
+                                                              style: const TextStyle(
+                                                                  color: Color(
+                                                                      0xff636878),
+                                                                  fontSize: 13),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 14)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Icon(
-                                      Icons
-                                          .subdirectory_arrow_right,
-                                      size: 15,
-                                      color: Color(
-                                          0xff636878),
+                                    const Divider(
+                                      height: 0,
                                     ),
-                                    SizedBox(
-                                      width: 14,
-                                    ),
-                                    Text(
-                                      "مساهدة الردود", //View more replies
-                                      style: TextStyle(
-                                          color: Color(
-                                              0xff636878),
-                                          fontSize: 13),
-                                    ),
-                                    SizedBox(
-                                      width: 14,
-                                    )
                                   ],
-                                ),
-                              ),
-                            )
-                                : const SizedBox(),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  const Divider(
-                    height: 0,
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      );
-    });
+                                );
+                        },
+                      );
+                    },
+                  );
+      },
+    );
   }
 }
 
@@ -1428,8 +1405,9 @@ class ReplyCommentComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ReplyVM>(builder: (context, vm, _) {
-      return StreamBuilder<AmityComment>(
+    return Consumer<ReplyVM>(
+      builder: (context, vm, _) {
+        return StreamBuilder<AmityComment>(
           key: Key(comment.commentId!),
           stream: comment.listen.stream,
           initialData: comment,
@@ -1437,52 +1415,54 @@ class ReplyCommentComponent extends StatelessWidget {
             var comments = snapshot.data!;
             var commentData = comments.data as CommentTextData;
             return comments.isDeleted!
-                ? SizedBox()
-            // ? Container(
-            //     padding: const EdgeInsetsDirectional.only(start: 0),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Container(
-            //           margin: const EdgeInsetsDirectional.only(bottom: 12),
-            //           decoration: BoxDecoration(
-            //               color: Provider.of<AmityUIConfiguration>(context)
-            //                   .appColors
-            //                   .baseShade4,
-            //               borderRadius:
-            //                   const BorderRadius.all(Radius.circular(4))),
-            //           padding: const EdgeInsetsDirectional.all(5.0),
-            //           child: const Wrap(
-            //             crossAxisAlignment: WrapCrossAlignment.center,
-            //             children: [
-            //               SizedBox(
-            //                 width: 14,
-            //               ),
-            //               Icon(
-            //                 Icons.remove_circle_outline,
-            //                 size: 15,
-            //                 color: Color(0xff636878),
-            //               ),
-            //               SizedBox(
-            //                 width: 14,
-            //               ),
-            //               Text(
-            //                 "هذا الرد تم حذفه", //This reply has been deleted
-            //                 style: TextStyle(
-            //                     color: Color(0xff636878), fontSize: 13),
-            //               ),
-            //               SizedBox(
-            //                 width: 14,
-            //               )
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   )
+                ? const SizedBox()
+                // ? Container(
+                //     padding: const EdgeInsetsDirectional.only(start: 0),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Container(
+                //           margin: const EdgeInsetsDirectional.only(bottom: 12),
+                //           decoration: BoxDecoration(
+                //               color: Provider.of<AmityUIConfiguration>(context)
+                //                   .appColors
+                //                   .baseShade4,
+                //               borderRadius:
+                //                   const BorderRadius.all(Radius.circular(4))),
+                //           padding: const EdgeInsetsDirectional.all(5.0),
+                //           child: const Wrap(
+                //             crossAxisAlignment: WrapCrossAlignment.center,
+                //             children: [
+                //               SizedBox(
+                //                 width: 14,
+                //               ),
+                //               Icon(
+                //                 Icons.remove_circle_outline,
+                //                 size: 15,
+                //                 color: Color(0xff636878),
+                //               ),
+                //               SizedBox(
+                //                 width: 14,
+                //               ),
+                //               Text(
+                //                 "هذا الرد تم حذفه", //This reply has been deleted
+                //                 style: TextStyle(
+                //                     color: Color(0xff636878), fontSize: 13),
+                //               ),
+                //               SizedBox(
+                //                 width: 14,
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   )
                 : Container(
                     padding: const EdgeInsetsDirectional.symmetric(
-                        vertical: 0, horizontal: 0),
+                      vertical: 0,
+                      horizontal: 0,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1573,128 +1553,137 @@ class ReplyCommentComponent extends StatelessWidget {
                                                     color: Color(0xff898E9E),
                                                   ),
                                                 )
-                                              : const Text(
-                                                  " مفيد", //Like
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff898E9E),
-                                  ),
-                                ),
-                              ],
-                            )),
+                                              : Text(
+                                                  "post.useful".tr(), //Like
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xff898E9E),
+                                                  ),
+                                                ),
+                                        ],
+                                      )),
 
-                        // const SizedBox(width: 10),
-                        // // Reply Button
-                        // Provider.of<AmityUIConfiguration>(context)
-                        //     .iconConfig
-                        //     .replyIcon(iconSize: 16),
+                              // const SizedBox(width: 10),
+                              // // Reply Button
+                              // Provider.of<AmityUIConfiguration>(context)
+                              //     .iconConfig
+                              //     .replyIcon(iconSize: 16),
 
-                        // const Text(
-                        //   "Reply",
-                        //   style: TextStyle(
-                        //     color: Color(0xff898E9E),
-                        //   ),
-                        // ),
+                              // const Text(
+                              //   "Reply",
+                              //   style: TextStyle(
+                              //     color: Color(0xff898E9E),
+                              //   ),
+                              // ),
 
-                        // More Options Button
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          child: const Icon(
-                            Icons.more_horiz,
-                            color: Color(0xff898E9E),
-                          ),
-                          onTap: () {
-                            AmityGeneralCompomemt.showOptionsBottomSheet(
-                                context, [
-                              comment.user?.userId! ==
-                                  AmityCoreClient
-                                      .getCurrentUser()
-                                      .userId
-                                  ? const SizedBox()
-                                  : ListTile(
-                                title: const Text(
-                                  'تبليغ', //Report
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                },
+                              // More Options Button
+                              const SizedBox(
+                                width: 10,
                               ),
-
-                              ///check admin
-                              comment.user?.userId! !=
-                                  AmityCoreClient
-                                      .getCurrentUser()
-                                      .userId
-                                  ? const SizedBox()
-                                  : ListTile(
-                                title: const Text(
-                                  'تعليقي يحتاج بعض التعديلات', //Edit Comment
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500),
+                              GestureDetector(
+                                child: const Icon(
+                                  Icons.more_horiz,
+                                  color: Color(0xff898E9E),
                                 ),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditCommentPage(
-                                                feedType: feedType,
-                                                initailText: (comments
-                                                    .data
-                                                as CommentTextData)
-                                                    .text!,
-                                                comment: comments,
-                                                postCallback:
-                                                    () async {},
-                                              )));
-                                },
-                              ),
-                              comment.user?.userId! !=
-                                  AmityCoreClient
-                                      .getCurrentUser()
-                                      .userId
-                                  ? const SizedBox()
-                                  : ListTile(
-                                title: const Text(
-                                  ' تعليقي لم يعجبني أود حذفه.', //Delete Comment
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
+                                onTap: () {
+                                  AmityGeneralCompomemt.showOptionsBottomSheet(
+                                    context,
+                                    [
+                                      comment.user?.userId! ==
+                                              AmityCoreClient.getCurrentUser()
+                                                  .userId
+                                          ? const SizedBox()
+                                          : ListTile(
+                                              title: Text(
+                                                "report.report".tr(), //Report
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                              },
                                             ),
-                                            onTap: () async {
-                                              ConfirmationDialog().show(
+
+                                      ///check admin
+                                      comment.user?.userId! !=
+                                              AmityCoreClient.getCurrentUser()
+                                                  .userId
+                                          ? const SizedBox()
+                                          : ListTile(
+                                              title: Text(
+                                                "comment.edit"
+                                                    .tr(), //Edit Comment
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditCommentPage(
+                                                              feedType:
+                                                                  feedType,
+                                                              initialText:
+                                                                  (comments.data
+                                                                          as CommentTextData)
+                                                                      .text!,
+                                                              comment: comments,
+                                                              postCallback:
+                                                                  () async {},
+                                                            )));
+                                              },
+                                            ),
+                                      comment.user?.userId! !=
+                                              AmityCoreClient.getCurrentUser()
+                                                  .userId
+                                          ? const SizedBox()
+                                          : ListTile(
+                                              title: Text(
+                                                "comment.delete".tr(),
+                                                //Delete Comment
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              onTap: () async {
+                                                ConfirmationDialog().show(
                                                   context: context,
-                                                  title: "حذف هذا التعليق",
+                                                  title: "delete.comment".tr(),
                                                   //Delete this comment
-                                                  detailText:
-                                                      "سيتم حذف هذا التعليق بشكل دائم. لن تتمكن بعد الآن من رؤية هذا التعليق أو العثور عليه",
+                                                  detailText: "delete.custom"
+                                                      .tr(args: [
+                                                    "comment.comment".tr()
+                                                  ]),
                                                   // This comment will be permanently deleted. You'll no longer to see and find this comment
                                                   onConfirm: () {
                                                     vm.deleteComment(comment);
                                                     AmitySuccessDialog
                                                         .showTimedDialog(
-                                                            "تم بنجاح", //Success
+                                                            "external.done"
+                                                                .tr(), //Success
                                                             context: context);
                                                     Navigator.pop(context);
-                                                  });
-                                            },
-                                          ),
-                                  ]);
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                    ],
+                                  );
                                 },
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }

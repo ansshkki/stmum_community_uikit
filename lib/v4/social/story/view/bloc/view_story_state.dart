@@ -42,6 +42,7 @@ class ViewStoryInitial extends ViewStoryState {
     required super.jumpToUnSeen,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -85,6 +86,7 @@ class ViewStoryTargetFetched extends ViewStoryState {
     required super.jumpToUnSeen,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -106,6 +108,7 @@ class NewCurrentStoryState extends ViewStoryState {
     required super.shouldPause,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -127,6 +130,7 @@ class ManagerStoryPermissionFetchedState extends ViewStoryState {
     required super.storyTarget,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -139,6 +143,7 @@ class ManagerStoryPermissionFetchedState extends ViewStoryState {
 
 class ActiveStoriesFetchedState extends ViewStoryState {
   Random random = Random();
+
   ActiveStoriesFetchedState({
     required super.community,
     required super.stories,
@@ -149,6 +154,7 @@ class ActiveStoriesFetchedState extends ViewStoryState {
     required super.jumpToUnSeen,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -171,6 +177,7 @@ class StoryDeletedState extends ViewStoryState {
     required super.shouldPause,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -183,7 +190,8 @@ class StoryDeletedState extends ViewStoryState {
 
 class ShouldPauseState extends ViewStoryState {
   Random random = Random();
-   ShouldPauseState({
+
+  ShouldPauseState({
     required super.community,
     required super.stories,
     required super.currentStory,
@@ -193,6 +201,7 @@ class ShouldPauseState extends ViewStoryState {
     required super.shouldPause,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -205,10 +214,8 @@ class ShouldPauseState extends ViewStoryState {
       ];
 }
 
-
 class TryingReuploadingState extends ViewStoryState {
-
-   const TryingReuploadingState({
+  const TryingReuploadingState({
     required super.community,
     required super.stories,
     required super.currentStory,
@@ -218,6 +225,7 @@ class TryingReuploadingState extends ViewStoryState {
     required super.shouldPause,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -240,6 +248,7 @@ class JumpToUnSeenState extends ViewStoryState {
     required super.shouldPause,
     required super.hasManageStoryPermission,
   });
+
   @override
   List<Object> get props => [
         stories ?? [],
@@ -250,4 +259,3 @@ class JumpToUnSeenState extends ViewStoryState {
         shouldPause ?? "",
       ];
 }
-

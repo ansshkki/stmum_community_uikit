@@ -4,6 +4,7 @@ import 'package:amity_uikit_beta_service/v4/social/story/view/bloc/view_story_bl
 import 'package:amity_uikit_beta_service/v4/social/story/view/components/story_video_player/bloc/story_video_player_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_engagement_row.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_upload_progress_row.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,7 +21,6 @@ class AmityStoryBottomRow extends StatelessWidget {
   final bool isCreatedByMe;
   final bool hasModeratorRole;
   final Function onStoryDelete;
-
 
   const AmityStoryBottomRow({
     super.key,
@@ -49,9 +49,15 @@ class AmityStoryBottomRow extends StatelessWidget {
         child: AmityStoryEngagementRow(
           storyId: storyId,
           amityStory: story,
-          isCommunityJoined: BlocProvider.of<ViewStoryBloc>(context).state.isCommunityJoined ?? false,
+          isCommunityJoined:
+              BlocProvider.of<ViewStoryBloc>(context).state.isCommunityJoined ??
+                  false,
           isReactedByMe: isReactedByMe,
-          isAllowedComment: BlocProvider.of<ViewStoryBloc>(context).state.community?.allowCommentInStory ?? false,
+          isAllowedComment: BlocProvider.of<ViewStoryBloc>(context)
+                  .state
+                  .community
+                  ?.allowCommentInStory ??
+              false,
           reachCount: reachCount,
           reactionCount: reactionCount,
           commentCount: commentCount,
@@ -82,7 +88,12 @@ class AmityStoryUploadFailedRow extends StatelessWidget {
   final String storyId;
   final AmityStory story;
   final Function onStoryDelete;
-  const AmityStoryUploadFailedRow({super.key, required this.storyId, required this.story , required this.onStoryDelete});
+
+  const AmityStoryUploadFailedRow(
+      {super.key,
+      required this.storyId,
+      required this.story,
+      required this.onStoryDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +115,9 @@ class AmityStoryUploadFailedRow extends StatelessWidget {
                 width: 16,
               ),
               const SizedBox(width: 8),
-              const Text(
-                "Failed to upload",
-                style: TextStyle(
+              Text(
+                "util.upload_error".tr(),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontFamily: "SF Pro Text",
@@ -117,9 +128,11 @@ class AmityStoryUploadFailedRow extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
+              BlocProvider.of<ViewStoryBloc>(context)
+                  .add(ShoudPauseEvent(shouldPause: true));
               if (story.dataType == AmityStoryDataType.VIDEO) {
-                BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+                BlocProvider.of<StoryVideoPlayerBloc>(context)
+                    .add(const PauseStoryVideoEvent());
               }
               AmityAlertDialogWithThreeActions().show(
                   context: context,
@@ -130,25 +143,33 @@ class AmityStoryUploadFailedRow extends StatelessWidget {
                   actionOneColor: Colors.blue,
                   dismissText: "Cancel",
                   actionOne: () {
-                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(ShoudPauseEvent(shouldPause: false));
                     if (story.dataType == AmityStoryDataType.VIDEO) {
-                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                      BlocProvider.of<StoryVideoPlayerBloc>(context)
+                          .add(const PlayStoryVideoEvent());
                     }
-                    BlocProvider.of<ViewStoryBloc>(context).add(StoryRetryEvent(storyId: storyId, amityStory: story));
+                    BlocProvider.of<ViewStoryBloc>(context).add(
+                        StoryRetryEvent(storyId: storyId, amityStory: story));
                   },
                   actionTwo: () {
-                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(ShoudPauseEvent(shouldPause: false));
                     if (story.dataType == AmityStoryDataType.VIDEO) {
-                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                      BlocProvider.of<StoryVideoPlayerBloc>(context)
+                          .add(const PlayStoryVideoEvent());
                     }
-                    BlocProvider.of<ViewStoryBloc>(context).add(DeleteStoryEvent(storyId: storyId));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(DeleteStoryEvent(storyId: storyId));
                     onStoryDelete();
-                    // 
+                    //
                   },
                   onDismissRequest: () {
-                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(ShoudPauseEvent(shouldPause: false));
                     if (story.dataType == AmityStoryDataType.VIDEO) {
-                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                      BlocProvider.of<StoryVideoPlayerBloc>(context)
+                          .add(const PlayStoryVideoEvent());
                     }
                   });
             },

@@ -6,12 +6,14 @@ import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_compo
 import 'package:amity_uikit_beta_service/v4/social/post_target_selection_page/bloc/post_target_selection_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/utils/Shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PostTargetSelectionPage extends NewBasePage {
   PostTargetSelectionPage({super.key, required super.pageId});
+
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -40,9 +42,10 @@ class PostTargetSelectionPage extends NewBasePage {
               backgroundColor: theme.backgroundColor,
               appBar: AppBar(
                 backgroundColor: theme.backgroundColor,
-                title: const Text(
-                  'Post to',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                title: Text(
+                  "post.share".tr(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 17),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(
@@ -119,7 +122,7 @@ class PostTargetSelectionPage extends NewBasePage {
                                   "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
                         ),
                       ),
-                      title: Text('My timeline',
+                      title: Text("user.timeline".tr(),
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
@@ -141,7 +144,7 @@ class PostTargetSelectionPage extends NewBasePage {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'My Communities',
+                        "user.communities".tr(),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -342,8 +345,12 @@ class PostTargetSelectionPage extends NewBasePage {
           Container(
             width: 64,
             height: 56,
-            padding:
-                const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
+            padding: const EdgeInsets.only(
+              top: 8,
+              left: 16,
+              right: 8,
+              bottom: 8,
+            ),
             child: Container(
               width: 40,
               height: 40,
@@ -355,17 +362,20 @@ class PostTargetSelectionPage extends NewBasePage {
               ),
             ),
           ),
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const SizedBox(height: 14.0),
-            Container(
-              width: 180,
-              height: 8,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 14.0),
+              Container(
+                width: 180,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ],
       ),
     );

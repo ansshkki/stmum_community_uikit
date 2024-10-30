@@ -1,12 +1,16 @@
 import 'package:amity_sdk/amity_sdk.dart';
-import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/view/bloc/view_story_bloc.dart';
-import 'package:amity_uikit_beta_service/v4/social/story/view/components/story_video_player/bloc/story_video_player_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-void amityStoryModalBottomSheetOverFlowMenu({required BuildContext context, required String storyId, required Function onDeleted , required AmityStory story , required Function (String) deleteClicked}) {
+void amityStoryModalBottomSheetOverFlowMenu(
+    {required BuildContext context,
+    required String storyId,
+    required Function onDeleted,
+    required AmityStory story,
+    required Function(String) deleteClicked}) {
   showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -14,26 +18,31 @@ void amityStoryModalBottomSheetOverFlowMenu({required BuildContext context, requ
         return AmityStoryModelBottomSheet(
           storyId: storyId,
           onDeleted: onDeleted,
-          deleteClicked: deleteClicked, 
+          deleteClicked: deleteClicked,
           // parentContext: context,
         );
-      }).then((value) {
-  });
+      }).then((value) {});
 }
 
 class AmityStoryModelBottomSheet extends StatelessWidget {
   final String storyId;
   final Function onDeleted;
-  final Function (String) deleteClicked;
+  final Function(String) deleteClicked;
+
   // final BuildContext parentContext ;
   // final Function (String) deleteStory;
-  const AmityStoryModelBottomSheet({super.key, required this.storyId, required this.onDeleted  , required this.deleteClicked});
+  const AmityStoryModelBottomSheet(
+      {super.key,
+      required this.storyId,
+      required this.onDeleted,
+      required this.deleteClicked});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ViewStoryBloc(),
-      child: BlocConsumer<ViewStoryBloc, ViewStoryState>(listener: (context, state) {
+      child: BlocConsumer<ViewStoryBloc, ViewStoryState>(
+          listener: (context, state) {
         if (state is StoryDeletedState) {
           onDeleted();
           Navigator.of(context).pop();
@@ -64,10 +73,8 @@ class AmityStoryModelBottomSheet extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 22),
                 child: AmityBottomSheetActionItem(
                   icon: "assets/Icons/ic_bin_red.svg",
-                  text: 'Delete story',
-                  onTap: () {
-                    deleteClicked(storyId);
-                  },
+                  text: "delete.story".tr(),
+                  onTap: () => deleteClicked(storyId),
                 ),
               ),
             ],
@@ -82,7 +89,9 @@ class AmityBottomSheetActionItem extends StatelessWidget {
   final String icon;
   final String text;
   final Function onTap;
-  const AmityBottomSheetActionItem({super.key, required this.icon, required this.text, required this.onTap});
+
+  const AmityBottomSheetActionItem(
+      {super.key, required this.icon, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

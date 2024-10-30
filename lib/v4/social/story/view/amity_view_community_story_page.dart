@@ -9,6 +9,7 @@ import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_cus
 import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_single_segment_timer_element.dart';
 import 'package:amity_uikit_beta_service/v4/utils/config_provider_widget.dart';
 import 'package:amity_uikit_beta_service/v4/utils/create_story/bloc/create_story_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +26,8 @@ class AmityViewCommunityStoryPage extends StatefulWidget {
   final Function? lastSegmentReached;
   final Function(AmityCommunity)? navigateToCommunityProfilePage;
   static VideoPlayerController? videoPlayerController;
-  AmityViewCommunityStoryPage({
+
+  const AmityViewCommunityStoryPage({
     super.key,
     required this.targetId,
     required this.targetType,
@@ -39,10 +41,12 @@ class AmityViewCommunityStoryPage extends StatefulWidget {
   });
 
   @override
-  State<AmityViewCommunityStoryPage> createState() => _AmityViewCommunityStoryPageState();
+  State<AmityViewCommunityStoryPage> createState() =>
+      _AmityViewCommunityStoryPageState();
 }
 
-class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPage> {
+class _AmityViewCommunityStoryPageState
+    extends State<AmityViewCommunityStoryPage> {
   final PageController _pageController = PageController();
   AmityComment? replyToComment;
 
@@ -57,9 +61,12 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
         AmityStorySingleSegmentTimerElement.currentValue = -1;
       });
     });
-    BlocProvider.of<ViewStoryBloc>(context).add(FetchStoryTarget(communityId: widget.targetId));
-    BlocProvider.of<ViewStoryBloc>(context).add(FetchActiveStories(communityId: widget.targetId));
-    BlocProvider.of<ViewStoryBloc>(context).add(FetchManageStoryPermission(communityId: widget.targetId));
+    BlocProvider.of<ViewStoryBloc>(context)
+        .add(FetchStoryTarget(communityId: widget.targetId));
+    BlocProvider.of<ViewStoryBloc>(context)
+        .add(FetchActiveStories(communityId: widget.targetId));
+    BlocProvider.of<ViewStoryBloc>(context)
+        .add(FetchManageStoryPermission(communityId: widget.targetId));
 
     super.initState();
   }
@@ -88,7 +95,7 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
               if (state is StoryDeletedEvent) {
                 AmityCustomSnackBar.show(
                   context,
-                  'Story deleted',
+                  "delete.deleted.story".tr(),
                   SvgPicture.asset(
                     'assets/Icons/ic_check_circled_white.svg',
                     package: 'amity_uikit_beta_service',
@@ -122,12 +129,16 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                             ? (stories.isNotEmpty)
                                 ? PageView.builder(
                                     onPageChanged: ((value) {
-                                      BlocProvider.of<ViewStoryBloc>(context).add(NewCurrentStory(currentStroy: stories[value]));
+                                      BlocProvider.of<ViewStoryBloc>(context)
+                                          .add(NewCurrentStory(
+                                              currentStroy: stories[value]));
                                     }),
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     controller: _pageController,
                                     itemCount: stories.length,
-                                    itemBuilder: (BuildContext context, int index) {
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
                                       return Column(
                                         children: [
                                           Flexible(
@@ -136,66 +147,141 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                                               width: double.infinity,
                                               height: double.infinity,
                                               child: AmityStoryBodyRow(
-                                                  dataType: stories[index].dataType!,
+                                                  dataType:
+                                                      stories[index].dataType!,
                                                   data: stories[index].data!,
-                                                  state: stories[index].syncState!,
-                                                  items: stories[index].storyItems,
-                                                  isVisible: _currentPage == index,
+                                                  state:
+                                                      stories[index].syncState!,
+                                                  items:
+                                                      stories[index].storyItems,
+                                                  isVisible:
+                                                      _currentPage == index,
                                                   onTap: (onTap) {
-                                                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
-                                                    AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                                    stories[index].analytics().markAsSeen();
+                                                    BlocProvider.of<
+                                                                StoryVideoPlayerBloc>(
+                                                            context)
+                                                        .add(
+                                                            const DisposeStoryVideoPlayerEvent());
+                                                    AmityStorySingleSegmentTimerElement
+                                                        .currentValue = -1;
+                                                    stories[index]
+                                                        .analytics()
+                                                        .markAsSeen();
                                                     moveSegment(
                                                       shouldMoveToNext: onTap,
-                                                      totalSegments: stories.length,
+                                                      totalSegments:
+                                                          stories.length,
                                                       firstSegmentReached: () {
-                                                        widget.firstSegmentReached!();
+                                                        widget
+                                                            .firstSegmentReached!();
                                                       },
                                                       lastSegmentReached: () {
-                                                        BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
-                                                        AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                                        widget.lastSegmentReached!();
+                                                        BlocProvider.of<
+                                                                    StoryVideoPlayerBloc>(
+                                                                context)
+                                                            .add(
+                                                                const DisposeStoryVideoPlayerEvent());
+                                                        AmityStorySingleSegmentTimerElement
+                                                            .currentValue = -1;
+                                                        widget
+                                                            .lastSegmentReached!();
                                                       },
                                                     );
                                                   },
                                                   onHold: (isHold) {
-                                                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: isHold));
-                                                    if (stories[index].dataType == AmityStoryDataType.VIDEO) {
+                                                    BlocProvider.of<
+                                                                ViewStoryBloc>(
+                                                            context)
+                                                        .add(ShoudPauseEvent(
+                                                            shouldPause:
+                                                                isHold));
+                                                    if (stories[index]
+                                                            .dataType ==
+                                                        AmityStoryDataType
+                                                            .VIDEO) {
                                                       if (isHold) {
-                                                        BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+                                                        BlocProvider.of<
+                                                                    StoryVideoPlayerBloc>(
+                                                                context)
+                                                            .add(
+                                                                const PauseStoryVideoEvent());
                                                       } else {
-                                                        BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                                                        BlocProvider.of<
+                                                                    StoryVideoPlayerBloc>(
+                                                                context)
+                                                            .add(
+                                                                const PlayStoryVideoEvent());
                                                       }
                                                     }
                                                   },
                                                   onSwipeUp: () {
-                                                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
-                                                    if (stories[index].dataType == AmityStoryDataType.VIDEO) {
-                                                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+                                                    BlocProvider.of<
+                                                                ViewStoryBloc>(
+                                                            context)
+                                                        .add(ShoudPauseEvent(
+                                                            shouldPause: true));
+                                                    if (stories[index]
+                                                            .dataType ==
+                                                        AmityStoryDataType
+                                                            .VIDEO) {
+                                                      BlocProvider.of<
+                                                                  StoryVideoPlayerBloc>(
+                                                              context)
+                                                          .add(
+                                                              const PauseStoryVideoEvent());
                                                     }
-                                                    var shouldAllowComment = BlocProvider.of<ViewStoryBloc>(context).state.community?.allowCommentInStory ?? false;
+                                                    var shouldAllowComment =
+                                                        BlocProvider.of<ViewStoryBloc>(
+                                                                    context)
+                                                                .state
+                                                                .community
+                                                                ?.allowCommentInStory ??
+                                                            false;
 
-                                                    openCommentTraySheet(context, stories[index], shouldAllowComment);
+                                                    openCommentTraySheet(
+                                                        context,
+                                                        stories[index],
+                                                        shouldAllowComment);
                                                   },
                                                   onSwipeDown: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  onHyperlinkClick: (hyperLink) async {
-                                                    if (hyperLink.url == null || hyperLink.url!.isEmpty) {
+                                                  onHyperlinkClick:
+                                                      (hyperLink) async {
+                                                    if (hyperLink.url == null ||
+                                                        hyperLink
+                                                            .url!.isEmpty) {
                                                       return;
                                                     }
 
-                                                    stories[index].analytics().markLinkAsClicked();
+                                                    stories[index]
+                                                        .analytics()
+                                                        .markLinkAsClicked();
 
-                                                    if (hyperLink.url!.contains('http') || hyperLink.url!.contains('https')) {
-                                                      final Uri url = Uri.parse(hyperLink.url!);
-                                                      if (!await launchUrl(url)) {
-                                                        throw Exception('Could not launch $url');
+                                                    if (hyperLink.url!
+                                                            .contains('http') ||
+                                                        hyperLink.url!.contains(
+                                                            'https')) {
+                                                      final Uri url = Uri.parse(
+                                                          hyperLink.url!);
+                                                      if (!await launchUrl(
+                                                          url)) {
+                                                        throw Exception(
+                                                            "util.launch_error"
+                                                                .tr(args: [
+                                                          "$url"
+                                                        ]));
                                                       }
                                                     } else {
-                                                      final Uri url = Uri.parse("http://${hyperLink.url}");
-                                                      if (!await launchUrl(url)) {
-                                                        throw Exception('Could not launch $url');
+                                                      final Uri url = Uri.parse(
+                                                          "http://${hyperLink.url}");
+                                                      if (!await launchUrl(
+                                                          url)) {
+                                                        throw Exception(
+                                                            "util.launch_error"
+                                                                .tr(args: [
+                                                          "$url"
+                                                        ]));
                                                       }
                                                     }
                                                   }),
@@ -209,27 +295,56 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                                               width: double.infinity,
                                               color: Colors.black,
                                               child: AmityStoryBottomRow(
-                                                storyId: stories[index].storyId!,
+                                                storyId:
+                                                    stories[index].storyId!,
                                                 story: stories[index],
                                                 target: state.storyTarget,
-                                                state: stories[index].syncState!,
-                                                reachCount: stories[index].reach,
-                                                commentCount: stories[index].commentCount,
-                                                reactionCount: stories[index].reactionCount,
+                                                state:
+                                                    stories[index].syncState!,
+                                                reachCount:
+                                                    stories[index].reach,
+                                                commentCount:
+                                                    stories[index].commentCount,
+                                                reactionCount: stories[index]
+                                                    .reactionCount,
                                                 onStoryDelete: () {
-                                                  AmityCustomSnackBar.show(context, 'Story deleted', SvgPicture.asset('assets/Icons/ic_check_circled_white.svg', package: 'amity_uikit_beta_service', height: 20, color: Colors.white), textColor: Colors.white);
-                                                  AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                                  BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                                                  AmityCustomSnackBar.show(
+                                                      context,
+                                                      "delete.deleted.story".tr(),
+                                                      SvgPicture.asset(
+                                                          'assets/Icons/ic_check_circled_white.svg',
+                                                          package:
+                                                              'amity_uikit_beta_service',
+                                                          height: 20,
+                                                          color: Colors.white),
+                                                      textColor: Colors.white);
+                                                  AmityStorySingleSegmentTimerElement
+                                                      .currentValue = -1;
+                                                  BlocProvider.of<
+                                                              StoryVideoPlayerBloc>(
+                                                          context)
+                                                      .add(
+                                                          const DisposeStoryVideoPlayerEvent());
 
                                                   if (state.stories == null) {
-                                                    widget.lastSegmentReached!();
-                                                  } else if (state.stories!.length == 1 || state.stories!.isEmpty) {
-                                                    widget.lastSegmentReached!();
+                                                    widget
+                                                        .lastSegmentReached!();
+                                                  } else if (state.stories!
+                                                              .length ==
+                                                          1 ||
+                                                      state.stories!.isEmpty) {
+                                                    widget
+                                                        .lastSegmentReached!();
                                                   }
                                                 },
-                                                isReactedByMe: stories[index].myReactions.isNotEmpty,
-                                                isCreatedByMe: stories[index].creatorId == AmityCoreClient.getUserId(),
-                                                hasModeratorRole: state.hasManageStoryPermission,
+                                                isReactedByMe: stories[index]
+                                                    .myReactions
+                                                    .isNotEmpty,
+                                                isCreatedByMe: stories[index]
+                                                        .creatorId ==
+                                                    AmityCoreClient.getUserId(),
+                                                hasModeratorRole: state
+                                                    .hasManageStoryPermission,
                                               ),
                                             ),
                                           ),
@@ -253,7 +368,7 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                                 onStoryDelete: () {
                                   AmityCustomSnackBar.show(
                                     context,
-                                    'Story deleted',
+                                    "delete.deleted.story".tr(),
                                     SvgPicture.asset(
                                       'assets/Icons/ic_check_circled_white.svg',
                                       package: 'amity_uikit_beta_service',
@@ -262,18 +377,25 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                                     ),
                                     textColor: Colors.white,
                                   );
-                                  AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                  BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                                  AmityStorySingleSegmentTimerElement
+                                      .currentValue = -1;
+                                  BlocProvider.of<StoryVideoPlayerBloc>(context)
+                                      .add(
+                                          const DisposeStoryVideoPlayerEvent());
 
                                   if (state.stories == null) {
                                     widget.lastSegmentReached!();
-                                  } else if (state.stories!.length == 1 || state.stories!.isEmpty) {
+                                  } else if (state.stories!.length == 1 ||
+                                      state.stories!.isEmpty) {
                                     widget.lastSegmentReached!();
                                   }
                                 },
                                 moveToNextSegment: () {
-                                  AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                  stories[_currentPage].analytics().markAsSeen();
+                                  AmityStorySingleSegmentTimerElement
+                                      .currentValue = -1;
+                                  stories[_currentPage]
+                                      .analytics()
+                                      .markAsSeen();
                                   moveSegment(
                                     shouldMoveToNext: true,
                                     totalSegments: stories.length,
@@ -281,31 +403,45 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
                                       widget.firstSegmentReached!();
                                     },
                                     lastSegmentReached: () {
-                                      AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                                      AmityStorySingleSegmentTimerElement
+                                          .currentValue = -1;
+                                      BlocProvider.of<StoryVideoPlayerBloc>(
+                                              context)
+                                          .add(
+                                              const DisposeStoryVideoPlayerEvent());
                                       widget.lastSegmentReached!();
                                     },
                                   );
                                 },
                                 onCloseClicked: () {
-                                  AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                  BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+                                  AmityStorySingleSegmentTimerElement
+                                      .currentValue = -1;
+                                  BlocProvider.of<StoryVideoPlayerBloc>(context)
+                                      .add(
+                                          const DisposeStoryVideoPlayerEvent());
                                   widget.lastSegmentReached!();
                                 },
                                 navigateToCreatePage: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) {
                                     return CreateStoryConfigProviderWidget(
-                                      targetType: AmityStoryTargetType.COMMUNITY,
+                                      targetType:
+                                          AmityStoryTargetType.COMMUNITY,
                                       targetId: state.storyTarget!.targetId,
                                       pageId: 'create_story_page',
                                     );
                                   }));
                                 },
-                                navigateToCommunityProfilePage: widget.navigateToCommunityProfilePage ??
-                                    (community) {
-                                      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
-                                      AmityStorySingleSegmentTimerElement.currentValue = -1;
-                                    })
+                                navigateToCommunityProfilePage:
+                                    widget.navigateToCommunityProfilePage ??
+                                        (community) {
+                                          BlocProvider.of<StoryVideoPlayerBloc>(
+                                                  context)
+                                              .add(
+                                                  const DisposeStoryVideoPlayerEvent());
+                                          AmityStorySingleSegmentTimerElement
+                                              .currentValue = -1;
+                                        })
                             : Container()
                         : Container(),
                   ],
@@ -358,10 +494,13 @@ class _AmityViewCommunityStoryPageState extends State<AmityViewCommunityStoryPag
 
 // Widget of the comments tray in the bottomSheet
 
-void openCommentTraySheet(BuildContext context, AmityStory story, bool shouldAllowComments) {
-  BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
+void openCommentTraySheet(
+    BuildContext context, AmityStory story, bool shouldAllowComments) {
+  BlocProvider.of<ViewStoryBloc>(context)
+      .add(ShoudPauseEvent(shouldPause: true));
   if (story.dataType == AmityStoryDataType.VIDEO) {
-    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+    BlocProvider.of<StoryVideoPlayerBloc>(context)
+        .add(const PauseStoryVideoEvent());
   }
   showModalBottomSheet(
       isScrollControlled: true,
@@ -372,7 +511,8 @@ void openCommentTraySheet(BuildContext context, AmityStory story, bool shouldAll
       builder: (BuildContext context) {
         return SafeArea(
           child: Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, top: 10),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom, top: 10),
             child: DraggableScrollableSheet(
                 initialChildSize: 0.95, //set this as you want
                 maxChildSize: 0.95, //set this as you want
@@ -397,10 +537,11 @@ void openCommentTraySheet(BuildContext context, AmityStory story, bool shouldAll
           ),
         );
       }).whenComplete(() {
-    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+    BlocProvider.of<ViewStoryBloc>(context)
+        .add(ShoudPauseEvent(shouldPause: false));
     if (story.dataType == AmityStoryDataType.VIDEO) {
-      BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+      BlocProvider.of<StoryVideoPlayerBloc>(context)
+          .add(const PlayStoryVideoEvent());
     }
   });
 }
-

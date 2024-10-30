@@ -56,8 +56,10 @@ class AmityStoryEngagementRow extends StatelessWidget {
             children: [
               AmityStoryCommentCountElement(
                   onClick: () {
-                    BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
-                    BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(ShoudPauseEvent(shouldPause: true));
+                    BlocProvider.of<StoryVideoPlayerBloc>(context)
+                        .add(const PauseStoryVideoEvent());
                     openCommentTraySheet(context, amityStory, isAllowedComment);
                   },
                   count: "$commentCount"),
@@ -66,9 +68,11 @@ class AmityStoryEngagementRow extends StatelessWidget {
                 count: "$reactionCount",
                 onClick: (addReaction) {
                   if (addReaction) {
-                    BlocProvider.of<ViewStoryBloc>(context).add(AddReactionEvent(storyId: storyId));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(AddReactionEvent(storyId: storyId));
                   } else {
-                    BlocProvider.of<ViewStoryBloc>(context).add(RemoveReactionEvent(storyId: storyId));
+                    BlocProvider.of<ViewStoryBloc>(context)
+                        .add(RemoveReactionEvent(storyId: storyId));
                   }
                 },
                 isReactedByMe: isReactedByMe,
@@ -80,6 +84,4 @@ class AmityStoryEngagementRow extends StatelessWidget {
       ),
     );
   }
-
-  
 }

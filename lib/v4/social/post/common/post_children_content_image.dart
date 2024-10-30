@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class PostContentImage extends StatelessWidget {
   final List<AmityPost> posts;
+
   const PostContentImage({super.key, required this.posts});
 
   @override
@@ -63,44 +64,51 @@ class PostContentImage extends StatelessWidget {
     Widget buildTwoImages(List<AmityPost> posts) {
       return AspectRatio(
         aspectRatio: 1,
-        child: Row(children: [
-          Expanded(
+        child: Row(
+          children: [
+            Expanded(
               child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ImagePostViewer(
-                    posts: posts,
-                    initialIndex: 0,
-                  ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ImagePostViewer(
+                        posts: posts,
+                        initialIndex: 0,
+                      ),
+                    ),
+                  );
+                },
+                child: backgroundImage(
+                  getURL(posts[0].data!),
+                  0,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomLeft: Radius.circular(8)),
                 ),
-              );
-            },
-            child: backgroundImage(getURL(posts[0].data!), 0,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8))),
-          )),
-          Expanded(
+              ),
+            ),
+            Expanded(
               child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ImagePostViewer(
-                    posts: posts,
-                    initialIndex: 1,
-                  ),
-                ),
-              );
-            },
-            child: backgroundImage(getURL(posts[1].data!), 1,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8))),
-          ))
-        ]),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ImagePostViewer(
+                        posts: posts,
+                        initialIndex: 1,
+                      ),
+                    ),
+                  );
+                },
+                child: backgroundImage(getURL(posts[1].data!), 1,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8))),
+              ),
+            )
+          ],
+        ),
       );
     }
 
@@ -110,9 +118,8 @@ class PostContentImage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-                child: GestureDetector(
-              onTap: () {
-                Navigator.push(
+              child: GestureDetector(
+                onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ImagePostViewer(
@@ -120,37 +127,34 @@ class PostContentImage extends StatelessWidget {
                       initialIndex: 0,
                     ),
                   ),
-                );
-              },
-              child: backgroundImage(getURL(posts[0].data!), 0,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8))),
-            )),
+                ),
+                child: backgroundImage(getURL(posts[0].data!), 0,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
+              ),
+            ),
             Expanded(
               child: Row(
                 children: [
                   Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImagePostViewer(
-                            posts: posts,
-                            initialIndex: 1,
-                          ),
-                        ),
-                      );
-                    },
-                    child: backgroundImage(getURL(posts[1].data!), 1,
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(8))),
-                  )),
+                    child: GestureDetector(
+                        onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ImagePostViewer(
+                                  posts: posts,
+                                  initialIndex: 1,
+                                ),
+                              ),
+                            ),
+                        child: backgroundImage(getURL(posts[1].data!), 1,
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(8)))),
+                  ),
                   Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                    child: GestureDetector(
+                      onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ImagePostViewer(
@@ -158,12 +162,12 @@ class PostContentImage extends StatelessWidget {
                             initialIndex: 2,
                           ),
                         ),
-                      );
-                    },
-                    child: backgroundImage(getURL(posts[2].data!), 2,
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(8))),
-                  )),
+                      ),
+                      child: backgroundImage(getURL(posts[2].data!), 2,
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(8))),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -178,9 +182,8 @@ class PostContentImage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-                child: GestureDetector(
-              onTap: () {
-                Navigator.push(
+              child: GestureDetector(
+                onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ImagePostViewer(
@@ -188,28 +191,26 @@ class PostContentImage extends StatelessWidget {
                       initialIndex: 0,
                     ),
                   ),
-                );
-              },
-              child: backgroundImage(getURL(posts[0].data!), 0,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8))),
-            )),
+                ),
+                child: backgroundImage(getURL(posts[0].data!), 0,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8))),
+              ),
+            ),
             Row(
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImagePostViewer(
-                            posts: posts,
-                            initialIndex: 1,
-                          ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImagePostViewer(
+                          posts: posts,
+                          initialIndex: 1,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: backgroundImage(getURL(posts[1].data!), 1,
@@ -220,17 +221,15 @@ class PostContentImage extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImagePostViewer(
-                            posts: posts,
-                            initialIndex: 2,
-                          ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImagePostViewer(
+                          posts: posts,
+                          initialIndex: 2,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: backgroundImage(getURL(posts[2].data!), 2),
@@ -239,23 +238,20 @@ class PostContentImage extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImagePostViewer(
-                            posts: posts,
-                            initialIndex: 3,
-                          ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImagePostViewer(
+                          posts: posts,
+                          initialIndex: 3,
                         ),
-                      );
-                    },
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: backgroundImage(getURL(posts[3].data!), 3,
-                          borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(8))),
+                      ),
                     ),
+                    child: AspectRatio(
+                        aspectRatio: 1,
+                        child: backgroundImage(getURL(posts[3].data!), 3,
+                            borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(8)))),
                   ),
                 ),
               ],
@@ -278,9 +274,8 @@ class PostContentImage extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ImagePostViewer(
@@ -288,41 +283,37 @@ class PostContentImage extends StatelessWidget {
                         initialIndex: 0,
                       ),
                     ),
-                  );
-                },
-                child: backgroundImage(getURL(posts[0].data!), 0,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8))),
-              )),
+                  ),
+                  child: backgroundImage(getURL(posts[0].data!), 0,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8))),
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImagePostViewer(
-                              posts: posts,
-                              initialIndex: 1,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImagePostViewer(
+                            posts: posts,
+                            initialIndex: 1,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundImage(getURL(posts[1].data!), 1,
                             borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                            )),
+                                bottomLeft: Radius.circular(8))),
                       ),
                     ),
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ImagePostViewer(
@@ -330,8 +321,7 @@ class PostContentImage extends StatelessWidget {
                               initialIndex: 2,
                             ),
                           ),
-                        );
-                      },
+                        ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundImage(getURL(posts[2].data!), 2),
@@ -340,8 +330,7 @@ class PostContentImage extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ImagePostViewer(
@@ -349,8 +338,7 @@ class PostContentImage extends StatelessWidget {
                               initialIndex: 3,
                             ),
                           ),
-                        );
-                      },
+                        ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Stack(

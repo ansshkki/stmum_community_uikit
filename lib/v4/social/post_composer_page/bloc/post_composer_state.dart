@@ -31,7 +31,7 @@ class PostComposerSelectedFiles extends PostComposerState {
 }
 
 class PostComposerTextChangeState extends PostComposerState {
-  PostComposerTextChangeState({required this.text});
+  const PostComposerTextChangeState({required this.text});
 
   final String text;
 

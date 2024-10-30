@@ -5,7 +5,8 @@ class AmityStoryReactionCountElement extends StatelessWidget {
   final String count;
   final bool isReactedByMe;
   final bool isCommunityJoined;
-  final Function (bool) onClick;
+  final Function(bool) onClick;
+
   const AmityStoryReactionCountElement({
     super.key,
     required this.count,
@@ -19,12 +20,11 @@ class AmityStoryReactionCountElement extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (isCommunityJoined) {
-          if(isReactedByMe){
+          if (isReactedByMe) {
             onClick(false);
-          }else{
+          } else {
             onClick(true);
           }
-          
         }
       },
       child: Container(

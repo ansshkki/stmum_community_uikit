@@ -7,13 +7,14 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'view_story_event.dart';
+
 part 'view_story_state.dart';
 
 class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
   late StoryLiveCollection storyLiveCollection;
-    AmityStorySortingOrder _sortOption = AmityStorySortingOrder.FIRST_CREATED;
-    late StreamSubscription<List<AmityStory>> _subscription;
-    late StreamSubscription<AmityStoryTarget> _subscriptionTarget;
+  AmityStorySortingOrder _sortOption = AmityStorySortingOrder.FIRST_CREATED;
+  late StreamSubscription<List<AmityStory>> _subscription;
+  late StreamSubscription<AmityStoryTarget> _subscriptionTarget;
 
   ViewStoryBloc()
       : super(
@@ -28,7 +29,6 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
             hasManageStoryPermission: false,
           ),
         ) {
-    
     on<ViewStoryEvent>(
       (event, emit) {},
     );
@@ -97,9 +97,17 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
               .createImageStory(
                 targetType: state.storyTarget!.targetType,
                 targetId: state.storyTarget!.targetId,
-                imageFile: (event.amityStory.data as ImageStoryData).image.hasLocalPreview != null ? File((event.amityStory.data as ImageStoryData).image.getFilePath!) : File(""),
+                imageFile: (event.amityStory.data as ImageStoryData)
+                            .image
+                            .hasLocalPreview !=
+                        null
+                    ? File((event.amityStory.data as ImageStoryData)
+                        .image
+                        .getFilePath!)
+                    : File(""),
                 storyItems: event.amityStory.storyItems,
-                imageDisplayMode: (event.amityStory.data as ImageStoryData).imageDisplayMode,
+                imageDisplayMode:
+                    (event.amityStory.data as ImageStoryData).imageDisplayMode,
               )
               .then(
                 (value) => null,
@@ -113,7 +121,11 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
               .createVideoStory(
                 targetType: state.storyTarget!.targetType,
                 targetId: state.storyTarget!.targetId,
-                videoFile: data.video.hasLocalPreview != null ? File((event.amityStory.data as VideoStoryData).video.getFilePath!) : File(""),
+                videoFile: data.video.hasLocalPreview != null
+                    ? File((event.amityStory.data as VideoStoryData)
+                        .video
+                        .getFilePath!)
+                    : File(""),
                 storyItems: event.amityStory.storyItems,
               )
               .then(
@@ -127,12 +139,24 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
     );
 
     on<NewCurrentStory>((event, emit) {
-      emit(NewCurrentStoryState(community: state.community, stories: state.stories, shouldPause: state.shouldPause, currentStory: event.currentStroy, jumpToUnSeen: state.jumpToUnSeen, isCommunityJoined: state.isCommunityJoined, storyTarget: state.storyTarget, hasManageStoryPermission: state.hasManageStoryPermission));
+      emit(NewCurrentStoryState(
+          community: state.community,
+          stories: state.stories,
+          shouldPause: state.shouldPause,
+          currentStory: event.currentStroy,
+          jumpToUnSeen: state.jumpToUnSeen,
+          isCommunityJoined: state.isCommunityJoined,
+          storyTarget: state.storyTarget,
+          hasManageStoryPermission: state.hasManageStoryPermission));
     });
 
     on<FetchManageStoryPermission>((event, emit) {
-      var canManageStories = AmityCoreClient.hasPermission(AmityPermission.MANAGE_COMMUNITY_STORY).atCommunity(event.communityId).check();
-      add(ManageStoryPermissionFetched(hasManageStoryPermission: canManageStories));
+      var canManageStories =
+          AmityCoreClient.hasPermission(AmityPermission.MANAGE_COMMUNITY_STORY)
+              .atCommunity(event.communityId)
+              .check();
+      add(ManageStoryPermissionFetched(
+          hasManageStoryPermission: canManageStories));
     });
 
     on<AddReactionEvent>((event, emit) {
@@ -177,19 +201,33 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
     on<StoryTargetFetched>(
       (event, emit) {
         if (event.storyTarget is AmityStoryTargetCommunity) {
-          emit(ViewStoryTargetFetched(storyTarget: event.storyTarget, community: (event.storyTarget as AmityStoryTargetCommunity).community, stories: state.stories, shouldPause: state.shouldPause, jumpToUnSeen: state.jumpToUnSeen, hasManageStoryPermission: state.hasManageStoryPermission, currentStory: state.currentStory, isCommunityJoined: state.isCommunityJoined));
-        } else {
-          AmityCommunity? commnunity = (state.storyTarget as AmityStoryTargetCommunity).community;
-          emit(
-            ViewStoryTargetFetched(
+          emit(ViewStoryTargetFetched(
               storyTarget: event.storyTarget,
-              community: state.storyTarget != null ? (state.storyTarget as AmityStoryTargetCommunity).community : null,
+              community:
+                  (event.storyTarget as AmityStoryTargetCommunity).community,
               stories: state.stories,
               shouldPause: state.shouldPause,
               jumpToUnSeen: state.jumpToUnSeen,
               hasManageStoryPermission: state.hasManageStoryPermission,
               currentStory: state.currentStory,
-              isCommunityJoined: commnunity != null ? commnunity.isJoined : state.isCommunityJoined,
+              isCommunityJoined: state.isCommunityJoined));
+        } else {
+          AmityCommunity? community =
+              (state.storyTarget as AmityStoryTargetCommunity).community;
+          emit(
+            ViewStoryTargetFetched(
+              storyTarget: event.storyTarget,
+              community: state.storyTarget != null
+                  ? (state.storyTarget as AmityStoryTargetCommunity).community
+                  : null,
+              stories: state.stories,
+              shouldPause: state.shouldPause,
+              jumpToUnSeen: state.jumpToUnSeen,
+              hasManageStoryPermission: state.hasManageStoryPermission,
+              currentStory: state.currentStory,
+              isCommunityJoined: community != null
+                  ? community.isJoined
+                  : state.isCommunityJoined,
             ),
           );
         }
@@ -198,7 +236,7 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
 
     on<FetchStoryTarget>(
       (event, emit) {
-       _subscriptionTarget =  AmitySocialClient.newStoryRepository()
+        _subscriptionTarget = AmitySocialClient.newStoryRepository()
             .live
             .getStoryTaregt(
               targetType: AmityStoryTargetType.COMMUNITY,
@@ -235,8 +273,18 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
     );
 
     on<FetchActiveStories>((event, emit) {
-      storyLiveCollection = StoryLiveCollection(request: () => AmitySocialClient.newStoryRepository().getActiveStories(targetId: event.communityId, targetType: AmityStoryTargetType.COMMUNITY, orderBy: _sortOption).build());
-      _subscription =  storyLiveCollection.getStreamController().stream.asBroadcastStream().listen((stoies) {
+      storyLiveCollection = StoryLiveCollection(
+          request: () => AmitySocialClient.newStoryRepository()
+              .getActiveStories(
+                  targetId: event.communityId,
+                  targetType: AmityStoryTargetType.COMMUNITY,
+                  orderBy: _sortOption)
+              .build());
+      _subscription = storyLiveCollection
+          .getStreamController()
+          .stream
+          .asBroadcastStream()
+          .listen((stoies) {
         add(ActiveStoriesFetched(stories: stoies));
       });
       storyLiveCollection.getData();
@@ -245,22 +293,30 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
     on<ActiveStoriesFetched>(
       (event, emit) {
         if (event.stories.isNotEmpty) {
-          AmityCommunity? commnunity = state.storyTarget != null ? (state.storyTarget as AmityStoryTargetCommunity).community ?? null : null;
+          AmityCommunity? community = state.storyTarget != null
+              ? (state.storyTarget as AmityStoryTargetCommunity).community ??
+                  null
+              : null;
           emit(
             ActiveStoriesFetchedState(
               storyTarget: state.storyTarget,
               shouldPause: state.shouldPause,
-              community: state.storyTarget != null ? (state.storyTarget as AmityStoryTargetCommunity).community : null,
+              community: state.storyTarget != null
+                  ? (state.storyTarget as AmityStoryTargetCommunity).community
+                  : null,
               stories: event.stories,
               hasManageStoryPermission: state.hasManageStoryPermission,
               currentStory: state.currentStory,
               jumpToUnSeen: state.jumpToUnSeen,
-              isCommunityJoined: commnunity != null ? commnunity.isJoined : state.isCommunityJoined,
+              isCommunityJoined: community != null
+                  ? community.isJoined
+                  : state.isCommunityJoined,
             ),
           );
 
           if (event.stories.isNotEmpty) {
-            var firstUnseenIndex = state.stories?.indexWhere((element) => element.isSeen() == false);
+            var firstUnseenIndex = state.stories
+                ?.indexWhere((element) => element.isSeen() == false);
             if (firstUnseenIndex != null) {
               if (firstUnseenIndex != -1) {
                 print("Jumping to unseen story at index: $firstUnseenIndex");

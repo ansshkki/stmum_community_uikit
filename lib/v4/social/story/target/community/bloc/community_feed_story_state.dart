@@ -15,7 +15,7 @@ class CommunityFeedStoryState {
       this.haveStoryPermission = false,
       this.community});
 
-  copywith({
+  copyWith({
     List<AmityStory>? stories,
     AmityStoryTarget? storyTarget,
     bool? haveStoryPermission,

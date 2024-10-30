@@ -41,19 +41,20 @@ class AmityNotificaion {
   String? targetDisplayName;
   String? targetImageUrl;
 
-  AmityNotificaion(
-      {description,
-      networkId,
-      userId,
-      verb,
-      targetId,
-      targetGroup,
-      imageUrl,
-      targetType,
-      hasRead,
-      lastUpdate,
-      actors,
-      actorsCount});
+  AmityNotificaion({
+    description,
+    networkId,
+    userId,
+    verb,
+    targetId,
+    targetGroup,
+    imageUrl,
+    targetType,
+    hasRead,
+    lastUpdate,
+    actors,
+    actorsCount,
+  });
 
   AmityNotificaion.fromJson(Map<String, dynamic> json) {
     description = json['description'];

@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 class PostContentText extends StatelessWidget {
   final AmityPost post;
   final AmityThemeColor theme;
-  const PostContentText({super.key, required this.post, required this.theme});
+
+  const PostContentText({
+    super.key,
+    required this.post,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +18,19 @@ class PostContentText extends StatelessWidget {
     if (post.data is TextData) {
       textContent = (post.data as TextData).text ?? "";
     }
-    return textContent.isNotEmpty ? Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Text(
-        textContent,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: theme.baseColor,
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ) : Container();
+    return textContent.isNotEmpty
+        ? Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              textContent,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: theme.baseColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
+          )
+        : Container();
   }
 }

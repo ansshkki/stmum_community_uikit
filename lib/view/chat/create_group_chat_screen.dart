@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,9 @@ import 'chat_screen.dart';
 
 class CreateChatGroup extends StatefulWidget {
   const CreateChatGroup({
-    Key? key,
+    super.key,
     required this.userIds,
-  }) : super(key: key);
+  });
 
   final List<String> userIds;
 
@@ -28,6 +29,7 @@ class CreateChatGroup extends StatefulWidget {
 
 class CreateChatGroupState extends State<CreateChatGroup> {
   String displayName = "";
+
   @override
   void dispose() {
     super.dispose();
@@ -36,9 +38,8 @@ class CreateChatGroupState extends State<CreateChatGroup> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      Provider.of<UserVM>(context, listen: false).getUsers();
-    });
+    Future.delayed(Duration.zero,
+        () => Provider.of<UserVM>(context, listen: false).getUsers());
   }
 
   Future<void> onCreateTap() async {
@@ -71,29 +72,29 @@ class CreateChatGroupState extends State<CreateChatGroup> {
   Widget build(BuildContext context) {
     return Consumer<UserVM>(builder: (context, vm, _) {
       return Scaffold(
-          appBar: AppBar(
-            title: const Text("إعداد المجموعة", //Setup group
-                style: TextStyle(color: Colors.black)),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child:
-                  const Icon(Icons.chevron_left, color: Colors.black, size: 35),
-            ),
-            actions: [
-              displayName != ""
-                  ? TextButton(
-                      onPressed: () {
-                        onCreateTap();
-                      },
-                      child: const Text("إنشاء"), // Create
-                    )
-                  : Container()
-            ],
+        appBar: AppBar(
+          title: Text("group.setup".tr(), //Setup group
+              style: const TextStyle(color: Colors.black)),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child:
+                const Icon(Icons.chevron_left, color: Colors.black, size: 35),
           ),
-          body: SafeArea(
-              child: Column(
+          actions: [
+            displayName != ""
+                ? TextButton(
+                    onPressed: () {
+                      onCreateTap();
+                    },
+                    child: Text("external.create".tr()), // Create
+                  )
+                : Container()
+          ],
+        ),
+        body: SafeArea(
+          child: Column(
             children: [
               Container(
                 margin: const EdgeInsetsDirectional.only(top: 20, bottom: 20),
@@ -149,11 +150,11 @@ class CreateChatGroupState extends State<CreateChatGroup> {
                       displayName = value;
                     });
                   },
-                  decoration: const InputDecoration(
-                    labelText: "اسم المجموعة",
+                  decoration: InputDecoration(
+                    labelText: "group.name".tr(),
                     alignLabelWithHint: false,
                     border: InputBorder.none,
-                    labelStyle: TextStyle(height: 1),
+                    labelStyle: const TextStyle(height: 1),
                   ),
                 ),
               ),
@@ -162,7 +163,9 @@ class CreateChatGroupState extends State<CreateChatGroup> {
                 thickness: 3,
               ),
             ],
-          )));
+          ),
+        ),
+      );
     });
   }
 }

@@ -14,7 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class AmityGlobalFeedComponent extends NewBaseComponent {
-  AmityGlobalFeedComponent({Key? key, String? pageId}) : super(key: key, pageId: pageId, componentId: 'global_feed_component');
+  AmityGlobalFeedComponent({super.key, super.pageId})
+      : super(componentId: 'global_feed_component');
 
   List<String> viewedPost = [];
 
@@ -23,7 +24,8 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
     final scrollController = ScrollController();
     context.read<GlobalFeedBloc>().add(GlobalFeedInit());
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         context.read<GlobalFeedBloc>().add(GlobalFeedFetch());
       }
     });
@@ -33,7 +35,8 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
 
     return Container(
       color: theme.backgroundColor,
-      child: BlocBuilder<GlobalFeedBloc, GlobalFeedState>(builder: (context, state) {
+      child: BlocBuilder<GlobalFeedBloc, GlobalFeedState>(
+          builder: (context, state) {
         if (state.isFetching && state.list.isEmpty) {
           viewedPost = [];
           return skeletonList();
@@ -58,12 +61,19 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                       },
                       child: ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.list.length,
                         itemBuilder: (context, index) {
                           final amityPost = state.list[index];
 
-                          if (((amityPost.children?.isNotEmpty ?? false) && (amityPost.children!.first.type == AmityDataType.FILE || amityPost.children!.first.type == AmityDataType.POLL || amityPost.children!.first.type == AmityDataType.LIVESTREAM)) || (amityPost.isDeleted ?? false)) {
+                          if (((amityPost.children?.isNotEmpty ?? false) &&
+                                  (amityPost.children!.first.type ==
+                                          AmityDataType.FILE ||
+                                      amityPost.children!.first.type ==
+                                          AmityDataType.POLL ||
+                                      amityPost.children!.first.type ==
+                                          AmityDataType.LIVESTREAM)) ||
+                              (amityPost.isDeleted ?? false)) {
                             return Container();
                           } else {
                             return BlocProvider(
@@ -71,21 +81,26 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                               child: VisibilityDetector(
                                 key: Key(amityPost.postId ?? ''),
                                 onVisibilityChanged: (VisibilityInfo info) {
-                                  final visiblePercentage = info.visibleFraction * 100;
+                                  final visiblePercentage =
+                                      info.visibleFraction * 100;
                                   if (visiblePercentage > 60) {
-                                    checkVisibilityAndMarkSeen(amityPost, visiblePercentage);
+                                    checkVisibilityAndMarkSeen(
+                                        amityPost, visiblePercentage);
                                   }
                                 },
                                 child: Column(
                                   children: [
                                     AmityPostContentComponent(
-                                      style: AmityPostContentComponentStyle.feed,
+                                      style:
+                                          AmityPostContentComponentStyle.feed,
                                       post: amityPost,
                                       action: AmityPostAction(
                                         onAddReaction: (String) {},
                                         onRemoveReaction: (String) {},
                                         onPostDeleted: (AmityPost post) {
-                                          context.read<GlobalFeedBloc>().add(GlobalFeedReloadThePost(post: post));
+                                          context.read<GlobalFeedBloc>().add(
+                                              GlobalFeedReloadThePost(
+                                                  post: post));
                                         },
                                         onPostUpdated: (post) {},
                                       ),
@@ -108,7 +123,10 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                       height: double.infinity,
                       color: theme.backgroundColor,
                       alignment: Alignment.center,
-                      child: state.isFetching ? const CircularProgressIndicator() : AmityEmptyNewsFeedComponent(elementId: "amity_empty_newsfeed_component"),
+                      child: state.isFetching
+                          ? const CircularProgressIndicator()
+                          : AmityEmptyNewsFeedComponent(
+                              elementId: "amity_empty_newsfeed_component"),
                     ),
                   ),
                 if (state.isFetching && state.list.isNotEmpty)
@@ -186,19 +204,23 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                 Container(
                   width: 48,
                   height: 60,
-                  padding: const EdgeInsetsDirectional.only(top: 12, start: 0, end: 8, bottom: 8),
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 12, start: 0, end: 8, bottom: 8),
                   child: const SkeletonImage(
                     height: 40,
                     width: 40,
                     borderRadius: 40,
                   ),
                 ),
-                const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SizedBox(height: 6.0),
-                  SkeletonText(width: 120),
-                  SizedBox(height: 12.0),
-                  SkeletonText(width: 88),
-                ]),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 6.0),
+                    SkeletonText(width: 120),
+                    SizedBox(height: 12.0),
+                    SkeletonText(width: 88),
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 14.0),

@@ -7,7 +7,11 @@ class BasePage extends StatelessWidget {
   final Widget? child;
   final String? pageId;
 
-  const BasePage({Key? key, this.child, this.pageId}) : super(key: key);
+  const BasePage({
+    super.key,
+    this.child,
+    this.pageId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,10 @@ class BasePage extends StatelessWidget {
 abstract class NewBasePage extends StatelessWidget {
   final String pageId;
 
-  NewBasePage({super.key, required this.pageId});
+  NewBasePage({
+    super.key,
+    required this.pageId,
+  });
 
   late final ConfigProvider configProvider;
   late final AmityThemeColor theme;

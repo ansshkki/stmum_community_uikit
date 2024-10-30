@@ -1,14 +1,20 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
 import 'package:amity_uikit_beta_service/v4/social/reaction/reaction_list.dart';
 import 'package:amity_uikit_beta_service/v4/utils/compact_string_converter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PostDetailInfo extends NewBaseComponent {
   final AmityPost post;
 
-  PostDetailInfo({super.key, required this.post, required super.componentId});
+  PostDetailInfo({
+    super.key,
+    required this.post,
+    required super.componentId,
+  });
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -18,7 +24,7 @@ class PostDetailInfo extends NewBaseComponent {
         children: [
           getReactionPreview(post, context),
           Expanded(child: Container()),
-          getCommentCount(post),
+          getCommentCount(context, post),
         ],
       ),
     );
@@ -63,14 +69,12 @@ class PostDetailInfo extends NewBaseComponent {
     }
 
     return GestureDetector(
-      onTap: () {
-        showReactionsBottomSheet();
-      },
+      onTap: () => showReactionsBottomSheet(),
       child: Row(
         children: [
           getReactionIcon(post),
           const SizedBox(width: 4),
-          getReactionCount(post),
+          getReactionCount(context, post),
         ],
       ),
     );
@@ -96,27 +100,34 @@ class PostDetailInfo extends NewBaseComponent {
     }
   }
 
-  Widget getReactionCount(AmityPost post) {
+  Widget getReactionCount(BuildContext context, AmityPost post) {
     final reactionCount = post.reactionCount ?? 0;
-    final text =
-        (reactionCount != 1) ? "${reactionCount.formattedCompactString()} likes" : "$reactionCount like";
-    return Text(text,
-        style: TextStyle(
-          color: theme.baseColorShade2,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ));
+
+    return Text(
+      "community.like".plural(
+        reactionCount,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      ),
+      style: TextStyle(
+        color: theme.baseColorShade2,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
+    );
   }
 
-  Widget getCommentCount(AmityPost post) {
+  Widget getCommentCount(BuildContext context, AmityPost post) {
     final commentCount = post.commentCount ?? 0;
-    final text =
-        (commentCount != 1) ? "${commentCount.formattedCompactString()} comments" : "$commentCount comment";
-    return Text(text,
-        style: TextStyle(
-          color: theme.baseColorShade2,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ));
+    return Text(
+      "community.comment".plural(
+        commentCount,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      ),
+      style: TextStyle(
+        color: theme.baseColorShade2,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
+    );
   }
 }

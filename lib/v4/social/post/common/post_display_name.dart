@@ -5,6 +5,7 @@ import 'package:amity_uikit_beta_service/v4/utils/date_time_extension.dart';
 import 'package:amity_uikit_beta_service/view/social/community_feed.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -12,8 +13,11 @@ class PostDisplayName extends StatelessWidget {
   final AmityPost post;
   final AmityThemeColor theme;
 
-  const PostDisplayName({Key? key, required this.post, required this.theme})
-      : super(key: key);
+  const PostDisplayName({
+    super.key,
+    required this.post,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +102,7 @@ class PostDisplayName extends StatelessWidget {
         );
       },
       child: Text(
-        user?.displayName ?? "Unknown",
+        user?.displayName ?? "post.unknown_name".tr(),
         style: TextStyle(
           color: theme.baseColor,
           fontSize: 15,
@@ -116,7 +120,7 @@ class PostDisplayName extends StatelessWidget {
     if (target is CommunityTarget && target.targetCommunity != null) {
       targetName =
           (post.target as CommunityTarget).targetCommunity?.displayName ??
-              'Unknown';
+              "post.unknown_name".tr();
 
       onTap = () {
         Navigator.of(context).push(
@@ -129,8 +133,8 @@ class PostDisplayName extends StatelessWidget {
     } else if (target is UserTarget) {
       if (post.postedUserId != target.targetUserId) {
         if (post.postedUserId != target.targetUserId) {
-          targetName =
-              (post.target as UserTarget).targetUser?.displayName ?? 'Unknown';
+          targetName = (post.target as UserTarget).targetUser?.displayName ??
+              "post.unknown_name".tr();
         }
         onTap = () {
           Navigator.of(context).push(
@@ -153,7 +157,7 @@ class PostDisplayName extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(width: 4),
-          TargetArrow(),
+          targetArrow(),
           const SizedBox(width: 4),
           Expanded(
             child: Text(
@@ -173,7 +177,7 @@ class PostDisplayName extends StatelessWidget {
     );
   }
 
-  Widget TargetArrow() {
+  Widget targetArrow() {
     return Container(
       width: 16,
       height: 16,

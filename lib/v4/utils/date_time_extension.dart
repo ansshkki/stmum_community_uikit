@@ -1,13 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeExtension on DateTime {
-
-
   String toSocialTimestamp() {
     final currentDateTime = DateTime.now();
     final difference = currentDateTime.difference(this);
     final yearDiff = (difference.inDays / 365).floor();
-    final weekDiff = (difference.inDays / 7).floor();  
+    final weekDiff = (difference.inDays / 7).floor();
     if (yearDiff >= 1) {
       return DateFormat('d MMM yyyy').format(this);
     } else if (weekDiff >= 1) {
@@ -19,7 +18,7 @@ extension DateTimeExtension on DateTime {
     } else if (difference.inMinutes >= 1) {
       return '${difference.inMinutes}m';
     } else {
-      return 'Just now';
+      return "time.now".tr();
     }
   }
 }

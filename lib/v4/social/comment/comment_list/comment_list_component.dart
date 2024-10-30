@@ -14,13 +14,13 @@ class AmityCommentListComponent extends NewBaseComponent {
   final CommentAction commentAction;
 
   AmityCommentListComponent({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.referenceId,
     required this.referenceType,
     required this.parentScrollController,
     required this.commentAction,
-  }) : super(key: key, pageId: pageId, componentId: "comment_tray_component");
+  }) : super(componentId: "comment_tray_component");
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -32,5 +32,4 @@ class AmityCommentListComponent extends NewBaseComponent {
       ),
     );
   }
-  
 }

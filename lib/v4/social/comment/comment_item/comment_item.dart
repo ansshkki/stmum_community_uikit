@@ -12,6 +12,7 @@ import 'package:amity_uikit_beta_service/v4/utils/compact_string_converter.dart'
 import 'package:amity_uikit_beta_service/v4/utils/date_time_extension.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,16 +26,13 @@ class CommentItem extends BaseElement {
   final ScrollController scrollController = ScrollController();
 
   CommentItem({
-    Key? key,
-    String? pageId,
-    String? componentId,
+    super.key,
+    super.pageId,
+    super.componentId,
+    super.elementId = "comment",
     required this.parentScrollController,
     required this.commentAction,
-  }) : super(
-            key: key,
-            pageId: pageId,
-            componentId: componentId,
-            elementId: 'comment');
+  });
 
   @override
   Widget buildElement(BuildContext context) {
@@ -65,7 +63,8 @@ class CommentItem extends BaseElement {
     });
     return Container(
       width: double.infinity,
-      padding: const EdgeInsetsDirectional.only(start: 0, end: 0, top: 4, bottom: 12),
+      padding: const EdgeInsetsDirectional.only(
+          start: 0, end: 0, top: 4, bottom: 12),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -166,59 +165,58 @@ class CommentItem extends BaseElement {
                               : SizedBox(
                                   width: double.infinity,
                                   child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.all(12),
+                                        child: SizedBox(
                                           width: double.infinity,
-                                          padding: const EdgeInsets.all(12),
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: MediaQuery.removePadding(
-                                              // Remove padding to fix wrong scroll indicator position
-                                              context: context,
-                                              removeTop: true,
-                                              removeBottom: true,
-                                              child: Scrollbar(
-                                                controller: scrollController,
-                                                child: TextField(
-                                                  controller: controller,
-                                                  scrollController:
-                                                      scrollController,
-                                                  onChanged: (value) {},
-                                                  keyboardType:
-                                                      TextInputType.multiline,
-                                                  maxLines: null,
-                                                  minLines: 1,
-                                                  textAlignVertical:
-                                                      TextAlignVertical.bottom,
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    contentPadding:
-                                                        const EdgeInsets
-                                                            .symmetric(
-                                                            horizontal: 0,
-                                                            vertical: 0),
-                                                    hintText:
-                                                        'Say something nice...',
-                                                    border: InputBorder.none,
-                                                    hintStyle: TextStyle(
-                                                      color:
-                                                          theme.baseColorShade2,
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
+                                          child: MediaQuery.removePadding(
+                                            // Remove padding to fix wrong scroll indicator position
+                                            context: context,
+                                            removeTop: true,
+                                            removeBottom: true,
+                                            child: Scrollbar(
+                                              controller: scrollController,
+                                              child: TextField(
+                                                controller: controller,
+                                                scrollController:
+                                                    scrollController,
+                                                onChanged: (value) {},
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                maxLines: null,
+                                                minLines: 1,
+                                                textAlignVertical:
+                                                    TextAlignVertical.bottom,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                    horizontal: 0,
+                                                    vertical: 0,
+                                                  ),
+                                                  hintText: "comment.hint".tr(),
+                                                  border: InputBorder.none,
+                                                  hintStyle: TextStyle(
+                                                    color:
+                                                        theme.baseColorShade2,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ]),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                         ),
                       )
@@ -271,8 +269,10 @@ class CommentItem extends BaseElement {
                                             isDense: true,
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
-                                                    horizontal: 0, vertical: 0),
-                                            hintText: 'Say something nice...',
+                                              horizontal: 0,
+                                              vertical: 0,
+                                            ),
+                                            hintText: "comment.hint".tr(),
                                             border: InputBorder.none,
                                             hintStyle: TextStyle(
                                               color: theme.baseColor,
@@ -325,7 +325,7 @@ class CommentItem extends BaseElement {
             ? GestureDetector(
                 onTap: () => {commentAction.onReply(comment)},
                 child: Text(
-                  'Reply',
+                  "comment.reply".tr(),
                   style: TextStyle(
                     color: theme.baseColorShade2,
                     fontSize: 13,
@@ -366,7 +366,7 @@ class CommentItem extends BaseElement {
     if (isReacting) {
       return (hasMyReaction)
           ? Text(
-              'Like',
+              "post.like".tr(),
               style: TextStyle(
                 color: theme.baseColorShade2,
                 fontSize: 13,
@@ -374,7 +374,7 @@ class CommentItem extends BaseElement {
               ),
             )
           : Text(
-              'مفيد',
+              "post.useful".tr(),
               style: TextStyle(
                 color: theme.primaryColor,
                 fontSize: 13,
@@ -395,7 +395,7 @@ class CommentItem extends BaseElement {
             context.read<CommentItemBloc>().add(
                   AddReactionToComment(
                     comment: comment,
-                    reactionType: 'like',
+                    reactionType: "post.like".tr(),
                   ),
                 );
           }
@@ -403,7 +403,7 @@ class CommentItem extends BaseElement {
         },
         child: (hasMyReaction)
             ? Text(
-                'مفيد',
+                "post.useful".tr(),
                 style: TextStyle(
                   color: theme.primaryColor,
                   fontSize: 13,
@@ -411,7 +411,7 @@ class CommentItem extends BaseElement {
                 ),
               )
             : Text(
-                'Like',
+                "post.like".tr(),
                 style: TextStyle(
                   color: theme.baseColorShade2,
                   fontSize: 13,
@@ -434,8 +434,8 @@ class CommentItem extends BaseElement {
                 .add(CommentListEventExpandItem(commentId: comment.commentId!));
           },
           child: Container(
-            padding:
-                const EdgeInsetsDirectional.only(top: 5, start: 8, end: 12, bottom: 5),
+            padding: const EdgeInsetsDirectional.only(
+                top: 5, start: 8, end: 12, bottom: 5),
             decoration: ShapeDecoration(
               color: theme.backgroundColor,
               shape: RoundedRectangleBorder(
@@ -469,7 +469,7 @@ class CommentItem extends BaseElement {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'View $childrenNumber reply',
+                        "comment.replies".tr(args: [childrenNumber.toString()]),
                         style: TextStyle(
                           color: theme.baseColorShade1,
                           fontSize: 13,
@@ -647,46 +647,47 @@ class CommentItem extends BaseElement {
               toastBloc: context.read<AmityToastBloc>(),
             ));
     showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        backgroundColor: theme.backgroundColor,
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: 140,
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 36,
-                  padding: const EdgeInsets.only(top: 12, bottom: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 36,
-                        height: 4,
-                        decoration: ShapeDecoration(
-                          color: theme.baseColorShade3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+      ),
+      backgroundColor: theme.backgroundColor,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 140,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 36,
+                padding: const EdgeInsets.only(top: 12, bottom: 20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 4,
+                      decoration: ShapeDecoration(
+                        color: theme.baseColorShade3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                renderReportButton(context, comment, onReport),
-              ],
-            ),
-          );
-        });
+              ),
+              renderReportButton(context, comment, onReport),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget renderReportButton(
@@ -694,11 +695,13 @@ class CommentItem extends BaseElement {
     final isFlaggedByMe = comment.isFlaggedByMe;
     var reportButtonLabel = "";
     if (isFlaggedByMe) {
-      reportButtonLabel =
-          (comment.parentId == null) ? 'Unreport comment' : "Unreport reply";
+      reportButtonLabel = (comment.parentId == null)
+          ? "report.unReport_comment".tr()
+          : "report.unReport_reply".tr();
     } else {
-      reportButtonLabel =
-          (comment.parentId == null) ? 'Report comment' : "Report reply";
+      reportButtonLabel = (comment.parentId == null)
+          ? "report.report_comment".tr()
+          : "report.report_reply".tr();
     }
 
     return GestureDetector(
@@ -748,158 +751,166 @@ class CommentItem extends BaseElement {
         .read<CommentItemBloc>()
         .add(CommentItemDelete(comment: comment));
     showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: 196,
-            child: Column(
-              children: [
-                Container(
+      ),
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 196,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 36,
+                padding: const EdgeInsets.only(top: 12, bottom: 20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 4,
+                      decoration: ShapeDecoration(
+                        color: theme.baseColorShade3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  onEdit();
+                },
+                child: Container(
                   width: double.infinity,
-                  height: 36,
-                  padding: const EdgeInsets.only(top: 12, bottom: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: 36,
-                        height: 4,
-                        decoration: ShapeDecoration(
-                          color: theme.baseColorShade3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                        padding: const EdgeInsets.only(top: 2, bottom: 2),
+                        child: SvgPicture.asset(
+                          'assets/Icons/amity_ic_edit_comment.svg',
+                          package: 'amity_uikit_beta_service',
+                          width: 24,
+                          height: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        (comment.parentId == null)
+                            ? "change.comment".tr()
+                            : "change.reply".tr(),
+                        style: TextStyle(
+                          color: theme.baseColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    onEdit();
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 2, bottom: 2),
-                          child: SvgPicture.asset(
-                            'assets/Icons/amity_ic_edit_comment.svg',
-                            package: 'amity_uikit_beta_service',
-                            width: 24,
-                            height: 20,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: Text(
                           (comment.parentId == null)
-                              ? 'Edit comment'
-                              : "Edit reply",
-                          style: TextStyle(
-                            color: theme.baseColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                              ? "delete.comment".tr()
+                              : "delete.reply".tr(),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CupertinoAlertDialog(
-                          title: Text((comment.parentId == null)
-                              ? "Delete comment"
-                              : "Delete reply"),
-                          content: Text(
-                              "This ${(comment.parentId == null) ? "comment" : "reply"} will be permanently removed."),
-                          actions: [
-                            CupertinoDialogAction(
-                              child: Text("Cancel",
-                                  style: TextStyle(
-                                    color: theme.primaryColor,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            CupertinoDialogAction(
-                              child: Text(
-                                "Delete",
+                        content: Text(
+                          "delete.custom".tr(args: [
+                            comment.parentId == null
+                                ? "comment.comment".tr()
+                                : "comment.reply".tr(),
+                          ]),
+                        ),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: Text("external.cancel".tr(),
                                 style: TextStyle(
-                                  color: theme.alertColor,
+                                  color: theme.primaryColor,
                                   fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                  fontWeight: FontWeight.w400,
+                                )),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: Text(
+                              "external.delete".tr(),
+                              style: TextStyle(
+                                color: theme.alertColor,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                onDelete();
-                              },
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 2, bottom: 2),
-                          child: SvgPicture.asset(
-                            'assets/Icons/amity_ic_delete.svg',
-                            package: 'amity_uikit_beta_service',
-                            width: 24,
-                            height: 20,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onDelete();
+                            },
                           ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 2, bottom: 2),
+                        child: SvgPicture.asset(
+                          'assets/Icons/amity_ic_delete.svg',
+                          package: 'amity_uikit_beta_service',
+                          width: 24,
+                          height: 20,
                         ),
-                        const SizedBox(width: 12),
-                        Text(
-                          (comment.parentId == null)
-                              ? 'Delete comment'
-                              : "Delete reply",
-                          style: TextStyle(
-                            color: theme.baseColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        (comment.parentId == null)
+                            ? "delete.comment".tr()
+                            : "delete.reply".tr(),
+                        style: TextStyle(
+                          color: theme.baseColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget renderCommentEditAction(BuildContext context, AmityComment comment) {
@@ -907,7 +918,8 @@ class CommentItem extends BaseElement {
       listener: (context, state) {},
       builder: (context, state) {
         final commentText = getTextComment(comment);
-        final hasChanges = state.editedText.trim() != commentText.trim() && state.editedText.trim().isNotEmpty;
+        final hasChanges = state.editedText.trim() != commentText.trim() &&
+            state.editedText.trim().isNotEmpty;
         return Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -943,7 +955,7 @@ class CommentItem extends BaseElement {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Cancel',
+                            "external.cancel".tr(),
                             style: TextStyle(
                               color: theme.baseColorShade1,
                               fontSize: 13,
@@ -986,14 +998,14 @@ class CommentItem extends BaseElement {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2)),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Save',
-                            style: TextStyle(
+                            "external.save".tr(),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 13,
                               fontWeight: FontWeight.w600,

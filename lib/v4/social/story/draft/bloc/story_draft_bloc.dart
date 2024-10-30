@@ -3,13 +3,20 @@ import 'dart:io';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'story_draft_event.dart';
+
 part 'story_draft_state.dart';
 
 class StoryDraftBloc extends Bloc<StoryDraftEvent, StoryDraftState> {
   StoryDraftBloc() : super(StoryDraftInitial()) {
     on<ObserveStoryTargetEvent>((event, emit) {
-      AmitySocialClient.newStoryRepository().live.getStoryTaregt(targetType: event.targetType, targetId: event.communityId).asBroadcastStream().listen((event) {
+      AmitySocialClient.newStoryRepository()
+          .live
+          .getStoryTaregt(
+              targetType: event.targetType, targetId: event.communityId)
+          .asBroadcastStream()
+          .listen((event) {
         add(NewStoryTargetEvent(storyTarget: event));
       });
     });

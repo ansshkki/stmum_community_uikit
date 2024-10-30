@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:chewie/chewie.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,11 @@ import 'package:video_player/video_player.dart';
 
 class LocalVideoPlayer extends StatefulWidget {
   final File file;
-  const LocalVideoPlayer({Key? key, required this.file}) : super(key: key);
+
+  const LocalVideoPlayer({
+    super.key,
+    required this.file,
+  });
 
   @override
   State<LocalVideoPlayer> createState() => _LocalVideoPlayerState();
@@ -76,8 +81,8 @@ class _LocalVideoPlayerState extends State<LocalVideoPlayer> {
                           .primary,
                     ),
                     const SizedBox(height: 20),
-                    const Text('جاري التحميل', //Loading
-                        style: TextStyle(fontWeight: FontWeight.w500)),
+                    Text("external.loading".tr(), //Loading
+                        style: const TextStyle(fontWeight: FontWeight.w500)),
                     const SizedBox(height: 20),
                   ],
                 ),
@@ -91,12 +96,13 @@ class VideoPlayerScreen extends StatefulWidget {
   final List<AmityPost> files;
   final bool isFillScreen;
   final int initialIndex;
-  const VideoPlayerScreen(
-      {Key? key,
-      required this.files,
-      this.isFillScreen = false,
-      required this.initialIndex})
-      : super(key: key);
+
+  const VideoPlayerScreen({
+    super.key,
+    required this.files,
+    this.isFillScreen = false,
+    required this.initialIndex,
+  });
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -244,9 +250,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 class FullScreenVideoPlayerWidget extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
 
-  const FullScreenVideoPlayerWidget(
-      {Key? key, required this.videoPlayerController})
-      : super(key: key);
+  const FullScreenVideoPlayerWidget({
+    super.key,
+    required this.videoPlayerController,
+  });
 
   @override
   _FullScreenVideoPlayerWidgetState createState() =>

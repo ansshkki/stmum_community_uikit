@@ -5,6 +5,7 @@ import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:amity_uikit_beta_service/v4/utils/shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -12,10 +13,10 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
   AmityGlobalSearchViewModel viewModel;
 
   AmityUserSearchResultComponent({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.viewModel,
-  }) : super(key: key, pageId: pageId, componentId: 'user_search_result');
+  }) : super(componentId: 'user_search_result');
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -39,7 +40,7 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
               const SizedBox(
                   height: 10), // Optional spacing between icon and text
               Text(
-                'No results found',
+                "external.empty".tr(),
                 style: TextStyle(
                   color: theme.baseColorShade3,
                   fontWeight: FontWeight.w600,

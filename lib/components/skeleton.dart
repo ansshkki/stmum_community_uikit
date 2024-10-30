@@ -8,72 +8,71 @@ class LoadingSkeleton extends StatelessWidget {
   final BuildContext context;
 
   const LoadingSkeleton({super.key, required this.context});
+
   Widget skeletonList() {
     return Container(
       decoration: BoxDecoration(
           color: Provider.of<AmityUIConfiguration>(context)
               .appColors
               .baseBackground),
-      child: Column(children: [
-        Container(
-          color:
-              Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
-          height: 8,
-        ),
-        Expanded(
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: Shimmer(
-              linearGradient: LinearGradient(
-                colors: [
-                  Provider.of<AmityUIConfiguration>(context)
-                      .appColors
-                      .baseShade4,
-                  const Color(0xFFF4F4F4),
-                  const Color(0xFFEBEBF4),
-                ],
-                stops: const [
-                  0.1,
-                  0.3,
-                  0.4,
-                ],
-                begin: const Alignment(-1.0, -0.3),
-                end: const Alignment(1.0, 0.3),
-                tileMode: TileMode.clamp,
-              ),
-              child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    color: Provider.of<AmityUIConfiguration>(context)
+      child: Column(
+        children: [
+          Container(
+            color:
+                Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
+            height: 8,
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: Shimmer(
+                linearGradient: LinearGradient(
+                  colors: [
+                    Provider.of<AmityUIConfiguration>(context)
                         .appColors
                         .baseShade4,
-                    thickness: 8,
-                    height: 24,
-                  );
-                },
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ShimmerLoading(
-                          isLoading: true,
-                          child: skeletonRow(),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 4,
+                    const Color(0xFFF4F4F4),
+                    const Color(0xFFEBEBF4),
+                  ],
+                  stops: const [0.1, 0.3, 0.4],
+                  begin: const Alignment(-1.0, -0.3),
+                  end: const Alignment(1.0, 0.3),
+                  tileMode: TileMode.clamp,
+                ),
+                child: ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      color: Provider.of<AmityUIConfiguration>(context)
+                          .appColors
+                          .baseShade4,
+                      thickness: 8,
+                      height: 24,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ShimmerLoading(
+                            isLoading: true,
+                            child: skeletonRow(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  itemCount: 4,
+                ),
               ),
             ),
-          ),
-        )
-      ]),
+          )
+        ],
+      ),
     );
   }
 

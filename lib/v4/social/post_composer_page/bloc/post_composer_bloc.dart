@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -65,7 +66,7 @@ class PostComposerBloc extends Bloc<PostComposerEvent, PostComposerState> {
                 onError(error.toString());
               },
               cancel: () {
-                onError('Upload cancelled'); // Invoke the error callback
+                onError("util.upload_error".tr()); // Invoke the error callback
               },
             );
           },
@@ -80,19 +81,19 @@ class PostComposerBloc extends Bloc<PostComposerEvent, PostComposerState> {
         File(filePath),
         type,
         (progress) {
-          emit(PostComposerSelectedFiles(selectedFiles: {}));
+          emit(const PostComposerSelectedFiles(selectedFiles: {}));
           emit(PostComposerSelectedFiles(selectedFiles: files));
         },
         () {
-          emit(PostComposerSelectedFiles(selectedFiles: {}));
+          emit(const PostComposerSelectedFiles(selectedFiles: {}));
           emit(PostComposerSelectedFiles(selectedFiles: files));
         },
         (String) {
-          emit(PostComposerSelectedFiles(selectedFiles: {}));
+          emit(const PostComposerSelectedFiles(selectedFiles: {}));
           emit(PostComposerSelectedFiles(selectedFiles: files));
         },
         (Uint8List) {
-          emit(PostComposerSelectedFiles(selectedFiles: {}));
+          emit(const PostComposerSelectedFiles(selectedFiles: {}));
           emit(PostComposerSelectedFiles(selectedFiles: files));
         },
       );

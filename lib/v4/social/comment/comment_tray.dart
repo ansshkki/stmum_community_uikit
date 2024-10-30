@@ -5,6 +5,7 @@ import 'package:amity_uikit_beta_service/v4/social/comment/comment_creator/comme
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_creator/comment_creator_action.dart';
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_item/comment_action.dart';
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_list/comment_list_component.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -14,6 +15,7 @@ class AmityCommentTrayComponent extends NewBaseComponent {
   final bool shouldAllowComments;
   final ScrollController scrollController;
   String? pageId;
+
   AmityCommentTrayComponent({
     super.key,
     required this.referenceId,
@@ -44,6 +46,7 @@ class CommentTrayComponent extends StatefulWidget {
   final AmityCommentReferenceType referenceType;
   final ScrollController scrollController;
   AmityThemeColor theme;
+
   CommentTrayComponent({
     super.key,
     required this.theme,
@@ -84,7 +87,7 @@ class _CommentTrayComponentState extends State<CommentTrayComponent> {
                   controller: widget.scrollController,
                   slivers: [
                     SliverAppBar(
-                      title: const Text('Comments'),
+                      title: Text("comment.comments".tr()),
                       titleTextStyle: TextStyle(
                         color: widget.theme.baseColor,
                         fontSize: 17,
@@ -137,9 +140,7 @@ class _CommentTrayComponentState extends State<CommentTrayComponent> {
                             referenceId: widget.referenceId,
                             replyTo: replyToComment,
                             action: CommentCreatorAction(
-                              onDissmiss: () {
-                                removeReplyToComment();
-                              },
+                              onDissmiss: () => removeReplyToComment(),
                             ),
                           )
                         : Padding(
@@ -155,14 +156,12 @@ class _CommentTrayComponentState extends State<CommentTrayComponent> {
                                   height: 16,
                                 ),
                                 const SizedBox(width: 16),
-                                const Text(
-                                  "Comments are disabled for this story",
-                                  style: TextStyle(
+                                Text(
+                                  "comment.not_available".tr(),
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     fontFamily: "SF Pro Text",
-                                    color: Color(
-                                      0xff898E9E,
-                                    ),
+                                    color: Color(0xff898E9E),
                                   ),
                                 ),
                               ],

@@ -1,4 +1,5 @@
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,12 +13,12 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
   final FileType? mediaType;
 
   AmityDetailedMediaAttachmentComponent({
-    Key? key,
+    super.key,
     this.onCameraTap,
     this.onImageTap,
     this.onVideoTap,
     this.mediaType,
-  }) : super(key: key, componentId: "componentId");
+  }) : super(componentId: "componentId");
 
   Widget _buildListTile({
     required String assetPath,
@@ -54,19 +55,19 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
           children: [
             _buildListTile(
               assetPath: 'assets/Icons/amity_ic_camera_button.svg',
-              title: 'Camera',
+              title: "media.camera".tr(),
               onTap: onCameraTap,
             ),
             if (mediaType == FileType.image || mediaType == null)
               _buildListTile(
                 assetPath: 'assets/Icons/amity_ic_image_button.svg',
-                title: 'Photo',
+                title: "media.photo".tr(),
                 onTap: onImageTap,
               ),
             if (mediaType == FileType.video || mediaType == null)
               _buildListTile(
                 assetPath: 'assets/Icons/amity_ic_video_button.svg',
-                title: 'Video',
+                title: "media.video".tr(),
                 onTap: onVideoTap,
               ),
           ],

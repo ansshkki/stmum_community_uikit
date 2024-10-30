@@ -1,15 +1,13 @@
-import 'package:amity_uikit_beta_service/v4/utils/config_provider.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_event.dart';
 import 'package:amity_uikit_beta_service/v4/social/social_home_page/bloc/social_home_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class ScrollableTabs extends NewBaseComponent {
-  ScrollableTabs({Key? key, required String pageId})
-      : super(key: key, pageId: pageId, componentId: '');
+  ScrollableTabs({super.key, required super.pageId}) : super(componentId: '');
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -24,9 +22,11 @@ class ScrollableTabs extends NewBaseComponent {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildTabButton(context, 'Newsfeed', 0, selectedIndex),
-                _buildTabButton(context, 'Explore', 1, selectedIndex),
-                _buildTabButton(context, 'My Communities', 2, selectedIndex),
+                _buildTabButton(context, "feed.title".tr(), 0, selectedIndex),
+                _buildTabButton(
+                    context, "explore.title".tr(), 1, selectedIndex),
+                _buildTabButton(
+                    context, "community.communities".tr(), 2, selectedIndex),
               ],
             ),
           ),

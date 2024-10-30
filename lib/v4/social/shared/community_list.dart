@@ -78,7 +78,8 @@ Widget communityRow(
             height: 80,
             child: CommunityImageAvatarElement(
                 avatarUrl: community.avatarImage?.fileUrl,
-                placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder_rectangle.svg",
+                placeHolderPath:
+                    "assets/Icons/amity_ic_community_avatar_placeholder_rectangle.svg",
                 elementId: AmityMyCommunityElement.communityAvatar.stringValue),
           ),
         ),

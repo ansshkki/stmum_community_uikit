@@ -14,7 +14,7 @@ class TextFieldWithCounter extends StatefulWidget {
   final void Function()? onTap;
 
   const TextFieldWithCounter({
-    Key? key,
+    super. key,
     required this.controller,
     required this.title,
     required this.hintText,
@@ -24,7 +24,7 @@ class TextFieldWithCounter extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.maxLines,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _TextFieldWithCounterState createState() => _TextFieldWithCounterState();
@@ -58,7 +58,8 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
             ),
             widget.showCount
                 ? Container(
-                    padding: const EdgeInsetsDirectional.symmetric(vertical: 8.0),
+                    padding:
+                        const EdgeInsetsDirectional.symmetric(vertical: 8.0),
                     child: Text(
                       '${widget.controller.text.length}/${widget.maxCharacters}',
                       style: TextStyle(
@@ -81,7 +82,7 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
             //         Provider.of<AmityUIConfiguration>(context).appColors.base),
             border: InputBorder.none,
             hintText: widget.hintText,
-            counterText: "",
+            counterText: '',
           ),
           cursorColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
           maxLength: widget.maxCharacters,
@@ -93,10 +94,7 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
             setState(() {});
           },
         ),
-        Divider(
-          color: Colors.grey[200],
-          thickness: 1,
-        ),
+        Divider(color: Colors.grey[200], thickness: 1),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,8 @@ class ChatsPage extends StatelessWidget {
           labelColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
           unselectedLabelColor: Colors.black,
           indicatorSize: TabBarIndicatorSize.label,
-          tabs: const [
-            Tab(text: "مجموعة") // Group
+          tabs: [
+            Tab(text: "group.group".tr()) // Group
             // Tab(text: S.of(context).groups),)
           ],
         ),

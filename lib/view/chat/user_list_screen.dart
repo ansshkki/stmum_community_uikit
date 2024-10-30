@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ import 'create_group_chat_screen.dart';
 
 class UserList extends StatefulWidget {
   const UserList({super.key});
+
   @override
   UserListState createState() => UserListState();
 }
@@ -94,87 +96,98 @@ class UserListState extends State<UserList> {
         AppBar().preferredSize.height;
 
     final theme = Theme.of(context);
-    return Consumer<UserVM>(builder: (context, vm, _) {
-      return Scaffold(
-        appBar: AppBar(
-          title:
-              const Text("إختر المستخدمين", style: TextStyle(color: Colors.black)), //Select Users
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child:
-                const Icon(Icons.chevron_left, color: Colors.black, size: 35),
+    return Consumer<UserVM>(
+      builder: (context, vm, _) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "user.choose".tr(),
+              style: const TextStyle(color: Colors.black),
+            ),
+            //Select Users
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child:
+                  const Icon(Icons.chevron_left, color: Colors.black, size: 35),
+            ),
+            actions: [
+              getSelectedLength() > 0
+                  ? TextButton(
+                      onPressed: () {
+                        onNextTap();
+                      },
+                      child: Text(
+                        true
+                            // getSelectedLength() > 1
+                            ? "external.next".tr() // Next
+                            : "external.create".tr(),
+                      )) // Create
+                  : Container()
+            ],
           ),
-          actions: [
-            getSelectedLength() > 0
-                ? TextButton(
-                    onPressed: () {
-                      onNextTap();
-                    },
-                    child: const Text(true
-                        // getSelectedLength() > 1
-                        ? "التالي" // Next
-                        : "إنشاء")) // Create
-                : Container()
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: bHeight,
+          body: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: bHeight,
 
-                  // color: ApplicationColors.lightGrey,
-                  child: FadedSlideAnimation(
-                    beginOffset: const Offset(0, 0.3),
-                    endOffset: const Offset(0, 0),
-                    slideCurve: Curves.linearToEaseOut,
-                    child: Column(
-                      children: [
-                        getLength() < 1
-                            ? Expanded(
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                      color: Provider.of<AmityUIConfiguration>(
-                                              context)
-                                          .primaryColor),
+                    // color: ApplicationColors.lightGrey,
+                    child: FadedSlideAnimation(
+                      beginOffset: const Offset(0, 0.3),
+                      endOffset: const Offset(0, 0),
+                      slideCurve: Curves.linearToEaseOut,
+                      child: Column(
+                        children: [
+                          getLength() < 1
+                              ? Expanded(
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                        color:
+                                            Provider.of<AmityUIConfiguration>(
+                                                    context)
+                                                .primaryColor),
+                                  ),
+                                )
+                              : Expanded(
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    // shrinkWrap: true,
+                                    itemCount: getLength(),
+                                    itemBuilder: (context, index) {
+                                      return UserWidget(
+                                        theme: theme,
+                                        index: index,
+                                        user: Provider.of<UserVM>(context,
+                                                listen: false)
+                                            .getUserList()[index],
+                                      );
+                                    },
+                                  ),
                                 ),
-                              )
-                            : Expanded(
-                                child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  // shrinkWrap: true,
-                                  itemCount: getLength(),
-                                  itemBuilder: (context, index) {
-                                    return UserWidget(
-                                      theme: theme,
-                                      index: index,
-                                      user: Provider.of<UserVM>(context,
-                                              listen: false)
-                                          .getUserList()[index],
-                                    );
-                                  },
-                                ),
-                              ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
 class UserWidget extends StatelessWidget {
-  const UserWidget(
-      {Key? key, required this.user, required this.theme, required this.index})
-      : super(key: key);
+  const UserWidget({
+    super.key,
+    required this.user,
+    required this.theme,
+    required this.index,
+  });
 
   final ThemeData theme;
   final AmityUser user;

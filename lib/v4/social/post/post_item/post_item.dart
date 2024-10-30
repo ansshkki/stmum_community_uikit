@@ -8,6 +8,7 @@ import 'package:amity_uikit_beta_service/v4/social/post/common/post_header.dart'
 import 'package:amity_uikit_beta_service/v4/social/post/post_detail/amity_post_detail_page.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/post_item/bloc/post_item_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/post_item/post_item_bottom.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,11 +18,11 @@ class PostItem extends NewBaseComponent {
   final AmityPostAction? action;
 
   PostItem({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.post,
     this.action,
-  }) : super(key: key, pageId: pageId, componentId: "post_item_component");
+  }) : super(componentId: "post_item_component");
 
   @override
   Widget buildComponent(BuildContext context) {
@@ -58,17 +59,19 @@ class PostItem extends NewBaseComponent {
 
     var postAction = (action != null)
         ? action!.copyWith(
-            onAddReaction: onAddReaction, onRemoveReaction: onRemoveReaction, onPostUpdated: onPostUpdated)
+            onAddReaction: onAddReaction,
+            onRemoveReaction: onRemoveReaction,
+            onPostUpdated: onPostUpdated)
         : AmityPostAction(
             onAddReaction: onAddReaction,
             onRemoveReaction: onRemoveReaction,
-            onPostDeleted: (String) {},
+            onPostDeleted: (value) {},
             onPostUpdated: onPostUpdated);
 
-            var page = AmityPostDetailPage(
-              postId: post.postId!,
-              action: postAction,
-            );
+    var page = AmityPostDetailPage(
+      postId: post.postId!,
+      action: postAction,
+    );
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -107,7 +110,10 @@ class PostItem extends NewBaseComponent {
               child: getChildrenPostContent(context, post),
             ),
             getPostBottom(
-                post: post, action: postAction, isReacting: isReacting),
+              post: post,
+              action: postAction,
+              isReacting: isReacting,
+            ),
           ],
         ),
       ),
@@ -122,7 +128,10 @@ class PostItem extends NewBaseComponent {
     return textContent.isNotEmpty
         ? Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
             child: Text(
               textContent,
               style: TextStyle(
@@ -181,7 +190,7 @@ class PostItem extends NewBaseComponent {
 
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
-      throw Exception('Could not launch $url');
+      throw Exception("util.launch_error".tr(args: [url]));
     }
   }
 
@@ -207,19 +216,20 @@ class PostItem extends NewBaseComponent {
           child: Stack(
             children: [
               ListTile(
-                onTap: () {
-                  _launchUrl(
+                onTap: () => _launchUrl(
                     files[index].data!.fileInfo.fileUrl!,
-                  );
-                },
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 8, horizontal: 14), // Reduced padding
+                  ),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                // Reduced padding
                 tileColor: Colors.white.withOpacity(0.0),
                 leading: Container(
-                  height: 100, // Reduced height to make it slimmer
-                  width: 40, // Added width to align the image
-                  alignment:
-                      AlignmentDirectional.centerStart, // Center alignment for the image
+                  height: 100,
+                  // Reduced height to make it slimmer
+                  width: 40,
+                  // Added width to align the image
+                  alignment: AlignmentDirectional.centerStart,
+                  // Center alignment for the image
                   child: Image(
                     image: AssetImage(fileImage,
                         package: 'amity_uikit_beta_service'),

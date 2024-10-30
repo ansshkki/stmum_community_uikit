@@ -14,6 +14,7 @@ class CustomBottomSheet extends StatelessWidget {
       DraggableScrollableController();
 
   CustomBottomSheet({
+    super.key,
     required this.theme,
     required this.collapsedContent,
     required this.expandedContent,
@@ -41,12 +42,14 @@ class CustomBottomSheet extends StatelessWidget {
                   if (state is CustomBottomSheetCollapsed &&
                       notification.extent > triggeredHeight) {
                     context.read<CustomBottomSheetBloc>().add(
-                          CustomBottomSheetExtentChanged(extent: notification.extent),
+                          CustomBottomSheetExtentChanged(
+                              extent: notification.extent),
                         );
                   } else if (state is CustomBottomSheetExpanded &&
                       notification.extent < triggeredHeight) {
                     context.read<CustomBottomSheetBloc>().add(
-                          CustomBottomSheetExtentChanged(extent: notification.extent),
+                          CustomBottomSheetExtentChanged(
+                              extent: notification.extent),
                         );
                   }
                   return true;

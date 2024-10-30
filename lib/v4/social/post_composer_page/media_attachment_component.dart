@@ -14,12 +14,12 @@ class AmityMediaAttachmentComponent extends NewBaseComponent {
   final FileType? mediaType;
 
   AmityMediaAttachmentComponent({
-    Key? key,
+    super.key,
     required this.onCameraTap,
     required this.onImageTap,
     required this.onVideoTap,
     this.mediaType,
-  }) : super(key: key, componentId: "componentId");
+  }) : super(componentId: "componentId");
 
   @override
   Widget buildComponent(BuildContext context) {

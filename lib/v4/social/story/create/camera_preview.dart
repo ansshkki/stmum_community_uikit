@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:amity_uikit_beta_service/amity_sle_uikit.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:camera/camera.dart';
@@ -9,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:image/image.dart' as img;
 
 class CameraPreviewWidget extends StatefulWidget {
   final bool isVideoMode;
@@ -33,7 +30,8 @@ class CameraPreviewWidget extends StatefulWidget {
   State<CameraPreviewWidget> createState() => _CameraPreviewWidgetState();
 }
 
-class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsBindingObserver, TickerProviderStateMixin {
+class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   CameraController? controller;
   XFile? imageFile;
   XFile? videoFile;
@@ -49,6 +47,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
   double captureButtonSizeRingSize = 72;
   var isBackCamSelected = true;
   final int videoTimeInSeconds = 30;
+
   // Counting pointers (number of user fingers on screen)
 
   int _pointers = 0;
@@ -79,7 +78,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Container(
+      return SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Stack(
@@ -91,19 +90,21 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                 borderRadius: const BorderRadius.all(
                   Radius.circular(20.0),
                 ),
-                child: _cameraPreviewWidget(constraints.maxHeight, constraints.maxWidth),
+                child: _cameraPreviewWidget(
+                    constraints.maxHeight, constraints.maxWidth),
               ),
             ),
             Positioned(
               bottom: 48,
               right: 16,
               child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isBackCamSelected = !isBackCamSelected;
-                    onNewCameraSelected(isBackCamSelected ? AmityUIKit.cameras.first : AmityUIKit.cameras.firstWhere((element) => element.lensDirection == CameraLensDirection.front));
-                  });
-                },
+                onTap: () => setState(() {
+                  isBackCamSelected = !isBackCamSelected;
+                  onNewCameraSelected(isBackCamSelected
+                      ? AmityUIKit.cameras.first
+                      : AmityUIKit.cameras.firstWhere((element) =>
+                          element.lensDirection == CameraLensDirection.front));
+                }),
                 child: Container(
                   height: 40,
                   width: 40,
@@ -114,12 +115,17 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                   child: Center(
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 350),
-                      transitionBuilder: ((child, animation) => RotationTransition(
-                          turns: child.key == ValueKey("back_cam") ? Tween<double>(begin: 0.5, end: 1).animate(animation) : Tween<double>(begin: 1, end: 0.5).animate(animation),
-                          child: FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          ))),
+                      transitionBuilder: ((child, animation) =>
+                          RotationTransition(
+                              turns: child.key == const ValueKey("back_cam")
+                                  ? Tween<double>(begin: 0.5, end: 1)
+                                      .animate(animation)
+                                  : Tween<double>(begin: 1, end: 0.5)
+                                      .animate(animation),
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ))),
                       child: isBackCamSelected
                           ? SvgPicture.asset(
                               "assets/Icons/ic_camera_switch_white.svg",
@@ -194,11 +200,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
               top: 16,
               left: 16,
               child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.onCloseClicked();
-                  });
-                },
+                onTap: () => setState(() => widget.onCloseClicked()),
                 child: Container(
                   height: 32,
                   width: 32,
@@ -222,12 +224,14 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
               child: GestureDetector(
                 onTap: () async {
                   if (widget.isVideoMode) {
-                    final video = await ImagePicker().pickVideo(source: ImageSource.gallery);
+                    final video = await ImagePicker()
+                        .pickVideo(source: ImageSource.gallery);
                     if (video != null) {
                       widget.onVideoCaptured(File(video.path));
                     }
                   } else {
-                    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    final image = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
                     if (image != null) {
                       widget.onImageCaptured(File(image.path), true);
                     }
@@ -260,20 +264,18 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                 width: 80,
                 child: Center(
                   child: GestureDetector(
-                    onLongPress: () {
+                    onLongPress: () => setState(() {
                       setState(() {
-                        setState(() {
-                          isRecording = true;
-                          lastButtonPress = DateTime.now();
-                          startVideoTimer();
-                        });
-                        if (widget.isVideoMode) {
-                          captureButtonSizeRingSize = 80;
-                          captureButtonSize = 64;
-                        }
-                        onVideoRecordButtonPressed();
+                        isRecording = true;
+                        lastButtonPress = DateTime.now();
+                        startVideoTimer();
                       });
-                    },
+                      if (widget.isVideoMode) {
+                        captureButtonSizeRingSize = 80;
+                        captureButtonSize = 64;
+                      }
+                      onVideoRecordButtonPressed();
+                    }),
                     onLongPressEnd: (details) {
                       setState(() {
                         if (widget.isVideoMode) {
@@ -297,7 +299,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: isRecording ? Colors.transparent : Colors.white,
+                          color:
+                              isRecording ? Colors.transparent : Colors.white,
                           width: 4,
                         ),
                       ),
@@ -336,7 +339,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                                       child: CircularProgressIndicator(
                                         color: Colors.red,
                                         value: animController.value,
-                                        semanticsLabel: 'Circular progress indicator',
+                                        semanticsLabel:
+                                            'Circular progress indicator',
                                       ),
                                     ),
                                   ],
@@ -374,13 +378,19 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 100),
                           decoration: BoxDecoration(
-                            color: isRecording ? widget.themeColor?.alertColor ?? Colors.red : Colors.transparent,
+                            color: isRecording
+                                ? widget.themeColor?.alertColor ?? Colors.red
+                                : Colors.transparent,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Center(
                             child: Text(
                               pressDuration,
-                              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600, fontFamily: "'SF Pro Text'"),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "'SF Pro Text'"),
                             ),
                           ),
                         ),
@@ -419,12 +429,14 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
             child: Center(
               child: CameraPreview(
                 controller!,
-                child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onScaleStart: _handleScaleStart,
                     onScaleUpdate: _handleScaleUpdate,
-                    onTapDown: (TapDownDetails details) => onViewFinderTap(details, constraints),
+                    onTapDown: (TapDownDetails details) =>
+                        onViewFinderTap(details, constraints),
                   );
                 }),
               ),
@@ -460,7 +472,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
       return;
     }
 
-    _currentScale = (_baseScale * details.scale).clamp(_minAvailableZoom, _maxAvailableZoom);
+    _currentScale = (_baseScale * details.scale)
+        .clamp(_minAvailableZoom, _maxAvailableZoom);
 
     await controller!.setZoomLevel(_currentScale);
   }
@@ -491,7 +504,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
     }
   }
 
-  Future<void> _initializeCameraController(CameraDescription cameraDescription) async {
+  Future<void> _initializeCameraController(
+      CameraDescription cameraDescription) async {
     final CameraController cameraController = CameraController(
       cameraDescription,
       ResolutionPreset.max,
@@ -517,8 +531,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
     try {
       await cameraController.initialize();
       await Future.wait(<Future<Object?>>[
-        cameraController.getMaxZoomLevel().then((double value) => _maxAvailableZoom = value),
-        cameraController.getMinZoomLevel().then((double value) => _minAvailableZoom = value),
+        cameraController
+            .getMaxZoomLevel()
+            .then((double value) => _maxAvailableZoom = value),
+        cameraController
+            .getMinZoomLevel()
+            .then((double value) => _minAvailableZoom = value),
       ]);
     } on CameraException catch (e) {
       switch (e.code) {
@@ -608,6 +626,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
       return;
     }
   }
+
   /* DO  NOT REMOVE ABOVE BLOCK */
 
   /* DO  NOT REMOVE THIS BLOCK */
@@ -664,7 +683,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
       return;
     }
 
-    final VideoPlayerController vController = kIsWeb ? VideoPlayerController.networkUrl(Uri.parse(videoFile!.path)) : VideoPlayerController.file(File(videoFile!.path));
+    final VideoPlayerController vController = kIsWeb
+        ? VideoPlayerController.networkUrl(Uri.parse(videoFile!.path))
+        : VideoPlayerController.file(File(videoFile!.path));
 
     videoPlayerListener = () {
       if (videoController != null) {
@@ -709,6 +730,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> with WidgetsB
       return null;
     }
   }
+
   /* DO  NOT REMOVE ABOVE BLOCK */
 
   void startVideoTimer() {

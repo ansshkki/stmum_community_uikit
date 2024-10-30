@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,7 +12,7 @@ class CommunityModeratorBadge extends StatelessWidget {
       padding: const EdgeInsetsDirectional.only(start: 4, end: 6),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0xFFD9E5FC),
+        color: const Color(0xFFD9E5FC),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -43,10 +44,10 @@ class CommunityModeratorBadge extends StatelessWidget {
               ],
             ),
           ),
-          const Text(
-            'Moderator',
+          Text(
+            "community.moderator".tr(),
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF1054DE),
               fontSize: 10,
               fontWeight: FontWeight.w400,

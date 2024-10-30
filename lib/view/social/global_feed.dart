@@ -1538,7 +1538,7 @@ class CommentActionComponent extends StatelessWidget {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => EditCommentPage(
                                           feedType: FeedType.user,
-                                          initailText:
+                                          initialText:
                                               (comments.data as CommentTextData)
                                                   .text!,
                                           comment: comments,

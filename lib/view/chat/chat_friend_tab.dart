@@ -1,4 +1,5 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class ChatItems {
 }
 
 class AmitySLEChannelScreen extends StatefulWidget {
-  const AmitySLEChannelScreen({Key? key}) : super(key: key);
+  const AmitySLEChannelScreen({super.key});
 
   @override
   AmitySLEChannelScreenState createState() => AmitySLEChannelScreenState();
@@ -53,7 +54,7 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
 
     if (result == "0 seconds ago") {
       //0 seconds ago
-      return "نشر للتو"; //just now
+      return "time.now".tr(); //just now
     } else {
       return DateFormat('d / MMMM', "ar").format(convertedTimestamp);
     }
@@ -158,7 +159,7 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                             ),
                             title: Text(
                               vm.getChannelList()[index].displayName ??
-                                  "عرض الاسم", //Display name
+                                  "user.name".tr(), //Display name
                               style: TextStyle(
                                 color: rand
                                     ? Provider.of<AmityUIConfiguration>(context)

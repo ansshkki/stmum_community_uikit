@@ -11,8 +11,12 @@ abstract class BaseElement extends StatelessWidget {
   late final AmityThemeColor theme;
   late final ConfigProvider configProvider;
 
-  BaseElement(
-      {super.key, this.pageId, this.componentId, required this.elementId});
+  BaseElement({
+    super.key,
+    this.pageId,
+    this.componentId,
+    required this.elementId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,5 +27,3 @@ abstract class BaseElement extends StatelessWidget {
 
   Widget buildElement(BuildContext context);
 }
-
-

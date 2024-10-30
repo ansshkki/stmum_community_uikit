@@ -8,6 +8,7 @@ import 'chat_screen.dart';
 
 class SingleChatRoom extends StatefulWidget {
   final String channelId;
+
   const SingleChatRoom({
     super.key,
     required this.channelId,

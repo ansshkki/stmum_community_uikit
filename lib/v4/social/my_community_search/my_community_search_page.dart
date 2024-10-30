@@ -4,14 +4,17 @@ import 'package:amity_uikit_beta_service/v4/social/global_search/view_model/glob
 import 'package:amity_uikit_beta_service/v4/social/my_community_search/bloc/my_community_search_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/top_search_bar/top_search_bar.dart';
 import 'package:amity_uikit_beta_service/v4/utils/debouncer.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AmityMyCommunitiesSearchPage extends NewBasePage {
-  AmityMyCommunitiesSearchPage({Key? key, String? pageId})
-      : super(key: key, pageId: 'social_global_search_page');
+  AmityMyCommunitiesSearchPage({
+    super.key,
+    super.pageId = 'social_global_search_page',
+  });
 
-  var textcontroller = TextEditingController();
+  var textController = TextEditingController();
   final _debouncer = Debouncer(milliseconds: 300);
   final ScrollController scrollController = ScrollController();
   late AmityGlobalSearchViewModel viewModel;
@@ -32,7 +35,7 @@ class AmityMyCommunitiesSearchPage extends NewBasePage {
               loadMore: () {
                 context
                     .read<MyCommunitySearchBloc>()
-                    .add(MyCommunitySearchLoadMoreEvent());
+                    .add(const MyCommunitySearchLoadMoreEvent());
               },
             );
           }
@@ -45,20 +48,19 @@ class AmityMyCommunitiesSearchPage extends NewBasePage {
                   Column(
                     children: [
                       AmityTopSearchBarComponent(
-                        textcontroller: textcontroller,
-                        hintText: 'Search my community',
+                        textController: textController,
+                        hintText: "community.hint".tr(),
                         onTextChanged: (value) {
-                          _debouncer.run(() {
-                            context
+                          _debouncer.run(() => context
                                 .read<MyCommunitySearchBloc>()
-                                .add(MyCommunitySearchTextChanged(value));
-                          });
+                                .add(MyCommunitySearchTextChanged(value)));
                         },
                       ),
                       if (state is MyCommunitySearchLoaded)
                         Expanded(
                           child: AmityCommunitySearchResultComponent(
-                              viewModel: viewModel),
+                            viewModel: viewModel,
+                          ),
                         ),
                     ],
                   ),

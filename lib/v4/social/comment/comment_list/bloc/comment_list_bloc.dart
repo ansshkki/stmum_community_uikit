@@ -1,9 +1,11 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/bloc/amity_uikit_toast_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'comment_list_events.dart';
+
 part 'comment_list_state.dart';
 
 class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
@@ -63,7 +65,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
 
         if (e is AmityException) {
           event.toastBloc
-              .add(AmityToastShort(message: "Couldn’t load comment"));
+              .add(AmityToastShort(message: "comment.load_error".tr()));
         }
       }
     });
@@ -89,7 +91,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
       } catch (e) {
         if (e is AmityException) {
           event.toastBloc
-              .add(AmityToastShort(message: "Couldn’t load comment"));
+              .add(AmityToastShort(message: "comment.load_error".tr()));
         }
       }
     });
@@ -124,8 +126,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
           .dataTypes(null)
           .includeDeleted(false)
           .getLiveCollection();
-    }
-    else {
+    } else {
       return AmitySocialClient.newCommentRepository()
           .getComments()
           .content(referenceId)

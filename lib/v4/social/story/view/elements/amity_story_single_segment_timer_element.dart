@@ -23,10 +23,13 @@ class AmityStorySingleSegmentTimerElement extends StatefulWidget {
   });
 
   @override
-  State<AmityStorySingleSegmentTimerElement> createState() => _AmityStorySingleSegmentTimerElementState();
+  State<AmityStorySingleSegmentTimerElement> createState() =>
+      _AmityStorySingleSegmentTimerElementState();
 }
 
-class _AmityStorySingleSegmentTimerElementState extends State<AmityStorySingleSegmentTimerElement> with TickerProviderStateMixin {
+class _AmityStorySingleSegmentTimerElementState
+    extends State<AmityStorySingleSegmentTimerElement>
+    with TickerProviderStateMixin {
   late AnimationController controller;
 
   @override
@@ -40,7 +43,8 @@ class _AmityStorySingleSegmentTimerElementState extends State<AmityStorySingleSe
       controller.addListener(() {
         setState(() {});
         if (!widget.isAlreadyFinished && widget.isCurrentSegement) {
-          if (controller.value > 0.0 && AmityStorySingleSegmentTimerElement.currentValue != -1) {
+          if (controller.value > 0.0 &&
+              AmityStorySingleSegmentTimerElement.currentValue != -1) {
             AmityStorySingleSegmentTimerElement.currentValue = controller.value;
           }
         }
@@ -50,7 +54,9 @@ class _AmityStorySingleSegmentTimerElementState extends State<AmityStorySingleSe
     if (widget.shouldStart && widget.isCurrentSegement) {
       if (widget.shouldRestart) {
         controller.value = widget.isAlreadyFinished ? 1.0 : 0.0;
-        controller.forward(from: AmityStorySingleSegmentTimerElement.currentValue).whenComplete(() {
+        controller
+            .forward(from: AmityStorySingleSegmentTimerElement.currentValue)
+            .whenComplete(() {
           AmityStorySingleSegmentTimerElement.currentValue = 0.0;
           widget.onTimerFinished();
         });
@@ -61,13 +67,20 @@ class _AmityStorySingleSegmentTimerElementState extends State<AmityStorySingleSe
       } else {
         if (AmityStorySingleSegmentTimerElement.currentValue == -1) {
           AmityStorySingleSegmentTimerElement.currentValue = 0.0;
-          controller.forward(from: AmityStorySingleSegmentTimerElement.currentValue).whenComplete(() {
+          controller
+              .forward(from: AmityStorySingleSegmentTimerElement.currentValue)
+              .whenComplete(() {
             AmityStorySingleSegmentTimerElement.currentValue = 0.0;
             widget.onTimerFinished();
           });
         } else {
-          AmityStorySingleSegmentTimerElement.currentValue = (AmityStorySingleSegmentTimerElement.currentValue == 1.0) ? 0.0 : AmityStorySingleSegmentTimerElement.currentValue;
-          controller.forward(from: AmityStorySingleSegmentTimerElement.currentValue).whenComplete(() {
+          AmityStorySingleSegmentTimerElement.currentValue =
+              (AmityStorySingleSegmentTimerElement.currentValue == 1.0)
+                  ? 0.0
+                  : AmityStorySingleSegmentTimerElement.currentValue;
+          controller
+              .forward(from: AmityStorySingleSegmentTimerElement.currentValue)
+              .whenComplete(() {
             AmityStorySingleSegmentTimerElement.currentValue = 0.0;
             widget.onTimerFinished();
           });
@@ -89,13 +102,13 @@ class _AmityStorySingleSegmentTimerElementState extends State<AmityStorySingleSe
   @override
   Widget build(BuildContext context) {
     return Container(
-      
       margin: const EdgeInsets.symmetric(horizontal: 3),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         child: LinearProgressIndicator(
           value: controller.value,
-          valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 253, 253, 253)),
+          valueColor: const AlwaysStoppedAnimation<Color>(
+              Color.fromARGB(255, 253, 253, 253)),
           backgroundColor: const Color.fromARGB(152, 214, 214, 214),
         ),
       ),

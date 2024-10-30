@@ -60,7 +60,6 @@ class ConfigRepository {
 }
 
 extension ThemeConfig on ConfigRepository {
-
   AmityThemeStyle _getCurrentThemeStyle() {
     final systemStyle =
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
@@ -81,9 +80,11 @@ extension ThemeConfig on ConfigRepository {
   }
 
   AmityThemeColor getTheme(String? configId) {
-    final fallbackTheme =
-        _getCurrentThemeStyle() == AmityThemeStyle.light ? lightTheme : darkTheme;
-    final globalTheme = _getGlobalTheme(_getCurrentThemeStyle()) ?? fallbackTheme;
+    final fallbackTheme = _getCurrentThemeStyle() == AmityThemeStyle.light
+        ? lightTheme
+        : darkTheme;
+    final globalTheme =
+        _getGlobalTheme(_getCurrentThemeStyle()) ?? fallbackTheme;
 
     if (configId == null) {
       return _getThemeColor(globalTheme, fallbackTheme);
@@ -145,37 +146,29 @@ extension ThemeConfig on ConfigRepository {
   }
 
   LinearGradient getShimmerGradient() {
-    final style = _getCurrentThemeStyle() == AmityThemeStyle.light ? lightTheme : darkTheme;
+    final style = _getCurrentThemeStyle() == AmityThemeStyle.light
+        ? lightTheme
+        : darkTheme;
     if (style == lightTheme) {
-       
       return const LinearGradient(
         colors: [
           Color(0xFFEBEBF4),
           Color(0xFFF4F4F4),
           Color(0xFFEBEBF4),
         ],
-        stops: [
-          0.1,
-          0.3,
-          0.4,
-        ],
+        stops: [0.1, 0.3, 0.4],
         begin: Alignment(-1.0, -0.3),
         end: Alignment(1.0, 0.3),
         tileMode: TileMode.clamp,
       );
     } else {
-
       return const LinearGradient(
         colors: [
           Color.fromARGB(255, 167, 167, 167),
           Color.fromARGB(255, 46, 45, 45),
           Color.fromARGB(255, 167, 167, 167),
         ],
-        stops: [
-          0.1,
-          0.3,
-          0.4,
-        ],
+        stops: [0.1, 0.3, 0.4],
         begin: Alignment(-1.0, -0.3),
         end: Alignment(1.0, 0.3),
         tileMode: TileMode.clamp,

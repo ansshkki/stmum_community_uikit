@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,15 +7,15 @@ class SearchField extends StatefulWidget implements PreferredSizeWidget {
   final Function(String)? onSubmit;
   final String? initialSearch;
 
-  SearchField({
-    Key? key,
+  const SearchField({
+    super. key,
     this.onChanged,
     this.onSubmit,
     this.initialSearch,
-  }) : super(key: key);
+  }) ;
 
   @override
-  Size get preferredSize => Size.fromHeight(54);
+  Size get preferredSize => const Size.fromHeight(54);
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -42,7 +43,7 @@ class _SearchFieldState extends State<SearchField> {
           // height: 1,
         ),
         decoration: InputDecoration(
-          hintText: "البحث",
+          hintText: "search.search".tr(),
           hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: 14,
             color: Theme.of(context).colorScheme.onSurface,
@@ -65,20 +66,20 @@ class _SearchFieldState extends State<SearchField> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
           ),
-          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 8, 8),
+          contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 0, 8, 8),
           suffix: IconButton(
             onPressed: () {
               _controller.clear();
               widget.onSubmit?.call("");
             },
             style: IconButton.styleFrom(
-              fixedSize: Size.square(16),
+              fixedSize: const Size.square(16),
               iconSize: 16,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               visualDensity: VisualDensity.compact,
               padding: EdgeInsets.zero,
             ),
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
           ),
         ),
         onChanged: widget.onChanged,

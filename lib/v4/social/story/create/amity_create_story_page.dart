@@ -6,6 +6,7 @@ import 'package:amity_uikit_beta_service/v4/social/story/create/camera_preview.d
 import 'package:amity_uikit_beta_service/v4/social/story/draft/amity_story_media_type.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/draft/story_draft_page.dart';
 import 'package:amity_uikit_beta_service/v4/utils/create_story/bloc/create_story_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,7 +46,8 @@ class AmityCreateStoryPage extends NewBasePage {
                       child: CameraPreviewWidget(
                         isVideoMode: state is VideoSelectedState,
                         onImageCaptured: (image, isFromGallery) {
-                          AmityStoryMediaType mediaType = AmityStoryMediaTypeImage(file: image);
+                          AmityStoryMediaType mediaType =
+                              AmityStoryMediaTypeImage(file: image);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => StoryDraftPage(
@@ -58,7 +60,8 @@ class AmityCreateStoryPage extends NewBasePage {
                           );
                         },
                         onVideoCaptured: (video) {
-                          AmityStoryMediaType mediaType = AmityStoryMediaTypeVideo(file: video);
+                          AmityStoryMediaType mediaType =
+                              AmityStoryMediaTypeVideo(file: video);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => StoryDraftPage(
@@ -70,9 +73,7 @@ class AmityCreateStoryPage extends NewBasePage {
                             ),
                           );
                         },
-                        onCloseClicked: () {
-                          Navigator.of(context).pop();
-                        },
+                        onCloseClicked: () => Navigator.of(context).pop(),
                       ),
                     ),
                   ),
@@ -108,7 +109,9 @@ class AmityCreateStoryPage extends NewBasePage {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        context.read<CreateStoryPageBloc>().add(SelectImageEvent());
+                                        context
+                                            .read<CreateStoryPageBloc>()
+                                            .add(SelectImageEvent());
                                       },
                                       child: Container(
                                         color: Colors.transparent,
@@ -116,15 +119,19 @@ class AmityCreateStoryPage extends NewBasePage {
                                         height: 44,
                                         child: Center(
                                           child: Text(
-                                            'Photo',
-                                            style: (state is ImageSelectedState) ? getSelectedTextStyle(theme) : getUnselectedTextStyle(theme),
+                                            "media.photo".tr(),
+                                            style: (state is ImageSelectedState)
+                                                ? getSelectedTextStyle(theme)
+                                                : getUnselectedTextStyle(theme),
                                           ),
                                         ),
                                       ),
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        context.read<CreateStoryPageBloc>().add(SelectVideoEvent());
+                                        context
+                                            .read<CreateStoryPageBloc>()
+                                            .add(SelectVideoEvent());
                                       },
                                       child: Container(
                                         color: Colors.transparent,
@@ -132,8 +139,10 @@ class AmityCreateStoryPage extends NewBasePage {
                                         height: 44,
                                         child: Center(
                                           child: Text(
-                                            'Video',
-                                            style: (state is VideoSelectedState) ? getSelectedTextStyle(theme) : getUnselectedTextStyle(theme),
+                                           "media.video".tr(),
+                                            style: (state is VideoSelectedState)
+                                                ? getSelectedTextStyle(theme)
+                                                : getUnselectedTextStyle(theme),
                                           ),
                                         ),
                                       ),

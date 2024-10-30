@@ -2,6 +2,7 @@ import 'package:amity_uikit_beta_service/components/custom_user_avatar.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/general_component.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,14 +16,14 @@ class CustomListTile extends StatelessWidget {
   final dynamic user; // Replace 'dynamic' with your actual User class
 
   const CustomListTile({
-    Key? key,
+    super.key,
     required this.avatarUrl,
     required this.displayName,
     required this.createdAt,
     required this.editedAt,
     required this.userId,
     required this.user,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,8 @@ class CustomListTile extends StatelessWidget {
               onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ChangeNotifierProvider(
-                    create: (context) =>
-                        UserFeedVM(), // Assuming UserFeedVM is your ViewModel
+                    create: (context) => UserFeedVM(),
+                    // Assuming UserFeedVM is your ViewModel
                     child: UserProfileScreen(
                       amityUserId: userId,
                       amityUser: user,
@@ -79,7 +80,7 @@ class CustomListTile extends StatelessWidget {
                         const SizedBox(width: 5),
                         const Icon(Icons.circle, size: 5),
                         const SizedBox(width: 5),
-                        const Text("تم التعديل"), //Edited
+                        Text("change.done".tr()), //Edited
                       ]
                     ],
                   ),

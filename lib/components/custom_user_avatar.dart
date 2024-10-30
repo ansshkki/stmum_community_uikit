@@ -58,10 +58,11 @@ Widget getCommuAvatarImage(String? url, {double? radius, String? fileId}) {
 
 class CommuPlaceHolderWidget extends StatelessWidget {
   final double? radius;
+
   const CommuPlaceHolderWidget({
-    Key? key,
+    super.key,
     this.radius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

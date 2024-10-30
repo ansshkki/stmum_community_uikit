@@ -14,10 +14,10 @@ class ReplyList extends NewBaseComponent with ChangeNotifier {
   final ScrollController scrollController;
 
   ReplyList({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.scrollController,
-  }) : super(key: key, pageId: pageId, componentId: "comment_list_component");
+  }) : super(componentId: "comment_list_component");
 
   @override
   Widget buildComponent(BuildContext context) {

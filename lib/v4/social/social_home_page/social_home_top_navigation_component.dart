@@ -10,12 +10,12 @@ class AmitySocialHomeTopNavigationComponent extends NewBaseComponent {
   final void Function()? searchButtonAction;
 
   AmitySocialHomeTopNavigationComponent({
-    Key? key,
-    String? pageId,
-    required String componentId,
+    super.key,
+    super.pageId,
+    required super.componentId,
     required this.selectedTab,
     this.searchButtonAction,
-  }) : super(key: key, pageId: pageId, componentId: componentId);
+  });
 
   @override
   Widget buildComponent(BuildContext context) {

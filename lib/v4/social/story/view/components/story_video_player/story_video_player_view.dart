@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:amity_uikit_beta_service/v4/social/story/view/components/story_video_player/bloc/story_video_player_bloc.dart';
 import 'package:chewie/chewie.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -14,7 +15,18 @@ class AmityStoryVideoPlayer extends StatefulWidget {
   Function onWidgetDispose;
   final File? video;
   final String? url;
-  AmityStoryVideoPlayer({super.key, required this.video, required this.onInitializing, required this.url, required this.onInitialize, required this.onPause, required this.onPlay, required this.onWidgetDispose, this.showVolumeControl = false});
+
+  AmityStoryVideoPlayer({
+    super.key,
+    required this.video,
+    required this.onInitializing,
+    required this.url,
+    required this.onInitialize,
+    required this.onPause,
+    required this.onPlay,
+    required this.onWidgetDispose,
+    this.showVolumeControl = false,
+  });
 
   @override
   State<AmityStoryVideoPlayer> createState() => _AmityStoryVideoPlayerState();
@@ -24,7 +36,8 @@ class _AmityStoryVideoPlayerState extends State<AmityStoryVideoPlayer> {
   @override
   void initState() {
     widget.onInitializing();
-    BlocProvider.of<StoryVideoPlayerBloc>(context).add(InitializeStoryVideoPlayerEvent(file: widget.video, url: widget.url));
+    BlocProvider.of<StoryVideoPlayerBloc>(context).add(
+        InitializeStoryVideoPlayerEvent(file: widget.video, url: widget.url));
     super.initState();
   }
 
@@ -53,9 +66,11 @@ class _AmityStoryVideoPlayerState extends State<AmityStoryVideoPlayer> {
           onVisibilityChanged: (VisibilityInfo info) {
             if (info.visibleFraction == 0.0) {
               widget.onWidgetDispose();
-              BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+              BlocProvider.of<StoryVideoPlayerBloc>(context)
+                  .add(const DisposeStoryVideoPlayerEvent());
             } else {
-              BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+              BlocProvider.of<StoryVideoPlayerBloc>(context)
+                  .add(const PlayStoryVideoEvent());
             }
           },
           key: const Key('story_video_player'),
@@ -65,13 +80,16 @@ class _AmityStoryVideoPlayerState extends State<AmityStoryVideoPlayer> {
             color: const Color.fromRGBO(0, 0, 0, 1),
             child: Center(
               child: state is StoryVideoPlayerInitial
-                  ? const Column(
+                  ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 20),
-                        Text('Loading', style: TextStyle(fontWeight: FontWeight.w500)),
-                        SizedBox(height: 20),
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 20),
+                        Text("external.loading".tr(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                            )),
+                        const SizedBox(height: 20),
                       ],
                     )
                   : state.videoController != null
@@ -81,13 +99,16 @@ class _AmityStoryVideoPlayerState extends State<AmityStoryVideoPlayer> {
                             controller: state.chewieController!,
                           ),
                         )
-                      : const Column(
+                      : Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CircularProgressIndicator(),
-                            SizedBox(height: 20),
-                            Text('Loading', style: TextStyle(fontWeight: FontWeight.w500)),
-                            SizedBox(height: 20),
+                            const CircularProgressIndicator(),
+                            const SizedBox(height: 20),
+                            Text("external.loading".tr(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            const SizedBox(height: 20),
                           ],
                         ),
             ),

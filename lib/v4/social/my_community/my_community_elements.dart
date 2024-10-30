@@ -3,14 +3,14 @@ part of 'my_community_component.dart';
 class AmityCommunityCategoriesName extends BaseElement {
   final List<String?> tags;
 
-  AmityCommunityCategoriesName(
-      {Key? key, String? pageId, String? componentId, required this.tags})
-      : super(
-            key: key,
-            pageId: pageId,
-            componentId: componentId,
+  AmityCommunityCategoriesName({
+    super.key,
+    super.pageId,
+    super.componentId,
+    required this.tags,
+  }) : super(
             elementId:
-                AmityMyCommunityElement.communityCetegoryName.stringValue);
+                AmityMyCommunityElement.communityCategoryName.stringValue);
 
   @override
   Widget buildElement(BuildContext context) {
@@ -47,7 +47,10 @@ class AmityCommunityCategoriesName extends BaseElement {
     );
   }
 
-  Widget getCategoryWidget({required String label, required double maxWidth}) {
+  Widget getCategoryWidget({
+    required String label,
+    required double maxWidth,
+  }) {
     return Container(
       constraints: BoxConstraints(maxWidth: maxWidth),
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
@@ -60,7 +63,10 @@ class AmityCommunityCategoriesName extends BaseElement {
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
         style: TextStyle(
-            color: theme.baseColor, fontSize: 12, fontWeight: FontWeight.w400),
+          color: theme.baseColor,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
       ),
     );
   }
@@ -70,19 +76,15 @@ class CommunityImageAvatarElement extends BaseElement {
   final String? avatarUrl;
   final String placeHolderPath;
 
-  CommunityImageAvatarElement(
-      {Key? key,
-      String? pageId,
-      String? componentId,
-      this.placeHolderPath =
-          "assets/Icons/amity_ic_community_avatar_placeholder.svg",
-      required String elementId,
-      required this.avatarUrl})
-      : super(
-            key: key,
-            pageId: pageId,
-            componentId: componentId,
-            elementId: elementId);
+  CommunityImageAvatarElement({
+    super.key,
+    super.pageId,
+    super.componentId,
+    this.placeHolderPath =
+        "assets/Icons/amity_ic_community_avatar_placeholder.svg",
+    required super.elementId,
+    required this.avatarUrl,
+  });
 
   @override
   Widget buildElement(BuildContext context) {
@@ -93,39 +95,37 @@ class CommunityImageAvatarElement extends BaseElement {
 
 class AmityPrivateBadgeElement extends BaseElement {
   AmityPrivateBadgeElement({
-    Key? key,
-    String? pageId,
-    String? componentId,
+    super.key,
+    super.pageId,
+    super.componentId,
   }) : super(
-            key: key,
-            pageId: pageId,
-            componentId: componentId,
             elementId:
                 AmityMyCommunityElement.communityPrivateBadge.stringValue);
 
   @override
   Widget buildElement(BuildContext context) {
-    return SvgPicture.asset("assets/Icons/amity_ic_private_badge.svg",
-        package: 'amity_uikit_beta_service');
+    return SvgPicture.asset(
+      "assets/Icons/amity_ic_private_badge.svg",
+      package: 'amity_uikit_beta_service',
+    );
   }
 }
 
 class AmityOfficialBadgeElement extends BaseElement {
   AmityOfficialBadgeElement({
-    Key? key,
-    String? pageId,
-    String? componentId,
+    super.key,
+    super.pageId,
+    super.componentId,
   }) : super(
-          key: key,
-          pageId: pageId,
-          componentId: componentId,
-          elementId: AmityMyCommunityElement.communityOfficialBadge.stringValue,
-        );
+            elementId:
+                AmityMyCommunityElement.communityOfficialBadge.stringValue);
 
   @override
   Widget buildElement(BuildContext context) {
-    return SvgPicture.asset("assets/Icons/amity_ic_official_badge.svg",
-        package: 'amity_uikit_beta_service');
+    return SvgPicture.asset(
+      "assets/Icons/amity_ic_official_badge.svg",
+      package: 'amity_uikit_beta_service',
+    );
   }
 }
 
@@ -133,21 +133,21 @@ class CommunityMemberCountElement extends BaseElement {
   final int? memberCount;
 
   CommunityMemberCountElement({
-    Key? key,
-    String? pageId,
-    String? componentId,
+    super.key,
+    super.pageId,
+    super.componentId,
     required this.memberCount,
   }) : super(
-          key: key,
-          pageId: pageId,
-          componentId: componentId,
-          elementId: AmityMyCommunityElement.communityMemberCount.stringValue,
-        );
+            elementId:
+                AmityMyCommunityElement.communityMemberCount.stringValue);
 
   @override
   Widget buildElement(BuildContext context) {
     return Text(
-      '${memberCount?.formattedCompactString()} members',
+      "community.member".plural(
+        memberCount!.toInt(),
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      ),
       style: TextStyle(
         color: theme.baseColorShade1,
         fontWeight: FontWeight.w400,

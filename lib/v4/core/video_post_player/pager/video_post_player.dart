@@ -13,10 +13,10 @@ class VideoPostPlayerPager extends StatelessWidget with ChangeNotifier {
   final int initialIndex;
 
   VideoPostPlayerPager({
-    Key? key,
+    super.key,
     required this.posts,
     required this.initialIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

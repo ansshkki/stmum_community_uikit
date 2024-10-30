@@ -1,15 +1,14 @@
-import 'dart:math';
-
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 part 'hyperlink_event.dart';
+
 part 'hyperlink_state.dart';
 
 class HyperlinkBloc extends Bloc<HyperlinkEvent, HyperlinkState> {
-  HyperlinkBloc() : super(HyperlinkInitialState()) {
+  HyperlinkBloc() : super(const HyperlinkInitialState()) {
     on<HyperlinkEvent>((event, emit) {});
 
     on<SetInitalStateEvent>((event, emit) {
@@ -53,15 +52,14 @@ class HyperlinkBloc extends Bloc<HyperlinkEvent, HyperlinkState> {
       }
     });
 
-
     on<LoadingStateHyperLink>((event, emit) {
-      emit(HyperlinkLoadingState( hyperLink: state.hyperLink));
+      emit(HyperlinkLoadingState(hyperLink: state.hyperLink));
     });
 
     on<VerifyAndSaveHyperLinkEvent>((event, emit) async {
-      add(LoadingStateHyperLink( ));
+      add(LoadingStateHyperLink());
       if (event.urlText.isEmpty) {
-        add(OnURLErrorEvent(error: "Please enter a valid URL."));
+        add(OnURLErrorEvent(error: "util.url_format_error".tr()));
         return;
       }
       // else if(!Uri.parse(event.urlText).isAbsolute){
@@ -69,41 +67,31 @@ class HyperlinkBloc extends Bloc<HyperlinkEvent, HyperlinkState> {
       //   return;
       // }
 
-      await AmityCoreClient()
-          .validateUrls([event.urlText])
-          .then((value) {
-            if(event.customizedText.isEmpty){
-              HyperLink hyperlink = HyperLink(
-                url: event.urlText,
-              );
-              add(OnHyperLinkAdded(hyperlink: hyperlink));
-            }
-          })
-          .onError((error, stackTrace) {
-            add(OnURLErrorEvent(error: "Please enter a whitelisted URL."));
-          });
+      await AmityCoreClient().validateUrls([event.urlText]).then((value) {
+        if (event.customizedText.isEmpty) {
+          HyperLink hyperlink = HyperLink(
+            url: event.urlText,
+          );
+          add(OnHyperLinkAdded(hyperlink: hyperlink));
+        }
+      }).onError((error, stackTrace) {
+        add(OnURLErrorEvent(error: "util.url_abuse_error".tr()));
+      });
 
       if (event.customizedText.isNotEmpty) {
         await AmityCoreClient()
-            .validateTexts([event.customizedText])
-            .then((value) {
-              HyperLink hyperlink = HyperLink(
-                url: event.urlText,
-                customText: event.customizedText,
-              );
-              add(OnHyperLinkAdded(hyperlink: hyperlink));
-            })
-            .onError((error, stackTrace) {
-              add(OnCustmizedErrorEvent(error: "Your text contains a blocklisted word."));
-            });
+            .validateTexts([event.customizedText]).then((value) {
+          HyperLink hyperlink = HyperLink(
+            url: event.urlText,
+            customText: event.customizedText,
+          );
+          add(OnHyperLinkAdded(hyperlink: hyperlink));
+        }).onError((error, stackTrace) {
+          add(OnCustmizedErrorEvent(error: "util.content_abuse_error".tr()));
+        });
       }
 
       emit(state);
     });
   }
-
-
-
-
-
 }

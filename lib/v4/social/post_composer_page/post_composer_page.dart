@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:amity_sdk/amity_sdk.dart';
-import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_page.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/amity_uikit_toast.dart';
@@ -18,6 +15,7 @@ import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_compo
 import 'package:amity_uikit_beta_service/v4/utils/CustomBottomSheet/custom_buttom_sheet.dart';
 import 'package:amity_uikit_beta_service/v4/utils/SingleVideoPlayer/single_video_player.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,8 +43,11 @@ class PostComposerPage extends NewBasePage {
   bool isMediaReady = false;
   String appName = '';
 
-  PostComposerPage({Key? key, required this.options, this.onPopRequested})
-      : super(key: key, pageId: '');
+  PostComposerPage({
+    super.key,
+    required this.options,
+    this.onPopRequested,
+  }) : super(pageId: '');
 
   @override
   Widget buildPage(BuildContext context) {
@@ -198,31 +199,29 @@ class PostComposerPage extends NewBasePage {
                       minSize: 0.125,
                       theme: theme,
                       collapsedContent: AmityMediaAttachmentComponent(
-                        onCameraTap: () async {
-                          onCameraTap(context);
-                        },
-                        onImageTap: () async {
-                          pickMultipleFiles(context, FileType.image,
-                              maxFiles: 10);
-                        },
-                        onVideoTap: () async {
-                          pickMultipleFiles(context, FileType.video,
-                              maxFiles: 10);
-                        },
+                        onCameraTap: () async => onCameraTap(context),
+                        onImageTap: () async => pickMultipleFiles(
+                          context,
+                          FileType.image,
+                          maxFiles: 10,
+                        ),
+                        onVideoTap: () async => pickMultipleFiles(
+                          context,
+                          FileType.video,
+                          maxFiles: 10,
+                        ),
                         mediaType: selectedMediaType,
                       ),
                       expandedContent: AmityDetailedMediaAttachmentComponent(
-                          onCameraTap: () {
-                            onCameraTap(context);
-                          },
-                          onImageTap: () {
-                            pickMultipleFiles(context, FileType.image,
-                                maxFiles: 10);
-                          },
-                          onVideoTap: () {
-                            pickMultipleFiles(context, FileType.video,
-                                maxFiles: 10);
-                          },
+                          onCameraTap: () => onCameraTap(context),
+                          onImageTap: () => pickMultipleFiles(
+                              context, FileType.image,
+                              maxFiles: 10),
+                          onVideoTap: () => pickMultipleFiles(
+                                context,
+                                FileType.video,
+                                maxFiles: 10,
+                              ),
                           mediaType: selectedMediaType),
                     ),
                 ],
@@ -263,10 +262,10 @@ class PostComposerPage extends NewBasePage {
           if (result.type == FileType.video) {
             if (selectedFiles.length == 10) {
               AmityV4Dialog().showAlertErrorDialog(
-                title: "Maximum upload limit reached",
-                message:
-                    "You’ve reached the upload limit of 10 vidoes. Any additional videos will not be saved.",
-                closeText: "Close",
+                title: "media.limit.title".tr(),
+                message: "media.limit.message"
+                    .tr(args: ["media.videos".tr(), "media.videos".tr()]),
+                closeText: "external.close".tr(),
               );
             } else {
               context.read<PostComposerBloc>().add(
@@ -276,10 +275,10 @@ class PostComposerPage extends NewBasePage {
           } else {
             if (selectedFiles.length == 10) {
               AmityV4Dialog().showAlertErrorDialog(
-                title: "Maximum upload limit reached",
-                message:
-                    "You’ve reached the upload limit of 10 images. Any additional images will not be saved.",
-                closeText: "Close",
+                title: "media.limit.title".tr(),
+                message: "media.limit.message"
+                    .tr(args: ["media.photos".tr(), "media.photos".tr()]),
+                closeText: "external.close".tr(),
               );
             } else {
               context.read<PostComposerBloc>().add(
@@ -299,7 +298,7 @@ class PostComposerPage extends NewBasePage {
       List<XFile> files = [];
 
       if (type == FileType.video) {
-        typeText = 'videos';
+        typeText = "media.videos".tr();
 
         pickVideos() async {
           FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -314,8 +313,10 @@ class PostComposerPage extends NewBasePage {
                 {context.read<AmityToastBloc>().add(AmityToastDismiss())}
               else
                 {
-                  context.read<AmityToastBloc>().add(const AmityToastLoading(
-                      message: "Processing...", icon: AmityToastIcon.loading))
+                  context.read<AmityToastBloc>().add(AmityToastLoading(
+                        message: "external.processing".tr(),
+                        icon: AmityToastIcon.loading,
+                      ))
                 }
             },
           );
@@ -331,11 +332,12 @@ class PostComposerPage extends NewBasePage {
         showPermissionDialog() async {
           ConfirmationV4Dialog().show(
             context: context,
-            title: 'Allow access to your vidoes',
-            detailText: 'This allows $appName to access vidoes on your device.',
+            title: "media.access.title".tr(args: ["media.videos".tr()]),
+            detailText:
+                "media.access.message".tr(args: [appName, "media.videos".tr()]),
             leftButtonColor: null,
-            leftButtonText: 'OK',
-            rightButtonText: 'Open settings',
+            leftButtonText: "external.ok".tr(),
+            rightButtonText: "external.open_setting".tr(),
             onConfirm: () {
               openAppSettings();
             },
@@ -363,13 +365,15 @@ class PostComposerPage extends NewBasePage {
           await showPermissionDialog();
         }
       } else {
-        typeText = 'images';
+        typeText = "media.photos".tr();
         bool isPickerClosed = false;
 
         Future.delayed(const Duration(milliseconds: 1000), () {
           if (!isPickerClosed) {
-            context.read<AmityToastBloc>().add(const AmityToastLoading(
-                message: "Processing...", icon: AmityToastIcon.loading));
+            context.read<AmityToastBloc>().add(AmityToastLoading(
+                  message: "external.processing".tr(),
+                  icon: AmityToastIcon.loading,
+                ));
           }
         });
         try {
@@ -381,11 +385,11 @@ class PostComposerPage extends NewBasePage {
 
           PermissionAlertV4Dialog().show(
             context: context,
-            title: 'Allow access to your photos',
+            title: "media.access.title".tr(args: ["media.photos".tr()]),
             detailText:
-                'This allows $appName to share photos from this device and save photos to it.',
-            bottomButtonText: 'OK',
-            topButtonText: 'Open settings',
+                "media.access.message".tr(args: [appName, "media.photo".tr()]),
+            bottomButtonText: "external.ok".tr(),
+            topButtonText: "external.open_setting".tr(),
             onTopButtonAction: () {
               openAppSettings();
             },
@@ -397,10 +401,9 @@ class PostComposerPage extends NewBasePage {
       if (files.isNotEmpty) {
         if (selectedFiles.length + files.length > 10) {
           AmityV4Dialog().showAlertErrorDialog(
-            title: "Maximum upload limit reached",
-            message:
-                "You’ve reached the upload limit of 10 $typeText. Any additional $typeText will not be saved.",
-            closeText: "Close",
+            title: "media.title".tr(),
+            message: "media.message".tr(args: [typeText, typeText]),
+            closeText: "external.close".tr(),
           );
         } else {
           if (type == FileType.image) {
@@ -670,9 +673,9 @@ class PostComposerPage extends NewBasePage {
 
   String _getPageTitle() {
     if (options.mode == AmityPostComposerMode.edit) {
-      return "Edit Post";
+      return "change.post".tr();
     } else if (options.targetType == AmityPostTargetType.USER) {
-      return "My Timeline";
+      return "user.timeline".tr();
     } else {
       return options.community?.displayName ?? '';
     }
@@ -682,7 +685,9 @@ class PostComposerPage extends NewBasePage {
     return TextButton(
       onPressed: isPostButtonEnabled ? () => _handleAction(context) : null,
       child: Text(
-        options.mode == AmityPostComposerMode.edit ? "Save" : "Post",
+        options.mode == AmityPostComposerMode.edit
+            ? "external.save".tr()
+            : "post.post".tr(),
         style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w400,
@@ -697,10 +702,10 @@ class PostComposerPage extends NewBasePage {
   void _handleClose(BuildContext context) {
     ConfirmationV4Dialog().show(
       context: context,
-      title: 'Discard this post?',
-      detailText: 'The post will be permanently deleted. It cannot be undone.',
-      leftButtonText: 'Keep editing',
-      rightButtonText: 'Discard',
+      title: "messages.discard.title".tr(),
+      detailText: "messages.discard.content".tr(),
+      leftButtonText: "external.cancel".tr(),
+      rightButtonText: "external.discard".tr(),
       onConfirm: () {
         Navigator.pop(context);
         onPopRequested?.call(true);
@@ -729,8 +734,8 @@ class PostComposerPage extends NewBasePage {
         context.read<GlobalFeedBloc>().add(GlobalFeedReloadThePost(post: post));
         Navigator.pop(context);
       }).onError((error, stackTrace) {
-        _showToast(context, "Failed to edit post. Please try again.",
-            AmityToastIcon.warning);
+        _showToast(
+            context, "util.edit_post_error".tr(), AmityToastIcon.warning);
       });
     } else {
       final postEditBuilder = options.post?.edit();
@@ -743,8 +748,8 @@ class PostComposerPage extends NewBasePage {
         context.read<GlobalFeedBloc>().add(GlobalFeedReloadThePost(post: post));
         Navigator.pop(context);
       }).onError((error, stackTrace) {
-        _showToast(context, "Failed to edit post. Please try again.",
-            AmityToastIcon.warning);
+        _showToast(
+            context, "util.edit_post_error".tr(), AmityToastIcon.warning);
       });
     }
   }
@@ -752,8 +757,8 @@ class PostComposerPage extends NewBasePage {
   void _createPost(BuildContext context) {
     final targetId = options.targetId;
 
-    context.read<AmityToastBloc>().add(const AmityToastLoading(
-        message: "Posting", icon: AmityToastIcon.loading));
+    context.read<AmityToastBloc>().add(AmityToastLoading(
+        message: "external.posting".tr(), icon: AmityToastIcon.loading));
 
     var targetBuilder = AmitySocialClient.newPostRepository().createPost();
 
@@ -794,8 +799,7 @@ class PostComposerPage extends NewBasePage {
     postCreatorBuilder.post().then((post) {
       _onPostSuccess(context, post);
     }).onError((error, stackTrace) {
-      _showToast(context, "Failed to create post. Please try again.",
-          AmityToastIcon.warning);
+      _showToast(context, "util.edit_post_error".tr(), AmityToastIcon.warning);
     });
   }
 

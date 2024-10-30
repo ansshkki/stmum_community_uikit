@@ -1,6 +1,7 @@
 import 'package:amity_uikit_beta_service/utils/navigation_key.dart';
 import 'package:amity_uikit_beta_service/viewmodel/amity_viewmodel.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'create_group_repo.dart';
 
@@ -34,13 +35,13 @@ class CreateGroupRepoImp implements CreateGroupRepo {
         callback(true, null);
       } else {
         // callback(null, response.data["message"]);
-        callback(null, "حدث خطأ ما!");
+        callback(null, "repo.unknown_error".tr());
       }
     } 
     on DioException catch (error) {
       callback(null, error.message);
     } catch (error) {
-      callback(null, "خطا داخلي , يرجى التواصل مع فريق الدعم");
+      callback(null, "repo.internal_error".tr());
     }
   }
 }

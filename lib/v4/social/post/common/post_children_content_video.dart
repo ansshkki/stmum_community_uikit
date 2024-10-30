@@ -28,21 +28,20 @@ class PostContentVideo extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child:Container(
+              child: Container(
                 width: 40,
                 height: 40,
-                decoration: ShapeDecoration(
-                  color: Color(0x40000000),
-                  shape: OvalBorder(side: BorderSide(color: Colors.transparent)),
-                ),
-                child: Icon(
+                decoration: const ShapeDecoration(
+                    color: Color(0x40000000),
+                    shape: OvalBorder(
+                        side: BorderSide(color: Colors.transparent))),
+                child: const Icon(
                   Icons.play_arrow,
                   size: 25.0,
                   color: Colors.white,
                 ),
               ),
             ),
-            
           ],
         ),
       );
@@ -63,17 +62,13 @@ class PostContentVideo extends StatelessWidget {
     switch (posts.length) {
       case 1:
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VideoPostPlayerPager(
-                  posts: posts,
-                  initialIndex: 0,
-                ),
-              ),
-            );
-          },
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  VideoPostPlayerPager(posts: posts, initialIndex: 0),
+            ),
+          ),
           child: AspectRatio(
             aspectRatio: 1,
             child: backgroundThumbnail(getURL(posts[0].data!), 0,
@@ -88,45 +83,48 @@ class PostContentVideo extends StatelessWidget {
       case 2:
         return AspectRatio(
           aspectRatio: 1,
-          child: Row(children: [
-            Expanded(
+          child: Row(
+            children: [
+              Expanded(
                 child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => VideoPostPlayerPager(
-                      posts: posts,
-                      initialIndex: 0,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPostPlayerPager(
+                        posts: posts,
+                        initialIndex: 0,
+                      ),
                     ),
                   ),
-                );
-              },
-              child: backgroundThumbnail(getURL(posts[0].data!), 0,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomLeft: Radius.circular(8))),
-            )),
-            Expanded(
+                  child: backgroundThumbnail(getURL(posts[0].data!), 0,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8))),
+                ),
+              ),
+              Expanded(
                 child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => VideoPostPlayerPager(
-                      posts: posts,
-                      initialIndex: 1,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPostPlayerPager(
+                        posts: posts,
+                        initialIndex: 1,
+                      ),
                     ),
                   ),
-                );
-              },
-              child: backgroundThumbnail(getURL(posts[1].data!), 1,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  )),
-            ))
-          ]),
+                  child: backgroundThumbnail(
+                    getURL(posts[1].data!),
+                    1,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         );
 
       case 3:
@@ -136,17 +134,15 @@ class PostContentVideo extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoPostPlayerPager(
-                          posts: posts,
-                          initialIndex: 0,
-                        ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPostPlayerPager(
+                        posts: posts,
+                        initialIndex: 0,
                       ),
-                    );
-                  },
+                    ),
+                  ),
                   child: backgroundThumbnail(getURL(posts[0].data!), 0,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
@@ -158,9 +154,8 @@ class PostContentVideo extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => VideoPostPlayerPager(
@@ -168,17 +163,19 @@ class PostContentVideo extends StatelessWidget {
                               initialIndex: 1,
                             ),
                           ),
-                        );
-                      },
-                      child: backgroundThumbnail(getURL(posts[1].data!), 1,
+                        ),
+                        child: backgroundThumbnail(
+                          getURL(posts[1].data!),
+                          1,
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(8),
-                          )),
-                    )),
+                          ),
+                        ),
+                      ),
+                    ),
                     Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => VideoPostPlayerPager(
@@ -186,12 +183,12 @@ class PostContentVideo extends StatelessWidget {
                               initialIndex: 2,
                             ),
                           ),
-                        );
-                      },
-                      child: backgroundThumbnail(getURL(posts[2].data!), 2,
-                          borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(8))),
-                    )),
+                        ),
+                        child: backgroundThumbnail(getURL(posts[2].data!), 2,
+                            borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(8))),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -205,9 +202,8 @@ class PostContentVideo extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => VideoPostPlayerPager(
@@ -215,28 +211,29 @@ class PostContentVideo extends StatelessWidget {
                         initialIndex: 0,
                       ),
                     ),
-                  );
-                },
-                child: backgroundThumbnail(getURL(posts[0].data!), 0,
+                  ),
+                  child: backgroundThumbnail(
+                    getURL(posts[0].data!),
+                    0,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
-                    )),
-              )),
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPostPlayerPager(
-                              posts: posts,
-                              initialIndex: 1,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPostPlayerPager(
+                            posts: posts,
+                            initialIndex: 1,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(posts[1].data!), 1,
@@ -248,17 +245,15 @@ class PostContentVideo extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPostPlayerPager(
-                              posts: posts,
-                              initialIndex: 2,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPostPlayerPager(
+                            posts: posts,
+                            initialIndex: 2,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(posts[2].data!), 2),
@@ -267,17 +262,15 @@ class PostContentVideo extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPostPlayerPager(
-                              posts: posts,
-                              initialIndex: 3,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPostPlayerPager(
+                            posts: posts,
+                            initialIndex: 3,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(posts[3].data!), 3,
@@ -298,9 +291,8 @@ class PostContentVideo extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => VideoPostPlayerPager(
@@ -308,42 +300,41 @@ class PostContentVideo extends StatelessWidget {
                         initialIndex: 0,
                       ),
                     ),
-                  );
-                },
-                child: backgroundThumbnail(getURL(posts[0].data!), 0,
+                  ),
+                  child: backgroundThumbnail(
+                    getURL(posts[0].data!),
+                    0,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
-                    )),
-              )),
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPostPlayerPager(
-                              posts: posts,
-                              initialIndex: 1,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPostPlayerPager(
+                            posts: posts,
+                            initialIndex: 1,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(posts[1].data!), 1,
                             borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                            )),
+                                bottomLeft: Radius.circular(8))),
                       ),
                     ),
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => VideoPostPlayerPager(
@@ -351,8 +342,7 @@ class PostContentVideo extends StatelessWidget {
                               initialIndex: 2,
                             ),
                           ),
-                        );
-                      },
+                        ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(posts[2].data!), 2),
@@ -361,8 +351,7 @@ class PostContentVideo extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => VideoPostPlayerPager(
@@ -370,8 +359,7 @@ class PostContentVideo extends StatelessWidget {
                               initialIndex: 3,
                             ),
                           ),
-                        );
-                      },
+                        ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Stack(

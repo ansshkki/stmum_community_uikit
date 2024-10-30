@@ -1,4 +1,5 @@
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,8 @@ class NotificationPage extends StatelessWidget {
             unselectedLabelColor:
                 Provider.of<AmityUIConfiguration>(context).primaryColor,
             indicatorSize: TabBarIndicatorSize.label,
-            tabs: const [
-              Tab(text: "الكل"),// all
+            tabs: [
+              Tab(text: "external.all".tr()), // all
               // Tab(text: S.of(context).likes),
               // Tab(text: S.of(context).comments),
               // Tab(text: S.of(context).repost),

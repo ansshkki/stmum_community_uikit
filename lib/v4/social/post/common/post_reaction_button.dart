@@ -2,6 +2,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/common/post_action.dart';
 import 'package:amity_uikit_beta_service/v4/utils/compact_string_converter.dart';
 import 'package:amity_uikit_beta_service/v4/utils/config_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -99,7 +100,7 @@ class PostReactionButton extends StatelessWidget {
     bool hasMyReaction = post.myReactions?.isNotEmpty ?? false;
     var text = (post.reactionCount ?? 0).formattedCompactString();
     if (showLabel) {
-      text = hasMyReaction ? 'مفيد' : 'مفيد';
+      text = hasMyReaction ? "post.useful".tr() : "post.useful".tr();
     }
     return Text(
       text,
@@ -124,7 +125,7 @@ class PostReactionButton extends StatelessWidget {
     }
     var text = count.formattedCompactString();
     if (showLabel) {
-      text = hasMyReaction ? 'مفيد' : 'مفيد';
+      text = hasMyReaction ? "post.useful".tr() : "post.useful".tr();
     }
     return Text(
       text,

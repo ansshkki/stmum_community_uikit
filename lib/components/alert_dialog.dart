@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:amity_uikit_beta_service/components/custom_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../utils/navigation_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AmityDialog {
   var isShowDialog = true;
@@ -14,7 +14,7 @@ class AmityDialog {
     required String message,
   }) async {
     bool isBarrierDismissible() {
-      return title.toLowerCase().contains("خطأ"); //error
+      return title.toLowerCase().contains("external.error".tr()); //error
     }
 
     if (isShowDialog) {
@@ -32,7 +32,7 @@ class AmityDialog {
                 content: Text(message),
                 actions: <Widget>[
                   CupertinoDialogAction(
-                    child: const Text('حسنا'), // ok
+                    child: Text("external.ok".tr()), // ok
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -52,7 +52,7 @@ class AmityDialog {
                 content: Text(message),
                 actions: <Widget>[
                   TextButton(
-                    child: const Text('حسنا'), // ok
+                    child: Text("external.ok".tr()), // ok
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -94,17 +94,17 @@ class AmityLoadingDialog {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 padding: const EdgeInsetsDirectional.all(16.0),
-                child: const Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CupertinoActivityIndicator(
+                    const CupertinoActivityIndicator(
                       color: Colors.white,
                       radius: 20,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
-                      "جاري التحميل", // loading
-                      style: TextStyle(
+                      "external.loading".tr(), // loading
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -167,10 +167,10 @@ class ConfirmationDialog {
     required BuildContext context,
     required String title,
     required String detailText,
-    String leftButtonText = 'إلغاء', //Cancel
-    String rightButtonText = 'تأكيد', //Confirm
+    String? leftButtonText, //Cancel
+    String? rightButtonText, //Confirm
     required Function onConfirm,
-    Color confrimColor = Colors.red, 
+    Color confrimColor = Colors.red,
   }) async {
     // Check the platform
     if (Platform.isAndroid) {
@@ -183,7 +183,7 @@ class ConfirmationDialog {
             content: Text(detailText),
             actions: <Widget>[
               TextButton(
-                child: Text(leftButtonText),
+                child: Text(leftButtonText ?? "external.cancel".tr()),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -196,7 +196,7 @@ class ConfirmationDialog {
                 style: TextButton.styleFrom(
                   foregroundColor: confrimColor, // Set the text color
                 ),
-                child: Text(rightButtonText),
+                child: Text(rightButtonText ?? "external.confirm".tr()),
               ),
             ],
           );
@@ -214,7 +214,7 @@ class ConfirmationDialog {
               content: Text(detailText),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  child: Text(leftButtonText),
+                  child: Text(leftButtonText ?? "external.cancel".tr()),
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the dialog
                   },
@@ -226,7 +226,7 @@ class ConfirmationDialog {
                     onConfirm();
                   },
                   isDefaultAction: true,
-                  child: Text(rightButtonText),
+                  child: Text(rightButtonText ?? "external.confirm".tr()),
                 ),
               ],
             ),
@@ -237,7 +237,6 @@ class ConfirmationDialog {
   }
 }
 
-
 class AmityAlertDialogWithThreeActions {
   Future<void> show({
     required BuildContext context,
@@ -245,12 +244,12 @@ class AmityAlertDialogWithThreeActions {
     required String detailText,
     required String actionOneText,
     required String actionTwoText,
-    String dismissText = 'Cancel',
+    String? dismissText,
     required Function actionOne,
     required Function actionTwo,
     required Function onDismissRequest,
-     Color actionOneColor = Colors.red,
-     Color actionTwoColor = Colors.red,
+    Color actionOneColor = Colors.red,
+    Color actionTwoColor = Colors.red,
   }) async {
     // Check the platform
     if (Platform.isAndroid) {
@@ -261,10 +260,9 @@ class AmityAlertDialogWithThreeActions {
           return AlertDialog(
             title: Text(title),
             content: Text(detailText),
-            
             actions: <Widget>[
               TextButton(
-                child: Text(dismissText),
+                child: Text(dismissText ?? "external.cancel".tr()),
                 onPressed: () {
                   onDismissRequest();
                   Navigator.of(context).pop(); // Close the dialog
@@ -293,9 +291,8 @@ class AmityAlertDialogWithThreeActions {
             ],
           );
         },
-      ).then((value){
+      ).then((value) {
         onDismissRequest();
-      
       });
     } else if (Platform.isIOS) {
       // iOS-specific code
@@ -309,7 +306,7 @@ class AmityAlertDialogWithThreeActions {
               content: Text(detailText),
               actions: <Widget>[
                 CupertinoDialogAction(
-                  textStyle:  TextStyle(color: actionOneColor),
+                  textStyle: TextStyle(color: actionOneColor),
                   onPressed: () {
                     Navigator.of(context).pop();
                     actionOne();
@@ -318,7 +315,7 @@ class AmityAlertDialogWithThreeActions {
                   child: Text(actionOneText),
                 ),
                 CupertinoDialogAction(
-                  textStyle:  TextStyle(color: actionTwoColor ),
+                  textStyle: TextStyle(color: actionTwoColor),
                   onPressed: () {
                     Navigator.of(context).pop();
                     actionTwo();
@@ -327,7 +324,7 @@ class AmityAlertDialogWithThreeActions {
                   child: Text(actionTwoText),
                 ),
                 CupertinoDialogAction(
-                  child: Text(dismissText),
+                  child: Text(dismissText ?? "external.cancel".tr()),
                   onPressed: () {
                     onDismissRequest();
                     Navigator.of(context).pop(); // Close the dialog

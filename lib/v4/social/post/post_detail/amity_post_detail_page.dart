@@ -10,6 +10,7 @@ import 'package:amity_uikit_beta_service/v4/social/post/post_detail/bloc/post_de
 import 'package:amity_uikit_beta_service/v4/social/post/post_item/bloc/post_item_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/utils/Shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,11 +20,11 @@ class AmityPostDetailPage extends NewBasePage {
   final AmityPostAction? action;
 
   AmityPostDetailPage({
-    Key? key,
+    super.key,
     required this.postId,
     this.post,
     this.action,
-  }) : super(key: key, pageId: 'post_detail_page');
+  }) : super(pageId: 'post_detail_page');
 
   @override
   Widget buildPage(BuildContext context) {
@@ -72,7 +73,7 @@ class AmityPostDetailPage extends NewBasePage {
               slivers: [
                 SliverAppBar(
                   backgroundColor: theme.backgroundColor,
-                  title: const Text('Post'),
+                  title: Text("post.title".tr()),
                   titleTextStyle: TextStyle(
                     color: theme.baseColor,
                     fontSize: 17,
@@ -91,7 +92,8 @@ class AmityPostDetailPage extends NewBasePage {
                   ),
                 ),
                 SliverPadding(
-                  padding: const EdgeInsetsDirectional.only(start: 12, end: 16, top: 7),
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 12, end: 16, top: 7),
                   sliver: AmityCommentListComponent(
                     referenceId: postId,
                     referenceType: AmityCommentReferenceType.POST,

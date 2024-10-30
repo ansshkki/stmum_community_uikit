@@ -5,7 +5,6 @@ import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:amity_uikit_beta_service/v4/utils/shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/compact_string_converter.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
-import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,18 +15,18 @@ class AmityReactionListComponent extends NewBaseComponent {
   final AmityReactionReferenceType referenceType;
   late int? reactionCount = 0;
 
-
   AmityReactionListComponent({
-    Key? key,
-    String? pageId,
+    super.key,
+    super.pageId,
     required this.referenceId,
     required this.referenceType,
-  }) : super(key: key, pageId: pageId, componentId: 'reactions_component');
+  }) : super(componentId: 'reactions_component');
 
   @override
   Widget buildComponent(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReactionListBloc(referenceId: referenceId, referenceType: referenceType),
+      create: (context) => ReactionListBloc(
+          referenceId: referenceId, referenceType: referenceType),
       child: Builder(
         builder: (context) {
           context.read<ReactionListBloc>().add(ReactionListEventInit());
@@ -309,8 +308,12 @@ class AmityReactionListComponent extends NewBaseComponent {
             Container(
               width: 64,
               height: 56,
-              padding:
-                  const EdgeInsetsDirectional.only(top: 8, start: 16, end: 8, bottom: 8),
+              padding: const EdgeInsetsDirectional.only(
+                top: 8,
+                start: 16,
+                end: 8,
+                bottom: 8,
+              ),
               child: const SkeletonImage(
                 height: 40,
                 width: 40,

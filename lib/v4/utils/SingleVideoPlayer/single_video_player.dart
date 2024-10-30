@@ -13,11 +13,11 @@ class SingleVideoPlayer extends StatelessWidget with ChangeNotifier {
   final String? fileUrl;
 
   SingleVideoPlayer({
-    Key? key,
+    super.key,
     required this.filePath,
     required this.fileUrl,
     required this.initialIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,9 @@ class VideoPlayerBuilder with ChangeNotifier {
   Widget build() {
     return BlocBuilder<SingleVideoPlayerBloc, SingleVideoPlayerState>(
         builder: (context, state) {
-      context.read<SingleVideoPlayerBloc>().add(SingleVideoPlayerEventInitial());
+      context
+          .read<SingleVideoPlayerBloc>()
+          .add(SingleVideoPlayerEventInitial());
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(

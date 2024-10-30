@@ -5,6 +5,7 @@ import 'package:amity_uikit_beta_service/v4/core/toast/bloc/amity_uikit_toast_bl
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_creator/bloc/comment_creator_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_creator/comment_creator_action.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,18 +18,18 @@ class AmityCommentCreator extends BaseElement {
   AmityThemeColor? localTheme;
 
   AmityCommentCreator({
-    Key? key,
+    super.key,
     required this.referenceId,
     this.replyTo,
     required this.action,
     this.localTheme,
     required this.referenceType,
-    elementId = "comment_creator",
-  }) : super(key: key, elementId: elementId);
-  
+    super.elementId = "comment_creator",
+  });
+
   @override
   Widget buildElement(BuildContext context) {
-     return AmityCommentCreatorInternal(
+    return AmityCommentCreatorInternal(
       referenceId: referenceId,
       referenceType: referenceType,
       replyTo: replyTo,
@@ -46,13 +47,13 @@ class AmityCommentCreatorInternal extends StatefulWidget {
   final AmityThemeColor theme;
 
   const AmityCommentCreatorInternal({
-    Key? key,
+    super.key,
     required this.referenceId,
     required this.referenceType,
     this.replyTo,
     required this.action,
     required this.theme,
-  }) : super(key: key);
+  });
 
   @override
   _AmityCommentCreatorInternalState createState() =>
@@ -91,7 +92,8 @@ class _AmityCommentCreatorInternalState
               if (state.replyTo != null) renderReplyPanel(state.replyTo!),
               SafeArea(
                 top: false,
-                child: renderComposer(context, state, widget.referenceId, widget.referenceType),
+                child: renderComposer(
+                    context, state, widget.referenceId, widget.referenceType),
               ),
             ],
           );
@@ -100,8 +102,11 @@ class _AmityCommentCreatorInternalState
     );
   }
 
-  Widget renderComposer(BuildContext context, CommentCreatorState state, String referenceId, AmityCommentReferenceType referenceType) {
-    String? avatarUrl = AmityCoreClient.getCurrentUser().avatarUrl;
+  Widget renderComposer(BuildContext context, CommentCreatorState state,
+      String referenceId, AmityCommentReferenceType referenceType) {
+    String? avatarUrl = AmityCoreClient
+        .getCurrentUser()
+        .avatarUrl;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       child: Column(
@@ -121,7 +126,7 @@ class _AmityCommentCreatorInternalState
                     child: AmityNetworkImage(
                         imageUrl: avatarUrl,
                         placeHolderPath:
-                            "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
+                        "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
                   ),
                 ),
               ),
@@ -131,7 +136,7 @@ class _AmityCommentCreatorInternalState
                   height: state.currentHeight,
                   alignment: AlignmentDirectional.centerStart,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                   decoration: ShapeDecoration(
                     color: widget.theme.baseColorShade4,
                     shape: RoundedRectangleBorder(
@@ -161,7 +166,7 @@ class _AmityCommentCreatorInternalState
                           isDense: true,
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 0, vertical: 0),
-                          hintText: 'Say something nice...',
+                          hintText: "comment.hint".tr(),
                           border: InputBorder.none,
                           hintStyle: TextStyle(
                             color: widget.theme.baseColorShade2,
@@ -176,27 +181,29 @@ class _AmityCommentCreatorInternalState
               ),
               GestureDetector(
                 onTap: () {
-                  context.read<CommentCreatorBloc>().add(CommentCreatorCreated(
-                        referenceId: referenceId,
-                        referenceType: referenceType,
-                        text: controller.text,
-                        toastBloc: context.read<AmityToastBloc>(),
-                      ));
+                  context.read<CommentCreatorBloc>().add(
+                    CommentCreatorCreated(
+                      referenceId: referenceId,
+                      referenceType: referenceType,
+                      text: controller.text,
+                      toastBloc: context.read<AmityToastBloc>(),
+                    ),
+                  );
                   controller.clear();
                 },
                 child: Container(
-                  padding:
-                      const EdgeInsetsDirectional.only(bottom: 12, end: 12, start: 8),
+                  padding: const EdgeInsetsDirectional.only(
+                      bottom: 12, end: 12, start: 8),
                   clipBehavior: Clip.antiAlias,
                   decoration:
-                      BoxDecoration(color: widget.theme.backgroundColor),
+                  BoxDecoration(color: widget.theme.backgroundColor),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Post',
+                        "post.post".tr(),
                         style: TextStyle(
                           color: (state.text.isEmpty)
                               ? const Color(0xFFA0BDF8)
@@ -221,7 +228,8 @@ class _AmityCommentCreatorInternalState
     return Container(
       width: double.infinity,
       height: 40,
-      padding: const EdgeInsetsDirectional.only(top: 10, start: 16, end: 12, bottom: 10),
+      padding: const EdgeInsetsDirectional.only(
+          top: 10, start: 16, end: 12, bottom: 10),
       decoration: BoxDecoration(color: widget.theme.baseColorShade4),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -234,7 +242,7 @@ class _AmityCommentCreatorInternalState
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Replying to ',
+                      text: "comment.replaying".tr(),
                       style: TextStyle(
                         color: widget.theme.baseColorShade1,
                         fontSize: 15,
@@ -257,9 +265,7 @@ class _AmityCommentCreatorInternalState
             ),
           ),
           GestureDetector(
-            onTap: () {
-              widget.action.onDissmiss();
-            },
+            onTap: () => widget.action.onDissmiss(),
             child: SizedBox(
               width: 20,
               height: 20,

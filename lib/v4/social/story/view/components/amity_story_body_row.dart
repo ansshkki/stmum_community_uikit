@@ -28,7 +28,18 @@ class AmityStoryBodyRow extends StatefulWidget {
   final Function onSwipeDown;
   final Function(HyperLink)? onHyperlinkClick;
 
-  AmityStoryBodyRow({super.key, required this.dataType, required this.data, required this.state, required this.items, required this.isVisible, required this.onTap, required this.onHold, required this.onSwipeUp, required this.onSwipeDown, this.onHyperlinkClick});
+  AmityStoryBodyRow(
+      {super.key,
+      required this.dataType,
+      required this.data,
+      required this.state,
+      required this.items,
+      required this.isVisible,
+      required this.onTap,
+      required this.onHold,
+      required this.onSwipeUp,
+      required this.onSwipeDown,
+      this.onHyperlinkClick});
 
   @override
   State<AmityStoryBodyRow> createState() => _AmityStoryBodyRowState();
@@ -104,7 +115,9 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: AmityStoryBodyHyperlinkView(hyperlinkItem: widget.items.first as HyperLink, onHyperlinkClick: widget.onHyperlinkClick!),
+                      child: AmityStoryBodyHyperlinkView(
+                          hyperlinkItem: widget.items.first as HyperLink,
+                          onHyperlinkClick: widget.onHyperlinkClick!),
                     ),
                   )
                 : Container(),
@@ -117,7 +130,8 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
                         setState(() {
                           isVolumeOn = !isVolumeOn;
                         });
-                        BlocProvider.of<StoryVideoPlayerBloc>(context).add(const VolumeChangedEvent());
+                        BlocProvider.of<StoryVideoPlayerBloc>(context)
+                            .add(const VolumeChangedEvent());
                       },
                       child: Container(
                         height: 32,
@@ -128,7 +142,9 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
                         ),
                         child: Center(
                           child: SvgPicture.asset(
-                            isVolumeOn ? "assets/Icons/ic_volume_white.svg" : "assets/Icons/ic_volume_off_white.svg",
+                            isVolumeOn
+                                ? "assets/Icons/ic_volume_white.svg"
+                                : "assets/Icons/ic_volume_off_white.svg",
                             package: 'amity_uikit_beta_service',
                             height: 24,
                           ),
@@ -146,13 +162,19 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
   Widget getContent(AmityStoryDataType dataType) {
     switch (dataType) {
       case AmityStoryDataType.IMAGE:
-        return AmityStoryBodyImageView(data: widget.data as ImageStoryData, syncState: widget.state);
+        return AmityStoryBodyImageView(
+            data: widget.data as ImageStoryData, syncState: widget.state);
 
       case AmityStoryDataType.VIDEO:
         if (!widget.isVisible) {
-          BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
+          BlocProvider.of<StoryVideoPlayerBloc>(context)
+              .add(const PauseStoryVideoEvent());
         }
-        return AmityStoryBodyVideoView(data: widget.data as VideoStoryData, syncState: widget.state, videoPlayerController: AmityViewCommunityStoryPage.videoPlayerController);
+        return AmityStoryBodyVideoView(
+            data: widget.data as VideoStoryData,
+            syncState: widget.state,
+            videoPlayerController:
+                AmityViewCommunityStoryPage.videoPlayerController);
 
       default:
         return Container();
@@ -171,7 +193,8 @@ class AmityStoryBodyImageView extends StatefulWidget {
   });
 
   @override
-  State<AmityStoryBodyImageView> createState() => _AmityStoryBodyImageViewState();
+  State<AmityStoryBodyImageView> createState() =>
+      _AmityStoryBodyImageViewState();
 }
 
 class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
@@ -187,7 +210,8 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
   }
 
   Future<void> _updatePalette() async {
-    if (widget.data.image.hasLocalPreview != null && widget.data.image.hasLocalPreview!) {
+    if (widget.data.image.hasLocalPreview != null &&
+        widget.data.image.hasLocalPreview!) {
       _paletteGenerator = await PaletteGenerator.fromImageProvider(
         FileImage(File(widget.data.image.getFilePath!)),
         // size: const Size(200, 200), // Set the size to reduce computation time
@@ -200,10 +224,12 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
     }
 
     setState(() {
-      _dominantColor = _paletteGenerator.vibrantColor?.color.withOpacity(0.7) ?? Colors.black;
-      _vibrantColor = _paletteGenerator.darkVibrantColor?.color.withOpacity(0.7) ?? Colors.white;
+      _dominantColor = _paletteGenerator.vibrantColor?.color.withOpacity(0.7) ??
+          Colors.black;
+      _vibrantColor =
+          _paletteGenerator.darkVibrantColor?.color.withOpacity(0.7) ??
+              Colors.white;
     });
-    
   }
 
   @override
@@ -228,10 +254,14 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
           width: double.infinity,
           height: double.infinity,
           color: Colors.transparent,
-          child: widget.data.image.hasLocalPreview != null && widget.data.image.hasLocalPreview!
+          child: widget.data.image.hasLocalPreview != null &&
+                  widget.data.image.hasLocalPreview!
               ? Image.file(
                   File(widget.data.image.getFilePath!),
-                  fit: widget.data.imageDisplayMode == AmityStoryImageDisplayMode.FILL ? BoxFit.cover : BoxFit.contain,
+                  fit: widget.data.imageDisplayMode ==
+                          AmityStoryImageDisplayMode.FILL
+                      ? BoxFit.cover
+                      : BoxFit.contain,
                 )
               : CachedNetworkImage(
                   progressIndicatorBuilder: (context, url, progress) {
@@ -252,7 +282,10 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: imageProvider,
-                          fit: widget.data.imageDisplayMode == AmityStoryImageDisplayMode.FILL ? BoxFit.cover : BoxFit.contain,
+                          fit: widget.data.imageDisplayMode ==
+                                  AmityStoryImageDisplayMode.FILL
+                              ? BoxFit.cover
+                              : BoxFit.contain,
                         ),
                       ),
                     );
@@ -268,7 +301,12 @@ class AmityStoryBodyVideoView extends StatelessWidget {
   final VideoStoryData data;
   final AmityStorySyncState syncState;
   VideoPlayerController? videoPlayerController;
-  AmityStoryBodyVideoView({super.key, required this.data, required this.syncState, this.videoPlayerController});
+
+  AmityStoryBodyVideoView(
+      {super.key,
+      required this.data,
+      required this.syncState,
+      this.videoPlayerController});
 
   @override
   Widget build(BuildContext context) {
@@ -277,18 +315,27 @@ class AmityStoryBodyVideoView extends StatelessWidget {
       height: double.infinity,
       child: AmityStoryVideoPlayer(
         showVolumeControl: true,
-        video: (data.video.hasLocalPreview != null && data.video.hasLocalPreview!) ? File(data.video.getFilePath!) : null,
+        video:
+            (data.video.hasLocalPreview != null && data.video.hasLocalPreview!)
+                ? File(data.video.getFilePath!)
+                : null,
         onInitializing: () {
           AmityStorySingleSegmentTimerElement.currentValue = -1;
-          BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
+          BlocProvider.of<ViewStoryBloc>(context)
+              .add(ShoudPauseEvent(shouldPause: true));
         },
         onWidgetDispose: () {
-          BlocProvider.of<StoryVideoPlayerBloc>(context).add(const DisposeStoryVideoPlayerEvent());
+          BlocProvider.of<StoryVideoPlayerBloc>(context)
+              .add(const DisposeStoryVideoPlayerEvent());
         },
-        url: (data.video.hasLocalPreview != null && data.video.hasLocalPreview!) ? null : data.video.fileUrl!,
+        url: (data.video.hasLocalPreview != null && data.video.hasLocalPreview!)
+            ? null
+            : data.video.fileUrl!,
         onInitialize: () {
-          AmityStorySingleSegmentTimerElement.totalValue = BlocProvider.of<StoryVideoPlayerBloc>(context).state.duration;
-          BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+          AmityStorySingleSegmentTimerElement.totalValue =
+              BlocProvider.of<StoryVideoPlayerBloc>(context).state.duration;
+          BlocProvider.of<ViewStoryBloc>(context)
+              .add(ShoudPauseEvent(shouldPause: false));
         },
         onPause: () {},
         onPlay: () {},
@@ -300,7 +347,9 @@ class AmityStoryBodyVideoView extends StatelessWidget {
 class AmityStoryBodyHyperlinkView extends StatelessWidget {
   final HyperLink hyperlinkItem;
   final Function(HyperLink) onHyperlinkClick;
-  const AmityStoryBodyHyperlinkView({super.key, required this.hyperlinkItem, required this.onHyperlinkClick});
+
+  const AmityStoryBodyHyperlinkView(
+      {super.key, required this.hyperlinkItem, required this.onHyperlinkClick});
 
   @override
   Widget build(BuildContext context) {
