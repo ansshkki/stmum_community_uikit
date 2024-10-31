@@ -136,12 +136,12 @@ class AmityStoryUploadFailedRow extends StatelessWidget {
               }
               AmityAlertDialogWithThreeActions().show(
                   context: context,
-                  title: "Failed to upload story",
-                  detailText: "Would you like to discard or retry uploading?",
-                  actionOneText: "Retry",
-                  actionTwoText: "Discard",
+                  title: "messages.failed_upload.title".tr(),
+                  detailText: "messages.failed_upload.content".tr(),
+                  actionOneText: "external.retry".tr(),
+                  actionTwoText: "external.discard".tr(),
+                  dismissText: "external.cancel".tr(),
                   actionOneColor: Colors.blue,
-                  dismissText: "Cancel",
                   actionOne: () {
                     BlocProvider.of<ViewStoryBloc>(context)
                         .add(ShoudPauseEvent(shouldPause: false));

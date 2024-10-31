@@ -3,17 +3,19 @@ import 'package:amity_uikit_beta_service/view/user/edit_profile.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSettingPage extends StatelessWidget {
   final AmityUser amityUser;
   final AmityUserFollowInfo amityMyFollowInfo;
+
   const UserSettingPage({
-    Key? key,
+    super.key,
     required this.amityUser,
     required this.amityMyFollowInfo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class UserSettingPage extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               elevation: 0.0,
-              title: Text("الإعدادت", //Setting
+              title: Text("external.setting".tr(), //Setting
                   style: Provider.of<AmityUIConfiguration>(context)
                       .titleTextStyle
                       .copyWith(
@@ -50,7 +52,7 @@ class UserSettingPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsetsDirectional.all(16.0),
-                  child: Text("المعلومات الأساسية", //Basic info
+                  child: Text("external.basic_info".tr(), //Basic info
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 17,
@@ -75,7 +77,7 @@ class UserSettingPage extends StatelessWidget {
                                         .appColors
                                         .base)),
                         title: Text(
-                          "تعديل الملف الشخصي", //Edit Profile
+                          "user.edit".tr(),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -107,9 +109,9 @@ class UserSettingPage extends StatelessWidget {
                                     ),
                                     child: const Icon(Icons.person_remove,
                                         color: Color(0xff292B32))),
-                                title: const Text(
-                                  "تابع", //Follow
-                                  style: TextStyle(
+                                title: Text(
+                                  "user.do_following".tr(), //Follow
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
@@ -141,7 +143,7 @@ class UserSettingPage extends StatelessWidget {
                                                 .appColors
                                                 .base)),
                                 title: Text(
-                                  "عدم المتابعة", //Unfollow
+                                  "user.unFollowing".tr(), //Unfollow
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
@@ -173,7 +175,7 @@ class UserSettingPage extends StatelessWidget {
                                 child: const Icon(Icons.flag,
                                     color: Color(0xff292B32))),
                             title: Text(
-                              "إلغاء الإبلاغ عن المستخدم", //Unreport User
+                              "report.unReport_user".tr(), //Unreport User
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -203,7 +205,7 @@ class UserSettingPage extends StatelessWidget {
                                         .appColors
                                         .base)),
                             title: Text(
-                              "الإبلاغ عن المستخدم", //Report User
+                              "report.report_user".tr(), //Report User
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,

@@ -2,6 +2,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/notification_setting_comment_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/notification_setting_post.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // Import AmityCommunity here
@@ -10,8 +11,7 @@ class NotificationSettingPage extends StatefulWidget {
   // Assuming AmityCommunity has been defined elsewhere in your codebase
   final AmityCommunity community;
 
-  const NotificationSettingPage({Key? key, required this.community})
-      : super(key: key);
+  const NotificationSettingPage({super.key, required this.community});
 
   @override
   _NotificationSettingPageState createState() =>
@@ -28,7 +28,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
         title: Text(
-          'الإشعارات', //Notifications
+          "notification.names".tr(), //Notifications
           style: Provider.of<AmityUIConfiguration>(context)
               .titleTextStyle
               .copyWith(
@@ -46,7 +46,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
           Padding(
             padding: const EdgeInsetsDirectional.all(16.0),
             child: Text(
-              'السماح بالإشعارات', //Allow Notification
+              "notification.allow".tr(), //Allow Notification
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -57,20 +57,19 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
           ),
           ListTile(
             title: Text(
-                'السماح بتلقي الاشعارات المرسلة من هذا المجتمع', //Turn on to receive push notification from this community
-                style: TextStyle(
-                    color: Provider.of<AmityUIConfiguration>(context)
-                        .appColors
-                        .base)),
+              "notification.allow_receive".tr(),
+              //Turn on to receive push notification from this community
+              style: TextStyle(
+                  color: Provider.of<AmityUIConfiguration>(context)
+                      .appColors
+                      .base),
+            ),
             trailing: Switch(
               activeColor:
                   Provider.of<AmityUIConfiguration>(context).appColors.primary,
               value: isNotificationEnabled,
-              onChanged: (value) {
-                setState(() {
-                  isNotificationEnabled = value;
-                });
-              },
+              onChanged: (value) =>
+                  setState(() => isNotificationEnabled = value),
             ),
           ),
           const Divider(),
@@ -96,7 +95,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                                 .appColors
                                 .base),
                       ), // You may want to replace with your icon
-                      title: Text('المنشورات', //Posts
+                      title: Text("post.posts".tr(), //Posts
                           style: TextStyle(
                               color: Provider.of<AmityUIConfiguration>(context)
                                   .appColors
@@ -130,7 +129,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                         ),
                       ), // You may want to replace with your icon
                       title: Text(
-                        'التعليقات', //Comments
+                        "comment.comments".tr(), //Comments
                         style: TextStyle(
                             color: Provider.of<AmityUIConfiguration>(context)
                                 .appColors

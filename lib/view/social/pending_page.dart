@@ -2,6 +2,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/community_member_page.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,19 +11,21 @@ import '../../viewmodel/community_viewmodel.dart';
 import 'edit_community.dart';
 import 'global_feed.dart';
 
-class PendingFeddScreen extends StatefulWidget {
+class PendingFeedScreen extends StatefulWidget {
   final AmityCommunity community;
   final bool isFromFeed;
 
-  const PendingFeddScreen(
-      {Key? key, required this.community, this.isFromFeed = false})
-      : super(key: key);
+  const PendingFeedScreen({
+    super.key,
+    required this.community,
+    this.isFromFeed = false,
+  });
 
   @override
-  PendingFeddScreenState createState() => PendingFeddScreenState();
+  PendingFeedScreenState createState() => PendingFeedScreenState();
 }
 
-class PendingFeddScreenState extends State<PendingFeddScreen> {
+class PendingFeedScreenState extends State<PendingFeedScreen> {
   @override
   void initState() {
     super.initState();
@@ -84,8 +87,9 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
               children: [
                 Text(community.postsCount.toString(),
                     style: const TextStyle(fontSize: 16)),
-                const Text('مشاركات', //posts
-                    style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                Text("post.posts".tr(), //posts
+                    style:
+                        const TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
             ),
             Container(
@@ -101,8 +105,9 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
                   community.membersCount.toString(),
                   style: const TextStyle(fontSize: 16),
                 ),
-                const Text('أم داعمة', //members
-                    style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                Text("community.member".plural(1), //members
+                    style:
+                        const TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
             ),
           ],
@@ -117,8 +122,9 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
     //final mediaQuery = MediaQuery.of(context);
     //final bHeight = mediaQuery.size.height - mediaQuery.padding.top;
 
-    return Consumer<CommuFeedVM>(builder: (__, vm, _) {
-      return StreamBuilder<AmityCommunity>(
+    return Consumer<CommuFeedVM>(
+      builder: (__, vm, _) {
+        return StreamBuilder<AmityCommunity>(
           stream: widget.community.listen.stream,
           builder: (context, snapshot) {
             var community = snapshot.data ?? widget.community;
@@ -160,7 +166,7 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
                               return PostWidget(
                                   isPostDetail: false,
                                   showCommunity: false,
-                                  showlatestComment: false,
+                                  showLatestComment: false,
                                   isFromFeed: false,
                                   post: snapshot.data!,
                                   theme: theme,
@@ -182,7 +188,7 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
                 appBar: AppBar(
                   elevation: 0.0,
                   title: Text(
-                      "المنشورات المعلقة${vm.getCommunityPendingPosts().length})", //Pending posts
+                      "${"post.pending".tr()} (${vm.getCommunityPendingPosts().length})", //Pending posts
                       style: Provider.of<AmityUIConfiguration>(context)
                           .titleTextStyle),
                   backgroundColor: Colors.transparent,
@@ -192,7 +198,9 @@ class PendingFeddScreenState extends State<PendingFeddScreen> {
                     .appColors
                     .baseBackground,
                 body: feedWidget);
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }

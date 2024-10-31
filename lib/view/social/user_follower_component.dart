@@ -3,6 +3,7 @@ import 'package:amity_uikit_beta_service/components/bottom_sheet.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile_v2.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,10 +12,11 @@ import '../../viewmodel/follower_following_viewmodel.dart';
 
 class AmityFollowerScreen extends StatefulWidget {
   final String userId;
+
   const AmityFollowerScreen({
-    Key? key,
+    super.key,
     required this.userId,
-  }) : super(key: key);
+  });
 
   @override
   State<AmityFollowerScreen> createState() => _AmityFollowerScreenState();
@@ -123,7 +125,8 @@ class _AmityFollowerScreenState extends State<AmityFollowerScreen> {
                                                       .getFollowerList[index]
                                                       .sourceUser!
                                                       .displayName ??
-                                                  "لا يمكن ايجاد اسم للعرض", //display name not found
+                                                  "external.empty_name".tr(),
+                                              //display name not found
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 15,

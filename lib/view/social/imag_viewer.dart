@@ -6,8 +6,8 @@ class ImageViewerScreen extends StatefulWidget {
   final int initialIndex;
 
   const ImageViewerScreen(
-      {Key? key, required this.files, required this.initialIndex})
-      : super(key: key);
+      {super. key, required this.files, required this.initialIndex})
+      ;
 
   @override
   _ImageViewerScreenState createState() => _ImageViewerScreenState();

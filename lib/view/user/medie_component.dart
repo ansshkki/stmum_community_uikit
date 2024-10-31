@@ -4,6 +4,7 @@ import 'package:amity_uikit_beta_service/view/social/imag_viewer.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +15,15 @@ enum GalleryFeed { user, community }
 class MediaGalleryPage extends StatelessWidget {
   final GalleryFeed galleryFeed;
   final Function() onRefresh;
+
   const MediaGalleryPage(
       {super.key, required this.galleryFeed, required this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
-    var screenheight = MediaQuery.of(context).size.height;
+    var screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      constraints: BoxConstraints(minHeight: screenheight),
+      constraints: BoxConstraints(minHeight: screenHeight),
       color:
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       child: Column(
@@ -34,11 +36,13 @@ class MediaGalleryPage extends StatelessWidget {
               const SizedBox(
                 width: 12,
               ),
-              _mediaButton(context, "الصور", MediaType.photos), //Photos
+              _mediaButton(context, "media.photos".tr(), MediaType.photos),
+              //Photos
               const SizedBox(
                 width: 6,
               ),
-              _mediaButton(context, "الفيديوهات", MediaType.videos), //Videos
+              _mediaButton(context, "media.videos".tr(), MediaType.videos),
+              //Videos
             ],
           ),
           const SizedBox(
@@ -98,7 +102,8 @@ class MediaGalleryPage extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
         ),
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 16.0, vertical: 8.0),
       ),
       child: Text(text),
     );
@@ -114,16 +119,16 @@ class MediaGalleryPage extends StatelessWidget {
           package: "amity_uikit_beta_service",
         ),
         const SizedBox(height: 12),
-        const Text(
-          "هذا الحساب خاص", //This account is private
-          style: TextStyle(
+        Text(
+          "user.private".tr(), //This account is private
+          style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w600,
               color: Color(0xff292B32)),
         ),
-        const Text(
-          "تابع هذا الحساب لمشاهدة جميع المنشورات", //Follow this user to see all posts
-          style: TextStyle(
+        Text(
+          "user.follow_post".tr(), //Follow this user to see all posts
+          style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Color(0xffA5A9B5)),
@@ -144,9 +149,9 @@ class MediaGalleryPage extends StatelessWidget {
               package: "amity_uikit_beta_service",
             ),
             const SizedBox(height: 12),
-            const Text(
-              "ما من صور", //No photos yet
-              style: TextStyle(
+            Text(
+              "media.photo_empty".tr(), //No photos yet
+              style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: Color(0xffA5A9B5)),
@@ -171,19 +176,15 @@ class MediaGalleryPage extends StatelessWidget {
         // return Text(url);
 
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ImageViewerScreen(
-                  files: [
-                    amityPosts[index],
-                  ],
-                  initialIndex: 0,
-                ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ImageViewerScreen(
+                files: [amityPosts[index]],
+                initialIndex: 0,
               ),
-            );
-          },
+            ),
+          ),
           child: GridTile(
             child: Image.network(
               url,
@@ -235,9 +236,9 @@ class MediaGalleryPage extends StatelessWidget {
               package: "amity_uikit_beta_service",
             ),
             const SizedBox(height: 12),
-            const Text(
-              "ما من فيديوهات", //No videos yet
-              style: TextStyle(
+            Text(
+              "media.video_empty".tr(), //No videos yet
+              style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: Color(0xffA5A9B5)),

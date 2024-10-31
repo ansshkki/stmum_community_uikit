@@ -1,6 +1,7 @@
 import 'package:amity_uikit_beta_service/view/social/user_follower_component.dart';
 import 'package:amity_uikit_beta_service/view/social/user_following_component.dart';
 import 'package:amity_uikit_beta_service/viewmodel/follower_following_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +13,13 @@ class FollowScreen extends StatefulWidget {
   final String userId;
   final String? displayName;
   final FollowScreenType followScreenType;
-  const FollowScreen(
-      {super.key,
-        required this.userId,
-        this.displayName,
-        required this.followScreenType});
+
+  const FollowScreen({
+    super.key,
+    required this.userId,
+    this.displayName,
+    required this.followScreenType,
+  });
 
   @override
   State<FollowScreen> createState() => _FollowScreenState();
@@ -59,15 +62,15 @@ class _FollowScreenState extends State<FollowScreen> {
               //   fontWeight: FontWeight.w600,
               //   fontFamily: 'SF Pro Text',
               // ),
-              tabs: const [
+              tabs: [
                 Tab(
                   child: Text(
-                    "المتابعون", //Following
+                    "user.following".tr(), //Following
                   ),
                 ),
                 Tab(
                   child: Text(
-                    "المتابعين", //Followers
+                    "user.followers".tr(), //Followers
                   ),
                 ),
               ],

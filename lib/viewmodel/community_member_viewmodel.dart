@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MemberManagementVM extends ChangeNotifier {
@@ -113,8 +114,9 @@ class MemberManagementVM extends ChangeNotifier {
         print("promoteToModerator: success");
       }).onError((error, stackTrace) async {
         print("promoteToModerator: fail");
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
       print("finish loading...");
     });
@@ -133,8 +135,8 @@ class MemberManagementVM extends ChangeNotifier {
         .then((value) {
       AmityLoadingDialog.hideLoadingDialog();
     }).onError((error, stackTrace) async {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
 
     notifyListeners();
@@ -152,8 +154,8 @@ class MemberManagementVM extends ChangeNotifier {
           .removeWhere((element) => removingMemberIds.contains(element.userId));
       AmityLoadingDialog.hideLoadingDialog();
     }).onError((error, stackTrace) async {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     notifyListeners();
   }
@@ -164,8 +166,8 @@ class MemberManagementVM extends ChangeNotifier {
       print(value);
       AmitySuccessDialog.showTimedDialog("Report sent");
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     notifyListeners();
   }
@@ -176,8 +178,8 @@ class MemberManagementVM extends ChangeNotifier {
       print(value);
       AmitySuccessDialog.showTimedDialog("Unreport sent");
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     notifyListeners();
   }
@@ -188,8 +190,8 @@ class MemberManagementVM extends ChangeNotifier {
       print(value);
       AmitySuccessDialog.showTimedDialog("Block user");
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     notifyListeners();
   }
@@ -200,8 +202,8 @@ class MemberManagementVM extends ChangeNotifier {
       print(value);
       AmitySuccessDialog.showTimedDialog("Unblock user");
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     notifyListeners();
   }
@@ -226,5 +228,6 @@ class MemberManagementVM extends ChangeNotifier {
   }
 
   List<AmityCommunityMember> get userList => _userList;
+
   List<AmityCommunityMember> get moderatorList => _moderatorList;
 }

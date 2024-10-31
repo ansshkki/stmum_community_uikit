@@ -2,14 +2,15 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoomVM extends ChangeNotifier {
   AmityChannel? channel;
   TextEditingController textEditingController = TextEditingController();
-  final amitymessage = <AmityMessage>[];
+  final amityMessage = <AmityMessage>[];
   // late PagingController<AmityMessage> messageController;
-  final scrollcontroller = ScrollController();
+  final scrollController = ScrollController();
   // Future<void> initSingleChannel(
   //   String channelId,
   // ) async {
@@ -87,7 +88,7 @@ class ChatRoomVM extends ChangeNotifier {
     }).onError((error, stackTrace) async {
       log("error from channel");
       await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     messageLiveCollection = AmityChatClient.newMessageRepository()
         .getMessages(channelId)
@@ -96,20 +97,20 @@ class ChatRoomVM extends ChangeNotifier {
     messageLiveCollection.getStreamController().stream.listen((event) {
       print("evemt triggered");
       print("event length: ${event.length}");
-      amitymessage.clear();
+      amityMessage.clear();
 
-      amitymessage.addAll(event.reversed);
+      amityMessage.addAll(event.reversed);
       notifyListeners();
     });
 
     messageLiveCollection.loadNext();
 
-    scrollcontroller.addListener(paginationListener);
+    scrollController.addListener(paginationListener);
   }
 
   void paginationListener() {
-    if ((scrollcontroller.position.pixels >=
-            (scrollcontroller.position.maxScrollExtent - 100)) &&
+    if ((scrollController.position.pixels >=
+            (scrollController.position.maxScrollExtent - 100)) &&
         messageLiveCollection.hasNextPage()) {
       messageLiveCollection.loadNext();
     }
@@ -126,7 +127,7 @@ class ChatRoomVM extends ChangeNotifier {
       // Error on pagination controller
       log("error from send message");
       await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -137,7 +138,7 @@ class ChatRoomVM extends ChangeNotifier {
     //   curve: Curves.easeOut,
     //   duration: const Duration(milliseconds: 500),
     // );
-    scrollcontroller.jumpTo(0);
+    scrollController.jumpTo(0);
   }
 
   @override

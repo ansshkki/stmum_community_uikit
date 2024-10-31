@@ -5,6 +5,8 @@ import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/pos
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/create_postV2_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/edit_post_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 // import 'package:amity_uikit_beta_service/viewmodel/create_post_viewmodel.dart';
 // import 'package:amity_uikit_beta_service/viewmodel/media_viewmodel.dart';
 
@@ -13,6 +15,7 @@ import 'package:provider/provider.dart';
 
 class AmityEditPostScreen extends StatefulWidget {
   final AmityPost amityPost;
+
   const AmityEditPostScreen({
     super.key,
     required this.amityPost,
@@ -25,6 +28,7 @@ class AmityEditPostScreen extends StatefulWidget {
 class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
   bool hasContent = false;
   String originalText = "";
+
   @override
   void initState() {
     Provider.of<EditPostVM>(context, listen: false)
@@ -46,7 +50,7 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-            "تعديل المنشور", //Edit post
+            "change.post".tr(), //Edit post
             style: Provider.of<AmityUIConfiguration>(context)
                 .titleTextStyle
                 .copyWith(
@@ -63,13 +67,11 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
               if (hasContent) {
                 ConfirmationDialog().show(
                   context: context,
-                  title: 'تجاهل المنشور ؟', //Discard Post?
-                  detailText: 'هل تود تجاهل منشورك ؟', //Do you want to discard your post?
-                  leftButtonText: 'إلغاء', //Cancel
-                  rightButtonText: 'تجاهل', //Discard
-                  onConfirm: () {
-                    Navigator.of(context).pop();
-                  },
+                  title: "messages.discard.title".tr(),
+                  detailText: "messages.discard.content".tr(),
+                  leftButtonText: "external.cancel".tr(),
+                  rightButtonText: "external.discard".tr(),
+                  onConfirm: () => Navigator.of(context).pop(),
                 );
               } else {
                 Navigator.of(context).pop();
@@ -79,16 +81,15 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
           actions: [
             TextButton(
               onPressed: hasContent
-                  ? () async {
-                      vm.editPost(
-                          context: context,
-                          callback: () {
-                            Navigator.of(context).pop();
-                            context.read<GlobalFeedBloc>().add(GlobalFeedReloadThePost(post: widget.amityPost));
-                          });
-                    }
+                  ? () async => vm.editPost(
+                      context: context,
+                      callback: () {
+                        Navigator.of(context).pop();
+                        context.read<GlobalFeedBloc>().add(
+                            GlobalFeedReloadThePost(post: widget.amityPost));
+                      })
                   : null,
-              child: Text("حفظ", //Save
+              child: Text("external.save".tr(), //Save
                   style: TextStyle(
                       color: hasContent
                           ? Provider.of<AmityUIConfiguration>(context)
@@ -112,12 +113,11 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
 
                             if (value == originalText) {
                               print("match");
-                              hasContent = false;
-                              setState(() {});
+                              setState(() => hasContent = false);
                             } else {
                               print("unmatch");
-                              hasContent = true;
-                              setState(() {});
+
+                              setState(() => hasContent = true);
                             }
                           },
                           controller: vm.textEditingController,
@@ -128,9 +128,10 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
                           ),
                           scrollPhysics: const NeverScrollableScrollPhysics(),
                           maxLines: null,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "أكتب شيء لنشره", //Write something to post
+                            hintText: "post.create.content"
+                                .tr(), //Write something to post
                           ),
                         ),
                         Consumer<EditPostVM>(
@@ -304,19 +305,19 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تجاهل المنشور ؟'), //Discard Post?
-        content: const Text('هل تود تجاهل منشورك ؟'), //Do you want to discard your post?
+        title: Text("messages.discard.title".tr()),
+        content: Text("messages.discard.content".tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('إلغاء'), //Cancel
+            child: Text("external.cancel".tr()), //Cancel
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
               Navigator.of(context).pop();
             },
-            child: const Text('تجاهل'), //Discard
+            child:  Text("external.discard".tr()), //Discard
           ),
         ],
       ),

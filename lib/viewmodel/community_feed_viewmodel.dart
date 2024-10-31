@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/alert_dialog.dart';
 
 class CommuFeedVM extends ChangeNotifier {
   MediaType _selectedMediaType = MediaType.photos;
+
   void doSelectMedieType(MediaType mediaType) {
     _selectedMediaType = mediaType;
     log(_selectedMediaType.toString());
@@ -15,6 +17,7 @@ class CommuFeedVM extends ChangeNotifier {
   }
 
   TabController? userFeedTabController;
+
   void changeTab() {
     notifyListeners();
   }
@@ -42,6 +45,7 @@ class CommuFeedVM extends ChangeNotifier {
   final pendingScrollcontroller = ScrollController();
 
   AmityCommunity? community;
+
   List<AmityPost> getCommunityPosts() {
     return _amityCommunityFeedPosts;
   }
@@ -64,6 +68,7 @@ class CommuFeedVM extends ChangeNotifier {
   }
 
   int postCount = 0;
+
   void getPostCount(AmityCommunity community) async {
     await AmitySocialClient.newCommunityRepository()
         .getCommunity(community.communityId!)
@@ -83,6 +88,7 @@ class CommuFeedVM extends ChangeNotifier {
   }
 
   int reviewingPostCount = 0;
+
   void getReviewingPostCount(AmityCommunity community) {
     community.getPostCount(AmityFeedType.REVIEWING).then((value) {
       //success
@@ -321,14 +327,15 @@ class CommuFeedVM extends ChangeNotifier {
       if (postIndex != -1) {
         _amityCommunityFeedPosts.removeAt(postIndex);
         notifyListeners();
-        callback(true, "تم حذف المنشور بنجاح"); //Post deleted successfully.
+        callback(true, "delete.deleted.post".tr()); //Post deleted successfully.
       } else {
-        callback(false, "لم نستطع ايجاد المنشور في القائمة"); //Post not found in the list.
+        callback(false,
+            "لم نستطع ايجاد المنشور في القائمة"); //Post not found in the list.
       }
     }).onError((error, stackTrace) async {
       String errorMessage = error.toString();
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: errorMessage); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: errorMessage); //Error!
       callback(false, errorMessage);
     });
   }
@@ -341,8 +348,8 @@ class CommuFeedVM extends ChangeNotifier {
       _amityCommunityPendingFeedPosts.removeAt(postIndex);
       notifyListeners();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 

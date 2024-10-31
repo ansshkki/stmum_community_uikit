@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class MessageVM extends ChangeNotifier {
   List<Messages>? amityMessageList;
   bool isChatLoading = true;
   late String channelId;
-  bool ispaginationLoading = false;
+  bool isPaginationLoading = false;
 
   ///init
   Future<void> initVM(String channelId, Channels channel) async {
@@ -61,14 +62,14 @@ class MessageVM extends ChangeNotifier {
             if (error == null) {
               notifyListeners();
               scrollController?.addListener(() async {
-                if (!ispaginationLoading) {
+                if (!isPaginationLoading) {
                   var currentMessageCount = amityMessageList!.length;
                   var totalMessageCount = channel.messageCount!;
 
                   if ((scrollController!.position.pixels ==
                           (scrollController!.position.maxScrollExtent)) &&
                       (currentMessageCount < totalMessageCount)) {
-                    ispaginationLoading = true;
+                    isPaginationLoading = true;
 
                     log("ispaginationLoading = false");
                     var token = data!.paging!.previous;
@@ -97,12 +98,13 @@ class MessageVM extends ChangeNotifier {
                             amityMessageList?.insert(0, message);
                           }
                           notifyListeners();
-                          ispaginationLoading = false;
+                          isPaginationLoading = false;
                         } else {
-                          ispaginationLoading = false;
+                          isPaginationLoading = false;
                           log(error);
                           await AmityDialog().showAlertErrorDialog(
-                              title: "خطأ!", message: error); //Error!
+                              title: "repo.unknown_error".tr(),
+                              message: error); //Error!
                         }
                       },
                     );
@@ -135,8 +137,8 @@ class MessageVM extends ChangeNotifier {
               notifyListeners();
             } else {
               log(error);
-              await AmityDialog()
-                  .showAlertErrorDialog(title: "خطأ!", message: error); //Error!
+              await AmityDialog().showAlertErrorDialog(
+                  title: "repo.unknown_error".tr(), message: error); //Error!
             }
           });
     } else {

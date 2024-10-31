@@ -1,5 +1,6 @@
 import 'package:amity_uikit_beta_service/viewmodel/amity_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +14,13 @@ import '../../viewmodel/create_post_viewmodel.dart';
 class CreatePostScreen2 extends StatefulWidget {
   String? communityID;
   BuildContext? context;
-  CreatePostScreen2({Key? key, this.communityID, this.context})
-      : super(key: key);
+
+  CreatePostScreen2({
+    super.key,
+    this.communityID,
+    this.context,
+  });
+
   @override
   CreatePostScreen2State createState() => CreatePostScreen2State();
 }
@@ -33,7 +39,7 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
     final myAppbar = AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Text("إنشاء منشور", //Create Post
+      title: Text("post.create.title".tr(), //Create Post
           style: theme.textTheme.titleLarge!
               .copyWith(fontWeight: FontWeight.w500)),
       leading: IconButton(
@@ -67,7 +73,7 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                   Align(
                       alignment: AlignmentDirectional.topStart,
                       child: getAvatarImage(Provider.of<AmityVM>(context)
-                          .currentamityUser
+                          .currentAmityUser
                           ?.avatarUrl)),
                   const SizedBox(
                     height: 10,
@@ -80,9 +86,10 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                             controller: vm.textEditingController,
                             scrollPhysics: const NeverScrollableScrollPhysics(),
                             maxLines: null,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "اكتب شيئا لنشره", //Write something to post
+                              hintText: "post.create.content"
+                                  .tr(), //Write something to post
                             ),
                             // style: t/1heme.textTheme.bodyText1.copyWith(color: Colors.grey),
                           ),
@@ -114,15 +121,17 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                                             fit: BoxFit.cover,
                                           ),
                                           Align(
-                                              alignment: AlignmentDirectional.topEnd,
-                                              child: GestureDetector(
-                                                  onTap: () {
-                                                    vm.deleteImageAt(index: i);
-                                                  },
-                                                  child: Icon(
-                                                    Icons.cancel,
-                                                    color: Colors.grey.shade100,
-                                                  ))),
+                                            alignment:
+                                                AlignmentDirectional.topEnd,
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  vm.deleteImageAt(index: i),
+                                              child: Icon(
+                                                Icons.cancel,
+                                                color: Colors.grey.shade100,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     )
@@ -145,16 +154,15 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () async {
-                          await vm.addVideo();
-                        },
+                        onTap: () async => await vm.addVideo(),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: const EdgeInsetsDirectional.all(10),
-                          margin: const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
+                          margin:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
                           child: FaIcon(
                             FontAwesomeIcons.video,
                             color: vm.isNotSelectedImageYet()
@@ -175,7 +183,8 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: const EdgeInsetsDirectional.all(10),
-                          margin: const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
+                          margin:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
                           child: Icon(
                             Icons.photo,
                             color: vm.isNotSelectVideoYet()
@@ -186,16 +195,15 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () async {
-                          await vm.addFileFromCamera();
-                        },
+                        onTap: () async => await vm.addFileFromCamera(),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: const EdgeInsetsDirectional.all(10),
-                          margin: const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
+                          margin:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 10, 5),
                           child: Icon(
                             Icons.camera_alt,
                             color: vm.isNotSelectVideoYet()
@@ -237,14 +245,15 @@ class CreatePostScreen2State extends State<CreatePostScreen2> {
                           child: Container(
                             margin: const EdgeInsetsDirectional.only(top: 15),
                             alignment: Alignment.center,
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
                             decoration: BoxDecoration(
                               color: Provider.of<AmityUIConfiguration>(context)
                                   .primaryColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              "إرسال المنشور", //Submit Post
+                              "post.create.submit".tr(), //Submit Post
                               style: theme.textTheme.labelLarge,
                             ),
                           ),

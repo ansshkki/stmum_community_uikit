@@ -1,6 +1,7 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/pending_request_viewmodel.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +9,7 @@ import '../../components/custom_user_avatar.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 
 class AmityPendingScreen extends StatefulWidget {
-  const AmityPendingScreen({
-    Key? key,
-  }) : super(key: key);
+  const AmityPendingScreen({super.key});
 
   @override
   State<AmityPendingScreen> createState() => _AmityPendingScreenState();
@@ -36,7 +35,7 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "طلب للمتابعة", //Follow Request
+            "user.follow".tr(), //Follow Request
             style:
                 Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 24),
           ),
@@ -74,12 +73,14 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
                                   children: [
                                     Text(
                                       snapshot.data?.sourceUser!.displayName ??
-                                          "لا يمكن ايجاد اسم للعرض", //display name not found
+                                          "external.empty_name".tr(),
+                                      //display name not found
                                       style: theme.textTheme.bodyMedium,
                                     ),
                                     Text(
                                       snapshot.data?.sourceUser!.userId ??
-                                          "لا يمكن ايجاد اسم للعرض", //displayname not found
+                                          "external.empty_name".tr(),
+                                      //displayname not found
                                       style: theme.textTheme.bodySmall,
                                     ),
                                   ],
@@ -97,7 +98,7 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
                                 vm.acceptFollowRequest(
                                     snapshot.data!.sourceUser!.userId!, index);
                               },
-                              child: const Text("قبول"), //accept
+                              child: const Text("external.accept"), //accept
                             ),
                             const SizedBox(
                               width: 5,
@@ -111,7 +112,7 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
                                 vm.declineFollowRequest(
                                     snapshot.data!.sourceUser!.userId!, index);
                               },
-                              child: const Text("رفض"), //reject
+                              child: Text("external.reject".tr()), //reject
                             ),
                           ],
                         ),

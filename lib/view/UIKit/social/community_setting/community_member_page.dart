@@ -8,6 +8,7 @@ import 'package:amity_uikit_beta_service/viewmodel/community_member_viewmodel.da
 import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,9 @@ class MemberManagementPage extends StatefulWidget {
   final String communityId;
 
   const MemberManagementPage({
-    Key? key,
+    super.key,
     required this.communityId,
-  }) : super(key: key);
+  });
 
   @override
   State<MemberManagementPage> createState() => _MemberManagementPageState();
@@ -93,37 +94,35 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
                           .userList;
                       List<AmityUser> userIdList =
                           userList.map((user) => user.user!).toList();
-                      Navigator.of(context)
-                          .push<List<AmityUser>>(MaterialPageRoute(
-                              builder: (context) => UserListPage(
-                                    preSelectMember: userIdList,
-                                    onDonePressed: (users) async {
-                                      List<String> userIds = users
-                                          .map((user) => user.userId!)
-                                          .toList();
-                                      if (users.isNotEmpty) {
-                                        await Provider.of<CommunityVM>(context,
-                                                listen: false)
-                                            .addMembers(
-                                                widget.communityId, userIds);
-                                        await Provider.of<MemberManagementVM>(
-                                                context,
-                                                listen: false)
-                                            .initMember(
-                                          communityId: widget.communityId,
-                                        );
-                                        await Provider.of<MemberManagementVM>(
-                                                context,
-                                                listen: false)
-                                            .initModerators(
-                                          communityId: widget.communityId,
-                                        );
-                                        Navigator.of(context).pop();
-                                      } else {
-                                        log('Failed to add members');
-                                      }
-                                    },
-                                  )));
+                      Navigator.of(context).push<List<AmityUser>>(
+                        MaterialPageRoute(
+                          builder: (context) => UserListPage(
+                            preSelectMember: userIdList,
+                            onDonePressed: (users) async {
+                              List<String> userIds =
+                                  users.map((user) => user.userId!).toList();
+                              if (users.isNotEmpty) {
+                                await Provider.of<CommunityVM>(context,
+                                        listen: false)
+                                    .addMembers(widget.communityId, userIds);
+                                await Provider.of<MemberManagementVM>(context,
+                                        listen: false)
+                                    .initMember(
+                                  communityId: widget.communityId,
+                                );
+                                await Provider.of<MemberManagementVM>(context,
+                                        listen: false)
+                                    .initModerators(
+                                  communityId: widget.communityId,
+                                );
+                                Navigator.of(context).pop();
+                              } else {
+                                log('Failed to add members');
+                              }
+                            },
+                          ),
+                        ),
+                      );
                     },
                   ),
           ],
@@ -139,7 +138,7 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
                     Provider.of<AmityUIConfiguration>(context).appColors.base,
                 size: 30),
           ),
-          title: Text("مجتمع", //Community
+          title: Text("community.community".tr(), //Community
               style: Provider.of<AmityUIConfiguration>(context)
                   .titleTextStyle
                   .copyWith(
@@ -172,9 +171,9 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
                   //   fontFamily: 'SF Pro Text',
                   // ),
 
-                  tabs: const [
-                    Tab(text: "أم داعمة"), //Members
-                    Tab(text: "المشرفون"), //Moderators
+                  tabs: [
+                    Tab(text: "community.member".plural(1)), //Members
+                    Tab(text: "community.moderators".tr()), //Moderators
                   ],
                 ),
               ],
@@ -341,8 +340,10 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                         : ListTile(
                             title: Text(
                               member.roles!.contains('community-moderator')
-                                  ? 'طرد المشرف' //Dismiss moderator
-                                  : 'ترقية إلى المشرف', //Promote to moderator
+                                  ? "community.dismiss_moderator"
+                                      .tr() //Dismiss moderator
+                                  : "community.promote_user_to_moderator".tr(),
+                              //Promote to moderator
                               style:
                                   const TextStyle(fontWeight: FontWeight.w500),
                             ),
@@ -366,8 +367,9 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: Text(
                         member.user!.isFlaggedByMe
-                            ? "التراجع عن التبليغ"
-                            : "إبلاغ؛ التعليق غير مناسب", //Undo Report //Report
+                            ? "report.unReport".tr()
+                            : "report.report_comment"
+                                .tr(), //Undo Report //Report
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       onTap: () async {
@@ -395,24 +397,21 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     //   },
                     // ),
                     ListTile(
-                      title: const Text(
-                        'إخراج من المجتمع', //Remove from community
-                        style: TextStyle(
+                      title: Text(
+                        "community.remove".tr(), //Remove from community
+                        style: const TextStyle(
                             color: Colors.red, fontWeight: FontWeight.w500),
                       ),
                       onTap: () async {
                         Navigator.pop(context);
                         await ConfirmationDialog().show(
                           context: context,
-                          title: 'إخراج المستخدم من المجتمع ؟',
+                          title: "messages.remove.title".tr(),
                           //Remove user from Community?
-                          detailText:
-                              "لن يتمكن هذا المستخدم بعد الآن من البحث والنشر والتفاعل في هذا المجتمع",
+                          detailText: "messages.remove.content".tr(),
                           //This user won't no longer be able to search, post and interact in this community
-                          onConfirm: () {
-                            viewModel.removeMembers(
-                                viewModel.communityId, [member.userId!]);
-                          },
+                          onConfirm: () => viewModel.removeMembers(
+                              viewModel.communityId, [member.userId!]),
                         );
                         await viewModel.initModerators(
                             communityId: viewModel.communityId);
@@ -434,9 +433,9 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     //   },
                     // ),
                     ListTile(
-                      title: const Text(
-                        'تبليغ', //Report
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                      title: Text(
+                        "report.report".tr(), //Report
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       onTap: () {
                         viewModel.reportUser(member.user!);

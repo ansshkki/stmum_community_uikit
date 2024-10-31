@@ -3,6 +3,7 @@ import 'package:amity_uikit_beta_service/view/social/community_feed.dart';
 import 'package:amity_uikit_beta_service/viewmodel/feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,12 +15,14 @@ class CommunityList extends StatefulWidget {
   final CommunityListType communityType;
 
   const CommunityList(this.communityType, {super.key});
+
   @override
   CommunityListState createState() => CommunityListState();
 }
 
 class CommunityListState extends State<CommunityList> {
   CommunityListType communityType = CommunityListType.recommend;
+
   @override
   void dispose() {
     super.dispose();
@@ -145,12 +148,12 @@ class CommunityListState extends State<CommunityList> {
 }
 
 class CommunityWidget extends StatelessWidget {
-  const CommunityWidget(
-      {Key? key,
-      required this.community,
-      required this.theme,
-      required this.communityType})
-      : super(key: key);
+  const CommunityWidget({
+    super.key,
+    required this.community,
+    required this.theme,
+    required this.communityType,
+  });
 
   final AmityCommunity community;
   final ThemeData theme;
@@ -203,40 +206,66 @@ class CommunityWidget extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                  contentPadding: const EdgeInsetsDirectional.all(0),
-                  leading: FadeAnimation(
-                    child: (community.avatarImage?.fileUrl != null)
-                        ? CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                (NetworkImage(community.avatarImage!.fileUrl!)))
-                        : const CircleAvatar(
-                            backgroundImage: AssetImage(
-                                "assets/images/user_placeholder.png",
-                                package: "amity_uikit_beta_service")),
-                  ),
-                  title: Text(
-                    community.displayName ?? "مجتمع", //Community
-                    style: theme.textTheme.bodyLarge!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    " ${community.membersCount} أعضاء", //members
-                    style: theme.textTheme.bodyLarge!
-                        .copyWith(color: Colors.grey, fontSize: 11),
-                  ),
-                  trailing: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                      Provider.of<AmityUIConfiguration>(context).primaryColor,
-                    )),
-                    onPressed: () async {
-                      if (community.isJoined != null) {
-                        if (community.isJoined!) {
-                          Provider.of<CommunityVM>(context, listen: false)
-                              .leaveCommunity(community.communityId ?? "",
-                                  type: communityType,
-                                  callback: (bool isSuccess) {
+                contentPadding: const EdgeInsetsDirectional.all(0),
+                leading: FadeAnimation(
+                  child: (community.avatarImage?.fileUrl != null)
+                      ? CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage:
+                              (NetworkImage(community.avatarImage!.fileUrl!)))
+                      : const CircleAvatar(
+                          backgroundImage: AssetImage(
+                              "assets/images/user_placeholder.png",
+                              package: "amity_uikit_beta_service")),
+                ),
+                title: Text(
+                  community.displayName ?? "community.community".tr(),
+                  //Community
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  "community.member".plural(
+                    community.membersCount ?? 0,
+                    format:
+                        NumberFormat.compact(locale: context.locale.toString()),
+                  ), //members
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(color: Colors.grey, fontSize: 11),
+                ),
+                trailing: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                    Provider.of<AmityUIConfiguration>(context).primaryColor,
+                  )),
+                  onPressed: () async {
+                    if (community.isJoined != null) {
+                      if (community.isJoined!) {
+                        Provider.of<CommunityVM>(context, listen: false)
+                            .leaveCommunity(community.communityId ?? "",
+                                type: communityType,
+                                callback: (bool isSuccess) {
+                          var globalFeedProvider =
+                              Provider.of<FeedVM>(context, listen: false);
+                          var myCommunityList = Provider.of<MyCommunityVM>(
+                              context,
+                              listen: false);
+
+                          for (var i in myCommunityList.amityCommunities) {
+                            print(i.displayName);
+                          }
+                          print(myCommunityList.amityCommunities);
+                          globalFeedProvider.initAmityGlobalfeed(
+                              // isCustomPostRanking: widget.isCustomPostRanking
+                              isCustomPostRanking: false);
+                        });
+                      } else {
+                        Provider.of<CommunityVM>(context, listen: false)
+                            .joinCommunity(
+                          community.communityId ?? "",
+                          type: communityType,
+                          callback: (isSuccess) {
+                            print(">>>>>>>>>>>>>>>callback");
                             var globalFeedProvider =
                                 Provider.of<FeedVM>(context, listen: false);
                             var myCommunityList = Provider.of<MyCommunityVM>(
@@ -244,42 +273,24 @@ class CommunityWidget extends StatelessWidget {
                                 listen: false);
 
                             for (var i in myCommunityList.amityCommunities) {
-                              print(i.displayName);
+                              print(">>>>>>>>>>>>>>>${i.displayName}");
                             }
                             print(myCommunityList.amityCommunities);
                             globalFeedProvider.initAmityGlobalfeed(
                                 // isCustomPostRanking: widget.isCustomPostRanking
                                 isCustomPostRanking: false);
-                          });
-                        } else {
-                          Provider.of<CommunityVM>(context, listen: false)
-                              .joinCommunity(
-                            community.communityId ?? "",
-                            type: communityType,
-                            callback: (isSuccess) {
-                              print(">>>>>>>>>>>>>>>callback");
-                              var globalFeedProvider =
-                                  Provider.of<FeedVM>(context, listen: false);
-                              var myCommunityList = Provider.of<MyCommunityVM>(
-                                  context,
-                                  listen: false);
-
-                              for (var i in myCommunityList.amityCommunities) {
-                                print(">>>>>>>>>>>>>>>${i.displayName}");
-                              }
-                              print(myCommunityList.amityCommunities);
-                              globalFeedProvider.initAmityGlobalfeed(
-                                  // isCustomPostRanking: widget.isCustomPostRanking
-                                  isCustomPostRanking: false);
-                            },
-                          );
-                        }
+                          },
+                        );
                       }
-                    },
-                    child: Text(community.isJoined != null
-                        ? (community.isJoined! ? "أترك" : "كوني معنا") //Leave //JOIN
-                        : "كوني معنا"), //Join
-                  )),
+                    }
+                  },
+                  child: Text(community.isJoined != null
+                      ? (community.isJoined!
+                          ? "community.leave".tr()
+                          : "community.join".tr()) //Leave //JOIN
+                      : "community.join".tr()), //Join
+                ),
+              ),
             ],
           ),
         ),

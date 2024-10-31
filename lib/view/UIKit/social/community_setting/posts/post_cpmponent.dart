@@ -21,10 +21,10 @@ class PostMedia extends StatelessWidget {
 
       Widget backgroundImage(UIKitFileSystem file, int index) {
         // var file = files[index];
-        int rawprogress = isEditPost
+        int rawProgress = isEditPost
             ? 100
             : Provider.of<CreatePostVMV2>(context).files[0].progress;
-        var progress = rawprogress / 100.0;
+        var progress = rawProgress / 100.0;
 
         return Padding(
           padding: const EdgeInsetsDirectional.all(2.0),

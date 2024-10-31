@@ -87,7 +87,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                   : SingleChildScrollView(
                       reverse: true,
                       controller:
-                          Provider.of<ChatRoomVM>(context).scrollcontroller,
+                          Provider.of<ChatRoomVM>(context).scrollController,
                       child: MessageComponent(
                         bheight: bHeight - textFieldHeight,
                         theme: theme,
@@ -222,11 +222,11 @@ class MessageComponent extends StatelessWidget {
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: vm.amitymessage.length,
+            itemCount: vm.amityMessage.length,
             itemBuilder: (context, index) {
-              var data = vm.amitymessage[index].data;
+              var data = vm.amityMessage[index].data;
 
-              bool isSendbyCurrentUser = vm.amitymessage[index].userId !=
+              bool isSendbyCurrentUser = vm.amityMessage[index].userId !=
                   AmityCoreClient.getCurrentUser().userId;
               return Column(
                 crossAxisAlignment: isSendbyCurrentUser
@@ -240,11 +240,11 @@ class MessageComponent extends StatelessWidget {
                     children: [
                       if (!isSendbyCurrentUser)
                         Text(
-                          getTimeStamp(vm.amitymessage[index]),
+                          getTimeStamp(vm.amityMessage[index]),
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 8),
                         ),
-                      vm.amitymessage[index].type != AmityMessageDataType.TEXT
+                      vm.amityMessage[index].type != AmityMessageDataType.TEXT
                           ? Container(
                               margin: const EdgeInsetsDirectional.fromSTEB(
                                   10, 4, 10, 4),
@@ -275,7 +275,7 @@ class MessageComponent extends StatelessWidget {
                                           .primaryColor,
                                 ),
                                 child: Text(
-                                  (vm.amitymessage[index].data!
+                                  (vm.amityMessage[index].data!
                                               as MessageTextData)
                                           .text ??
                                       "",
@@ -289,13 +289,13 @@ class MessageComponent extends StatelessWidget {
                             ),
                       if (isSendbyCurrentUser)
                         Text(
-                          getTimeStamp(vm.amitymessage[index]),
+                          getTimeStamp(vm.amityMessage[index]),
                           style:
                               TextStyle(color: Colors.grey[500], fontSize: 8),
                         ),
                     ],
                   ),
-                  if (index + 1 == vm.amitymessage.length)
+                  if (index + 1 == vm.amityMessage.length)
                     const SizedBox(
                       height: 90,
                     )

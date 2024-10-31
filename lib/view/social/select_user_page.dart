@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,11 @@ class UserListPage extends StatefulWidget {
   final List<AmityUser>? preSelectMember;
   final Function(List<AmityUser>)? onDonePressed; // Add this line
 
-  const UserListPage(
-      {super.key,
-      this.preSelectMember,
-      this.onDonePressed}); // Modify this line
+  const UserListPage({
+    super.key,
+    this.preSelectMember,
+    this.onDonePressed,
+  }); // Modify this line
 
   @override
   State<UserListPage> createState() => _UserListPageState();
@@ -50,7 +52,7 @@ class _UserListPageState extends State<UserListPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'تحديد العضو', //Select member
+          "user.select_member".tr(), //Select member
           style: Provider.of<AmityUIConfiguration>(context)
               .titleTextStyle
               .copyWith(
@@ -60,11 +62,9 @@ class _UserListPageState extends State<UserListPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(
+            onPressed: () => Navigator.of(context).pop(
                   Provider.of<UserVM>(context, listen: false)
-                      .selectedCommunityUsers);
-            },
+                      .selectedCommunityUsers),
             child: TextButton(
               onPressed: () {
                 if (widget.onDonePressed != null) {
@@ -74,7 +74,7 @@ class _UserListPageState extends State<UserListPage> {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('تم', //Done
+              child: Text("external.done".tr(), //Done
                   style: TextStyle(
                       color: Provider.of<AmityUIConfiguration>(context,
                               listen: false)
@@ -97,11 +97,14 @@ class _UserListPageState extends State<UserListPage> {
                       Icons.search,
                       color: Colors.grey,
                     ),
-                    hintText: 'بحث', //Search
+                    hintText: "search.search".tr(),
+                    //Search
                     filled: true,
-                    contentPadding: const EdgeInsetsDirectional.symmetric(vertical: 0),
+                    contentPadding:
+                        const EdgeInsetsDirectional.symmetric(vertical: 0),
                     fillColor: Colors.grey[3],
-                    focusColor: Colors.white, // Removes focus highlight
+                    focusColor: Colors.white,
+                    // Removes focus highlight
                     enabledBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10.0), // Rounded edges
@@ -133,7 +136,8 @@ class _UserListPageState extends State<UserListPage> {
                           var user = Provider.of<UserVM>(context)
                               .selectedCommunityUsers[index];
                           return Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 5, 0, 5),
                             child: Column(
                               children: [
                                 GestureDetector(
@@ -173,8 +177,8 @@ class _UserListPageState extends State<UserListPage> {
                                                   .withOpacity(0.5),
                                               child: const Center(
                                                 child: Icon(
-                                                  Icons
-                                                      .close_rounded, // "X" mark
+                                                  Icons.close_rounded,
+                                                  // "X" mark
                                                   size: 10,
 
                                                   color: Colors.white,
@@ -185,8 +189,8 @@ class _UserListPageState extends State<UserListPage> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                    height: 5), // Space between avatar and name
+                                const SizedBox(height: 5),
+                                // Space between avatar and name
                                 SizedBox(
                                   width: 70,
                                   child: Center(
@@ -201,7 +205,8 @@ class _UserListPageState extends State<UserListPage> {
                                                   .base),
                                     ),
                                   ),
-                                ) // Display user's name, replace 'name' with the appropriate attribute for the user's name
+                                )
+                                // Display user's name, replace 'name' with the appropriate attribute for the user's name
                               ],
                             ),
                           );
@@ -215,7 +220,8 @@ class _UserListPageState extends State<UserListPage> {
                     .map<Widget>((item) {
                   return SliverStickyHeader(
                     header: Container(
-                      padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 0, 5),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 5, 0, 5),
                       color: Provider.of<AmityUIConfiguration>(context)
                           .appColors
                           .baseShade4,
@@ -236,8 +242,9 @@ class _UserListPageState extends State<UserListPage> {
                             children: [
                               ListTile(
                                 dense: true,
-                                contentPadding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 4.0, horizontal: 16.0),
+                                contentPadding:
+                                    const EdgeInsetsDirectional.symmetric(
+                                        vertical: 4.0, horizontal: 16.0),
                                 leading: CircleAvatar(
                                   backgroundColor:
                                       Provider.of<AmityUIConfiguration>(context)
@@ -255,18 +262,21 @@ class _UserListPageState extends State<UserListPage> {
                                 ),
 
                                 title: Text(
-                                  user.displayName ?? 'لا يوجد اسم', //No name
+                                  user.displayName ?? "external.empty_name".tr(),
+                                  //No name
                                   style: TextStyle(
                                       color: Provider.of<AmityUIConfiguration>(
                                               context)
                                           .appColors
                                           .base),
-                                ), // Fallback for a null displayName
+                                ),
+                                // Fallback for a null displayName
                                 trailing: Checkbox(
-                                  activeColor: Provider.of<
-                                              AmityUIConfiguration>(context,
-                                          listen: false)
-                                      .primaryColor, // Set the active color to primary color
+                                  activeColor:
+                                      Provider.of<AmityUIConfiguration>(context,
+                                              listen: false)
+                                          .primaryColor,
+                                  // Set the active color to primary color
                                   shape: const CircleBorder(),
                                   value: Provider.of<UserVM>(context)
                                       .selectedCommunityUsers

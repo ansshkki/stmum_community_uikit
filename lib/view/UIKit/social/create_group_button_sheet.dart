@@ -1,4 +1,5 @@
 import 'package:amity_uikit_beta_service/viewmodel/create_group_request_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +41,7 @@ class _CreateGroupButtonSheetState extends State<CreateGroupButtonSheet> {
                     const SizedBox(height: 12),
                     Row(
                       children: [
-                        const Text("طلب انشاء جروب"),
+                        Text("group.create_request".tr()),
                         const Spacer(),
                         IconButton(
                           onPressed: () => Navigator.pop(context),
@@ -51,83 +52,81 @@ class _CreateGroupButtonSheetState extends State<CreateGroupButtonSheet> {
                     const SizedBox(height: 24),
                     TextFormField(
                       controller: groupName,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "اسم الجروب",
+                      decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "group.name".tr(),
                       ),
                       validator: (value) {
                         if (value?.trim().isEmpty ?? true) {
-                          return "اسم الجروب يجب ان لا يكون فارغاً";
+                          return "group.empty_error".tr();
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 24),
-                    const Text(
-                      "التفاصيل",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    const SizedBox(height: 4),
-                    TextFormField(
-                      controller: description,
-                      minLines: 2,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: "التفاصيل",
+                    Text(
+                    "external.details".tr(),
+                      style: const TextStyle(fontSize: 12),
+                  ),
+                  const SizedBox(height: 4),
+                  TextFormField(
+                    controller: description,
+                    minLines: 2,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      hintText: "external.details".tr(),
                         hintStyle: const TextStyle(fontWeight: FontWeight.w400),
                       ),
                       validator: (value) {
                         if (value?.trim().isEmpty ?? true) {
-                          return "التفاصيل يجب ان لا تكون فارغة";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    vm.status == Statevm.loading
-                        ? const Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : SizedBox(
-                            width: double.infinity,
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  Provider.of<AmityUIConfiguration>(context)
-                                      .appColors
-                                      .primary,
-                                ),
+                          return "group.details_empty".tr();
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  vm.status == Statevm.loading
+                      ? const Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                Provider.of<AmityUIConfiguration>(context)
+                                    .appColors
+                                    .primary,
                               ),
-                              onPressed: () async {
-                                if (globalKey.currentState?.validate() ?? false) {
-                                  await Provider.of<CreateGroupRequestVM>(
-                                    context,
-                                    listen: false,
-                                  )
-                                      .createGroupRequest(
-                                    groupName.text,
-                                    description.text,
-                                  )
-                                      .then((val) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          "تم الطلب بنجاح",
-                                        ),
-                                      ),
-                                    );
+                            ),
+                            onPressed: () async {
+                              if (globalKey.currentState?.validate() ?? false) {
+                                await Provider.of<CreateGroupRequestVM>(
+                                  context,
+                                  listen: false,
+                                )
+                                    .createGroupRequest(
+                                  groupName.text,
+                                  description.text,
+                                )
+                                    .then((val) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content:
+                                        Text("external.required_done".tr()),
+                                  ));
                                   });
                                   Navigator.pop(context);
                                 }
                               },
                               child: Text(
-                                "طلب",
+                                "external.required".tr(),
                                 style: TextStyle(
                                   color:
                                       Provider.of<AmityUIConfiguration>(context)
@@ -143,7 +142,7 @@ class _CreateGroupButtonSheetState extends State<CreateGroupButtonSheet> {
                         ? Center(
                             child: Text(
                               textAlign: TextAlign.center,
-                              vm.errorMessage ?? "هناك خطأ ما , أعد المحاولة",
+                              vm.errorMessage ?? "repo.unknown_error".tr(),
                               style: TextStyle(
                                   color:
                                       Provider.of<AmityUIConfiguration>(context)

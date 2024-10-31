@@ -7,7 +7,7 @@ import 'package:provider/provider.dart'; // Import provider
 class PostReviewPage extends StatefulWidget {
   final AmityCommunity community;
 
-  const PostReviewPage({Key? key, required this.community}) : super(key: key);
+  const PostReviewPage({super.key, required this.community});
 
   @override
   _PostReviewPageState createState() => _PostReviewPageState();
@@ -15,6 +15,7 @@ class PostReviewPage extends StatefulWidget {
 
 class _PostReviewPageState extends State<PostReviewPage> {
   bool isPostReviewEnabled = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -59,7 +60,8 @@ class _PostReviewPageState extends State<PostReviewPage> {
             subtitle: const Padding(
               padding: EdgeInsetsDirectional.only(top: 8.0),
               child: Text(
-                '', //Posts by members have to be reviewed and approved by community moderators.
+                '',
+                //Posts by members have to be reviewed and approved by community moderators.
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(0xff636878),

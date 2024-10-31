@@ -10,6 +10,7 @@ import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/explore_page_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +18,14 @@ import 'package:provider/provider.dart';
 class CommunitySettingPage extends StatelessWidget {
   final AmityCommunity community;
 
-  const CommunitySettingPage({Key? key, required this.community})
-      : super(key: key);
+  const CommunitySettingPage({super.key, required this.community});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<AmityCommunity>(
         stream: community.listen.stream,
         builder: (context, snapshot) {
-          var livecommunity = snapshot.data ?? community;
+          var liveCommunity = snapshot.data ?? community;
           return Scaffold(
             backgroundColor: Provider.of<AmityUIConfiguration>(context)
                 .appColors
@@ -79,7 +79,7 @@ class CommunitySettingPage extends StatelessWidget {
                                   .base,
                             )),
                         title: Text(
-                          "تعديل الملف الشخصي", //Edit Profile
+                          "user.edit".tr(), //Edit Profile
                           style: TextStyle(
                             color: Provider.of<AmityUIConfiguration>(context)
                                 .appColors
@@ -94,7 +94,7 @@ class CommunitySettingPage extends StatelessWidget {
                           // Navigate to Edit Profile Page or perform an action
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  AmityEditCommunityScreen(livecommunity)));
+                                  AmityEditCommunityScreen(liveCommunity)));
                         },
                       ),
                 ListTile(
@@ -111,7 +111,7 @@ class CommunitySettingPage extends StatelessWidget {
                                 .appColors
                                 .base)),
                     title: Text(
-                      "أم داعمة", //Members
+                      "community.member".plural(1), //Members
                       style: TextStyle(
                         color: Provider.of<AmityUIConfiguration>(context)
                             .appColors
@@ -126,7 +126,7 @@ class CommunitySettingPage extends StatelessWidget {
                       // Navigate to Members Page or perform an action
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MemberManagementPage(
-                              communityId: livecommunity.communityId!)));
+                              communityId: liveCommunity.communityId!)));
                     }),
                 // ListTile(
                 //   leading: Container(
@@ -226,7 +226,7 @@ class CommunitySettingPage extends StatelessWidget {
                           // Navigate to Post Review Page or perform an action
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  PostReviewPage(community: livecommunity)));
+                                  PostReviewPage(community: liveCommunity)));
                         },
                       ),
                 //! DO NOT REMOVE
@@ -261,7 +261,7 @@ class CommunitySettingPage extends StatelessWidget {
                           // Navigate to Post Review Page or perform an action
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => StoryCommentSettingPage(
-                                  community: livecommunity)));
+                                  community: liveCommunity)));
                         },
                       ),
                 !community.isJoined!

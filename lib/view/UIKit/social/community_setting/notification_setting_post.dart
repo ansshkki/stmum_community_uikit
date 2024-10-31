@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +11,7 @@ enum NewPostNotificationSetting { everyone, onlyModerator, off }
 class PostNotificationSettingPage extends StatefulWidget {
   final AmityCommunity community;
 
-  const PostNotificationSettingPage({Key? key, required this.community})
-      : super(key: key);
+  const PostNotificationSettingPage({super.key, required this.community});
 
   @override
   _PostNotificationSettingPageState createState() =>
@@ -38,7 +38,7 @@ class _PostNotificationSettingPageState
               size: 30),
         ),
         title: Text(
-          'المنشورات', //Posts
+          "post.posts".tr(), //Posts
           style: TextStyle(
             color: Provider.of<AmityUIConfiguration>(context).appColors.base,
             fontSize: 18,
@@ -56,7 +56,7 @@ class _PostNotificationSettingPageState
           Padding(
             padding: const EdgeInsetsDirectional.all(16.0),
             child: Text(
-              "التفاعل مع المنشورات", //React Posts
+              "reaction.react_with_post".tr(), //React Posts
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -66,11 +66,13 @@ class _PostNotificationSettingPageState
             ),
           ),
 
-          const Padding(
-            padding: EdgeInsetsDirectional.only(start: 16.0, bottom: 16, end: 16),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                start: 16.0, bottom: 16, end: 16),
             child: Text(
-              "تلقي الاشعارات عند تعليق احدهم على منشوراتك في هذا المجتمع", //Receive notifications when someone make a reaction to your posts in this community
-              style: TextStyle(
+              "notification.comments".tr(),
+              //Receive notifications when someone make a reaction to your posts in this community
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xff636878),
               ),
@@ -78,7 +80,7 @@ class _PostNotificationSettingPageState
           ),
 
           _buildRadioTile<ReactPostNotificationSetting>(
-            title: 'أي شخص', //Everyone
+            title: "community.anyone".tr(), //Everyone
             value: ReactPostNotificationSetting.everyone,
             groupValue: _reactPostSetting,
             onChanged: (value) {
@@ -88,7 +90,7 @@ class _PostNotificationSettingPageState
             },
           ),
           _buildRadioTile<ReactPostNotificationSetting>(
-            title: 'المشرفين فقط', //Only Moderator
+            title: "community.only_moderator".tr(), //Only Moderator
             value: ReactPostNotificationSetting.onlyModerator,
             groupValue: _reactPostSetting,
             onChanged: (value) {
@@ -98,7 +100,7 @@ class _PostNotificationSettingPageState
             },
           ),
           _buildRadioTile<ReactPostNotificationSetting>(
-            title: 'مغلق', //Off
+            title: "external.off".tr(), //Off
             value: ReactPostNotificationSetting.off,
             groupValue: _reactPostSetting,
             onChanged: (value) {
@@ -115,29 +117,31 @@ class _PostNotificationSettingPageState
           ),
 
           // Section 2: New Posts
-          const Padding(
-            padding: EdgeInsetsDirectional.all(16.0),
+          Padding(
+            padding: const EdgeInsetsDirectional.all(16.0),
             child: Text(
-              "التفاعل مع المنشورات", //React Posts
-              style: TextStyle(
+              "reaction.react_with_post".tr(), //React Posts
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
                 color: Color(0xff292B32),
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsetsDirectional.only(start: 16.0, bottom: 16, end: 16),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                start: 16.0, bottom: 16, end: 16),
             child: Text(
-              "تلقي الاشعارات عند تعليق احدهم على منشوراتك في هذا المجتمع", //Receive notifications when someone make a reaction to your posts in this community
-              style: TextStyle(
+              "notification.comments".tr(),
+              //Receive notifications when someone make a reaction to your posts in this community
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xff636878),
               ),
             ),
           ),
           _buildRadioTile<NewPostNotificationSetting>(
-            title: 'أي شخص', //Everyone
+            title: "community.anyone".tr(), //Everyone
             value: NewPostNotificationSetting.everyone,
             groupValue: _newPostSetting,
             onChanged: (value) {
@@ -147,24 +151,16 @@ class _PostNotificationSettingPageState
             },
           ),
           _buildRadioTile<NewPostNotificationSetting>(
-            title:  'المشرفين فقط', //Only Moderator
+            title: "community.only_moderator".tr(), //Only Moderator
             value: NewPostNotificationSetting.onlyModerator,
             groupValue: _newPostSetting,
-            onChanged: (value) {
-              setState(() {
-                _newPostSetting = value!;
-              });
-            },
+            onChanged: (value) => setState(() => _newPostSetting = value!),
           ),
           _buildRadioTile<NewPostNotificationSetting>(
-            title: 'مغلق', //Off
+            title: "external.off".tr(), //Off
             value: NewPostNotificationSetting.off,
             groupValue: _newPostSetting,
-            onChanged: (value) {
-              setState(() {
-                _newPostSetting = value!;
-              });
-            },
+            onChanged: (value) => setState(() => _newPostSetting = value!),
           ),
           const Divider(),
         ],

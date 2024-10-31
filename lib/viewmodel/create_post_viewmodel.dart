@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/utils/navigation_key.dart';
 import 'package:amity_uikit_beta_service/viewmodel/media_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,6 +37,7 @@ class CreatePostVM extends ChangeNotifier {
       <AmityFileInfoWithUploadStatus>[];
   AmityFileInfoWithUploadStatus? amityVideo;
   bool isloading = false;
+
   void inits() {
     _progressMap.clear();
     textEditingController.clear();
@@ -108,6 +110,7 @@ class CreatePostVM extends ChangeNotifier {
   final Map<String, bool> _completeMap = {};
 
   bool areAllFilesComplete = true;
+
   void checkAreAllPathsComplete() {
     var files = Provider.of<MediaPickerVM>(
             NavigationService.navigatorKey.currentContext!,
@@ -259,6 +262,7 @@ class CreatePostVM extends ChangeNotifier {
 
 // List to store already selected image paths
   List<String> selectedImagePaths = [];
+
   Future<void> addFiles() async {
     if (isNotSelectVideoYet()) {
       final List<XFile> images =
@@ -293,8 +297,9 @@ class CreatePostVM extends ChangeNotifier {
           notifyListeners();
         }).onError((error, stackTrace) async {
           log("error: $error");
-          await AmityDialog()
-              .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          await AmityDialog().showAlertErrorDialog(
+              title: "repo.unknown_error".tr(),
+              message: error.toString()); //Error!
         });
       }
     }
@@ -335,8 +340,9 @@ class CreatePostVM extends ChangeNotifier {
         }
       } catch (error) {
         log("error: $error");
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       }
     }
   }
@@ -347,7 +353,8 @@ class CreatePostVM extends ChangeNotifier {
   }
 
   Future<void> createPost(BuildContext context,
-      {String? communityId, required Function(bool, String?, AmityPost?) callback}) async {
+      {String? communityId,
+      required Function(bool, String?, AmityPost?) callback}) async {
     log("createPost");
     log(amityUploadFile.length.toString());
 
@@ -433,8 +440,9 @@ class CreatePostVM extends ChangeNotifier {
         // }
       }).onError((error, stackTrace) async {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       await AmitySocialClient.newPostRepository()
@@ -460,8 +468,9 @@ class CreatePostVM extends ChangeNotifier {
         notifyListeners();
       }).onError((error, stackTrace) async {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
   }
@@ -568,8 +577,9 @@ class CreatePostVM extends ChangeNotifier {
         }
       }).onError((error, stackTrace) async {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       var builder = AmitySocialClient.newPostRepository()
@@ -598,8 +608,9 @@ class CreatePostVM extends ChangeNotifier {
         }
       }).onError((error, stackTrace) async {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
   }
@@ -636,8 +647,9 @@ class CreatePostVM extends ChangeNotifier {
               .scrollcontroller
               .jumpTo(0);
         }).onError((error, stackTrace) async {
-          await AmityDialog()
-              .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          await AmityDialog().showAlertErrorDialog(
+              title: "repo.unknown_error".tr(),
+              message: error.toString()); //Error!
         });
       } else {
         var builder = AmitySocialClient.newPostRepository()
@@ -665,8 +677,9 @@ class CreatePostVM extends ChangeNotifier {
             }
           }
         }).onError((error, stackTrace) async {
-          await AmityDialog()
-              .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          await AmityDialog().showAlertErrorDialog(
+              title: "repo.unknown_error".tr(),
+              message: error.toString()); //Error!
         });
       }
     }

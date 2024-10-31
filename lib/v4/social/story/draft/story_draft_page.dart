@@ -13,6 +13,7 @@ import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_cus
 import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_single_segment_timer_element.dart';
 import 'package:amity_uikit_beta_service/v4/utils/create_story/bloc/create_story_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,7 +127,7 @@ class _StoryDraftPageBuilderState extends State<StoryDraftPageBuilder> {
                                     state.hyperlink != null) {
                                   AmityCustomSnackBar.show(
                                     context,
-                                    'Can\'t add more than one link to your story.',
+                                    "util.link_error".tr(),
                                     SvgPicture.asset(
                                       'assets/Icons/ic_warning_outline_white.svg',
                                       package: 'amity_uikit_beta_service',
@@ -253,11 +254,10 @@ class _StoryDraftPageBuilderState extends State<StoryDraftPageBuilder> {
                               onTap: () {
                                 ConfirmationDialog().show(
                                   context: context,
-                                  title: 'Discard this Story?',
-                                  detailText:
-                                      'The story will be permanently deleted. It cannot be undone.',
-                                  leftButtonText: 'Cancel',
-                                  rightButtonText: 'Discard',
+                                  title: "discard.title".tr(),
+                                  detailText: "discard.content".tr(),
+                                  leftButtonText: "external.cancel".tr(),
+                                  rightButtonText: "external.discard".tr(),
                                   onConfirm: () {
                                     Navigator.of(context).pop();
                                   },
@@ -500,9 +500,10 @@ class ShareButton extends BaseElement {
       this.componentId,
       this.pageId})
       : super(
-            pageId: pageId,
-            componentId: componentId,
-            elementId: "share_story_button");
+          pageId: pageId,
+          componentId: componentId,
+          elementId: "share_story_button",
+        );
 
   @override
   Widget buildElement(BuildContext context) {
@@ -523,7 +524,7 @@ class ShareButton extends BaseElement {
             Container(
               margin: const EdgeInsets.only(left: 8, right: 8),
               child: Text(
-                "Share Story",
+                "${"external.share".tr()} ${"story.story".tr()}",
                 style: TextStyle(
                   color: theme.baseColor,
                   fontSize: 16,

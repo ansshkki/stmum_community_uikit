@@ -10,6 +10,7 @@ import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart'
 import 'package:amity_uikit_beta_service/viewmodel/explore_page_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +85,7 @@ class _CommunityPageState extends State<CommunityPage> {
                   ),
                 ),
                 clipBehavior: Clip.hardEdge,
-                builder: (context) => FractionallySizedBox(
+                builder: (context) => const FractionallySizedBox(
                   heightFactor: 0.8,
                   child: AmityCreatePostV2Screen(),
                 ),
@@ -117,12 +118,12 @@ class _CommunityPageState extends State<CommunityPage> {
           // ),
           // centerTitle: false,
           automaticallyImplyLeading: false,
-          leading: Provider.of<AmityVM>(context).currentamityUser == null
+          leading: Provider.of<AmityVM>(context).currentAmityUser == null
               ? null
               : IconButton(
                   onPressed: () {
                     final user = Provider.of<AmityVM>(context, listen: false)
-                        .currentamityUser;
+                        .currentAmityUser;
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChangeNotifierProvider(
@@ -136,7 +137,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     );
                   },
                   icon: getAvatarImage(Provider.of<AmityVM>(context)
-                      .currentamityUser
+                      .currentAmityUser
                       ?.avatarUrl),
                 ),
           actions: [
@@ -180,10 +181,10 @@ class _CommunityPageState extends State<CommunityPage> {
             //   fontWeight: FontWeight.w600,
             //   fontFamily: 'SF Pro Text',
             // ),
-            tabs: const [
-              Tab(text: "يومياتي"), //Newsfeed
-              Tab(text: "مشاركات"), //Explore
-              Tab(text: "مجتمعات "),
+            tabs: [
+              Tab(text: "feed.title".tr()), //Newsfeed
+              Tab(text: "explore.title".tr()), //Explore
+              Tab(text: "community.communities".tr()),
             ],
           ),
         ),
@@ -277,7 +278,7 @@ class ExplorePage extends StatelessWidget {
                       isPostDetail: false,
                       feedType: FeedType.global,
                       showCommunity: true,
-                      showlatestComment: false,
+                      showLatestComment: false,
                       post: snapshot.data!,
                       theme: theme,
                       postIndex: index,
@@ -295,14 +296,14 @@ class ExplorePage extends StatelessWidget {
 }
 
 class RecommendationSection extends StatelessWidget {
-  const RecommendationSection({Key? key}) : super(key: key);
+  const RecommendationSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ExplorePageVM>(
       builder: (context, vm, _) {
         if (vm.recommendedCommunities.isEmpty) {
-          return SizedBox();
+          return const SizedBox();
         }
 
         return Container(
@@ -336,7 +337,7 @@ class RecommendationSection extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(12), // No border radius
                       ),
-                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
                       child: Stack(
                         children: [
                           if (community.avatarImage?.fileUrl != null)
@@ -369,7 +370,7 @@ class RecommendationSection extends StatelessWidget {
                               children: [
                                 Text(
                                   community.displayName ?? "",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
@@ -378,7 +379,7 @@ class RecommendationSection extends StatelessWidget {
                                 Text(
                                   community.description ?? "",
                                   maxLines: 2,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
                                   ),
@@ -387,13 +388,14 @@ class RecommendationSection extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                         text: community.postsCount?.toString()),
-                                    TextSpan(text: " منشور - "),
+                                    TextSpan(text: " ${"post.title".tr()} - "),
                                     TextSpan(
                                         text:
                                             community.membersCount?.toString()),
-                                    TextSpan(text: " عضو"),
+                                    TextSpan(
+                                        text: " ${"community.member".tr()}"),
                                   ],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                     color: Colors.white70,
                                   ),
@@ -426,7 +428,7 @@ class RecommendationSection extends StatelessWidget {
 }
 
 class TrendingSection extends StatelessWidget {
-  const TrendingSection({Key? key}) : super(key: key);
+  const TrendingSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -464,7 +466,8 @@ class TrendingSection extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context)
@@ -491,7 +494,7 @@ class TrendingSection extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -500,7 +503,7 @@ class TrendingSection extends StatelessWidget {
                                 community.displayName ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -509,12 +512,12 @@ class TrendingSection extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                       text: community.postsCount?.toString()),
-                                  TextSpan(text: " منشور - "),
+                                  TextSpan(text: " ${"post.title".tr()} - "),
                                   TextSpan(
                                       text: community.membersCount?.toString()),
-                                  TextSpan(text: " عضو"),
+                                  TextSpan(text: " ${"community.member".tr()}"),
                                 ],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 10,
                                 ),
                               )),
@@ -578,9 +581,11 @@ class TrendingSection extends StatelessWidget {
                                     }
                                   }
                                 },
-                          child: Text(community.isJoined ?? false
-                              ? "منضم"
-                              : "كوني معنا"),
+                          child: Text(
+                            community.isJoined ?? false
+                                ? "community.joined".tr()
+                                : "community.join".tr(),
+                          ),
                         ),
                       ],
                     ),
@@ -709,7 +714,7 @@ class CategorySection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'تصنيفات المجتمعات', //Categories
+                      "community.categories".tr(), //Categories
                       style: Provider.of<AmityUIConfiguration>(context)
                           .titleTextStyle
                           .copyWith(
@@ -718,13 +723,11 @@ class CategorySection extends StatelessWidget {
                                   .base),
                     ),
                     IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CategoryListPage()),
-                        );
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CategoryListPage()),
+                      ),
                       style: IconButton.styleFrom(
                         foregroundColor:
                             Provider.of<AmityUIConfiguration>(context)
@@ -849,8 +852,7 @@ class CategorySection extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                              "ألا ترى ما تريد؟ أطلب مجموعة و سنضعها في الاعتبار, و سنخبرك بمجرد إنشائها"),
+                          Text("group.create_request_content".tr()),
                           const SizedBox(height: 8),
                           TextButton(
                             style: ButtonStyle(
@@ -864,11 +866,12 @@ class CategorySection extends StatelessWidget {
                                 // enableDrag: false,
                                 isScrollControlled: true,
                                 context: context,
-                                builder: (context) => CreateGroupButtonSheet(),
+                                builder: (context) =>
+                                    const CreateGroupButtonSheet(),
                               );
                             },
                             child: Text(
-                              "اطلب مجموعة",
+                              "group.request".tr(),
                               style: TextStyle(
                                 color:
                                     Provider.of<AmityUIConfiguration>(context)
@@ -902,10 +905,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      var explorePageVM = Provider.of<ExplorePageVM>(
-        context,
-        listen: false,
-      );
+      var explorePageVM = Provider.of<ExplorePageVM>(context, listen: false);
 
       explorePageVM.queryCommunityCategories(
           sortOption: AmityCommunityCategorySortOption.NAME,
@@ -923,7 +923,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0, // Remove shadow
         title: Text(
-          "التصنيفات", //Category
+          "community.categories".tr(), //Category
           style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
         ),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -941,7 +941,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                     const Icon(Icons.error, color: Colors.red, size: 48),
                     const SizedBox(height: 16),
                     Text(
-                      'Failed to load categories. Please try again.',
+                      "util.load_error".tr(),
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 16),
@@ -956,7 +956,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                           enablenotifylistener: true,
                         );
                       },
-                      child: const Text('Retry'),
+                      child: Text("external.retry".tr()),
                     ),
                   ],
                 ),
@@ -1011,7 +1011,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
 class CommunityListPage extends StatefulWidget {
   final AmityCommunityCategory category;
 
-  const CommunityListPage({required this.category, Key? key}) : super(key: key);
+  const CommunityListPage({required this.category, super.key});
 
   @override
   _CommunityListPageState createState() => _CommunityListPageState();
@@ -1041,7 +1041,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
         elevation: 0.0, // Remove shadow
 
         title: Text(
-          widget.category.name ?? "مجتمع", //Community
+          widget.category.name ?? "community.community".tr(), //Community
           style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
         ),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -1076,7 +1076,8 @@ class _CommunityListPageState extends State<CommunityListPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 6),
                       child: InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -1098,7 +1099,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1107,7 +1108,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                     community.displayName ?? "",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -1117,13 +1118,15 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                       TextSpan(
                                           text:
                                               community.postsCount?.toString()),
-                                      TextSpan(text: " منشور - "),
+                                      TextSpan(
+                                          text: " ${"post.title".tr()} - "),
                                       TextSpan(
                                           text: community.membersCount
                                               ?.toString()),
-                                      TextSpan(text: " عضو"),
+                                      TextSpan(
+                                          text: " ${"community.member".tr()}"),
                                     ],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 10,
                                     ),
                                   )),
@@ -1194,9 +1197,11 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                         }
                                       }
                                     },
-                              child: Text(community.isJoined ?? false
-                                  ? "منضم"
-                                  : "كوني معنا"),
+                              child: Text(
+                                community.isJoined ?? false
+                                    ? "community.joined".tr()
+                                    : "community.join".tr(),
+                              ),
                             ),
                           ],
                         ),
@@ -1252,7 +1257,7 @@ class GroupsSectionsPage extends StatelessWidget {
       children: [
         if (myCommunities.isNotEmpty)
           CommunityIconList(
-            amityCommunites: myCommunities,
+            amityCommunities: myCommunities,
             canCreateCommunity: false,
           ),
         if (myCommunities.isEmpty) const SizedBox(height: 16),

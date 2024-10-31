@@ -1,11 +1,9 @@
 import 'package:amity_sdk/amity_sdk.dart';
-import 'package:amity_uikit_beta_service/v4/social/story/draft/amity_story_media_type.dart';
-import 'package:amity_uikit_beta_service/v4/social/story/view/components/story_video_player/bloc/story_video_player_bloc.dart';
-import 'package:amity_uikit_beta_service/v4/social/story/view/elements/amity_story_single_segment_timer_element.dart';
 import 'package:amity_uikit_beta_service/v4/utils/config_provider_widget.dart';
 import 'package:amity_uikit_beta_service/v4/utils/create_story/bloc/create_story_bloc.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +14,12 @@ class AmityStoryTargetSelectionPage extends StatefulWidget {
   });
 
   @override
-  State<AmityStoryTargetSelectionPage> createState() => _AmityStoryTargetSelectionPageState();
+  State<AmityStoryTargetSelectionPage> createState() =>
+      _AmityStoryTargetSelectionPageState();
 }
 
-class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectionPage> {
+class _AmityStoryTargetSelectionPageState
+    extends State<AmityStoryTargetSelectionPage> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -37,10 +37,12 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
         }
       },
       child: Scaffold(
-        backgroundColor: Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
+        backgroundColor:
+            Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          elevation: 0.0, // Add this line to remove the shadow
+          elevation: 0.0,
+          // Add this line to remove the shadow
           leading: IconButton(
             icon: Icon(
               Icons.close,
@@ -49,8 +51,13 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
-            "Share to",
-            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle.copyWith(color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+            "post.share".tr(),
+            style: Provider.of<AmityUIConfiguration>(context)
+                .titleTextStyle
+                .copyWith(
+                    color: Provider.of<AmityUIConfiguration>(context)
+                        .appColors
+                        .base),
           ),
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black),
@@ -66,8 +73,12 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "My community",
-                      style: TextStyle(fontSize: 15, color: Provider.of<AmityUIConfiguration>(context).appColors.userProfileTextColor),
+                      "community.my_community".tr(),
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Provider.of<AmityUIConfiguration>(context)
+                              .appColors
+                              .userProfileTextColor),
                     ),
                   ),
                   ...viewModel.amityCommunities.map(
@@ -80,12 +91,19 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
                             leading: (communityStream.avatarFileId != null)
                                 ? CircleAvatar(
                                     backgroundColor: Colors.transparent,
-                                    backgroundImage: NetworkImage(communityStream.avatarImage!.fileUrl!),
+                                    backgroundImage: NetworkImage(
+                                        communityStream.avatarImage!.fileUrl!),
                                   )
                                 : Container(
                                     height: 40,
                                     width: 40,
-                                    decoration: BoxDecoration(color: Provider.of<AmityUIConfiguration>(context).appColors.primaryShade3, shape: BoxShape.circle),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Provider.of<AmityUIConfiguration>(
+                                                    context)
+                                                .appColors
+                                                .primaryShade3,
+                                        shape: BoxShape.circle),
                                     child: const Icon(
                                       Icons.group,
                                       color: Colors.white,
@@ -95,10 +113,15 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
                               children: [
                                 !community.isPublic!
                                     ? Padding(
-                                        padding: const EdgeInsets.only(left: 7.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 7.0),
                                         child: Icon(
                                           Icons.lock,
-                                          color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+                                          color:
+                                              Provider.of<AmityUIConfiguration>(
+                                                      context)
+                                                  .appColors
+                                                  .base,
                                           size: 17,
                                         ))
                                     : const SizedBox(),
@@ -107,36 +130,47 @@ class _AmityStoryTargetSelectionPageState extends State<AmityStoryTargetSelectio
                                 ),
                                 Text(
                                   community.displayName ?? '',
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Provider.of<AmityUIConfiguration>(context).appColors.base),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Provider.of<AmityUIConfiguration>(
+                                              context)
+                                          .appColors
+                                          .base),
                                 ),
                                 community.isOfficial!
                                     ? Padding(
-                                        padding: const EdgeInsets.only(left: 7.0),
-                                        child: Provider.of<AmityUIConfiguration>(context).iconConfig.officialIcon(iconSize: 17, color: Provider.of<AmityUIConfiguration>(context).primaryColor),
+                                        padding:
+                                            const EdgeInsets.only(left: 7.0),
+                                        child: Provider.of<
+                                                AmityUIConfiguration>(context)
+                                            .iconConfig
+                                            .officialIcon(
+                                                iconSize: 17,
+                                                color: Provider.of<
+                                                            AmityUIConfiguration>(
+                                                        context)
+                                                    .primaryColor),
                                       )
                                     : const SizedBox(),
                               ],
                             ),
-                            onTap: () {
-                              // Navigate or perform action based on 'Newsfeed' tap
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return CreateStoryConfigProviderWidget(
-                                      targetType: AmityStoryTargetType.COMMUNITY,
-                                      targetId: community.communityId!,
-                                      pageId: 'create_story_page',
-                                      
-                                    );
-                                  },
-                                ),
-                              );
-                            },
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return CreateStoryConfigProviderWidget(
+                                    targetType: AmityStoryTargetType.COMMUNITY,
+                                    targetId: community.communityId!,
+                                    pageId: 'create_story_page',
+                                  );
+                                },
+                              ),
+                            ),
                           );
                         },
                       );
                     },
-                  ).toList(),
+                  ),
                 ],
               ),
             );

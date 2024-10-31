@@ -7,6 +7,7 @@ import 'package:amity_uikit_beta_service/viewmodel/community_feed_viewmodel.dart
 import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -69,9 +70,9 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text(
-          'إنشاء مجتمع', //Create community
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          "community.create".tr(), //Create community
+          style: const TextStyle(color: Colors.black),
         ),
       ),
       body: Padding(
@@ -117,20 +118,20 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                       borderRadius:
                           BorderRadius.circular(5.0), // Adding rounded corners
                     ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize
-                          .min, // Making the row only as wide as the children need
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      // Making the row only as wide as the children need
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.camera_alt,
                           color: Colors.white,
-                        ), // Adding a camera icon
-                        SizedBox(
-                            width:
-                                8.0), // Adding some space between the icon and the text
+                        ),
+                        // Adding a camera icon
+                        const SizedBox(width: 8.0),
+                        // Adding some space between the icon and the text
                         Text(
-                          'تحميل صورة', //Upload image
-                          style: TextStyle(
+                          "media.upload_image".tr(), //Upload image
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -148,16 +149,17 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                 children: [
                   buildTextFieldWithCounter(
                     controller: _communityNameController,
-                    title: 'اسم المجتمع', //Community name
-                    hintText: 'اسم مجتمعك', //Name your community
+                    title: "community.community_name".tr(), //Community name
+                    hintText: "community.hint_name".tr(), //Name your community
                     maxCharacters: 30,
                   ),
                   const SizedBox(height: 16.0),
                   buildTextFieldWithCounter(
                     isRequred: false,
                     controller: _aboutController,
-                    title: 'حول المجتمع', //About
-                    hintText: 'أضف الوصف',
+                    title: "community.about".tr(),
+                    //About
+                    hintText: "community.add_description".tr(),
                     maxCharacters: 180,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
@@ -165,8 +167,10 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                   const SizedBox(height: 16.0),
                   buildTextFieldWithCounter(
                     controller: _categoryController,
-                    title: 'التصنيف', //Category
-                    hintText: 'اختر التصنيف', //Select category
+                    title: "community.category".tr(),
+                    //Category
+                    hintText: "community.select_category".tr(),
+                    //Select category
                     showCount: false,
                     maxCharacters: 30,
                     onTap: () async {
@@ -194,9 +198,10 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                               color: Colors.grey[200], shape: BoxShape.circle),
                           child: const Icon(Icons.public),
                         ),
-                        title: const Text('عام'), //Public
-                        subtitle: const Text(
-                            'أي شخص يستطيع الانضمام والزيارة و البحث في هذا المجتمع'), //Anyone can join, view and search this community
+                        title: Text("community.global".tr()),
+                        //Public
+                        subtitle: Text("community.global_content".tr()),
+                        //Anyone can join, view and search this community
                         trailing: Radio(
                           value: true,
                           groupValue: _isPublic,
@@ -219,9 +224,10 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                               color: Colors.grey[200], shape: BoxShape.circle),
                           child: const Icon(Icons.lock),
                         ),
-                        title: const Text('خاص'), //Private
-                        subtitle: const Text(
-                            'فقط الأعضاء المدعوين عن طريق المشرفين يمكنهم الانضمام و الزيارة و البحث في هذا المجتمع'), //Only members invited by the moderators can join, view and search this community
+                        title: Text("community.private".tr()),
+                        //Private
+                        subtitle: Text("community.private_content".tr()),
+                        //Only members invited by the moderators can join, view and search this community
                         trailing: Radio(
                           value: true,
                           groupValue: !_isPublic,
@@ -251,7 +257,8 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: 'اضافة أعضاء', //Add members
+                                  text:
+                                      "community.add_member".tr(), //Add members
                                   style: Provider.of<AmityUIConfiguration>(
                                           context,
                                           listen: false)
@@ -280,8 +287,8 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
             ),
             Center(
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 16, vertical: 10),
                 child: ElevatedButton(
                   onPressed: () async {
                     // Collect necessary data
@@ -364,9 +371,9 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                               color: Colors.white,
                             ),
                             const SizedBox(width: 10),
-                            const Text(
-                              'إنشاء مجتمع', //Create Community
-                              style: TextStyle(color: Colors.white),
+                            Text(
+                              "community.create".tr(), //Create Community
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ],
                   ),
@@ -419,7 +426,8 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                           fontSize: 13.4), // Setting font size to 13.4
                     ),
                   )
-                : Container(), // Updated here to show the current character count
+                : Container(),
+            // Updated here to show the current character count
           ],
         ),
         TextField(
@@ -478,8 +486,8 @@ class MemberSection extends StatelessWidget {
                           .white), // Adjust to use the correct attribute for avatar URL
             ),
 
-            label: Text(user.displayName ??
-                ""), // Display user's name, replace 'name' with the appropriate attribute for the user's name
+            label: Text(user.displayName ?? ""),
+            // Display user's name, replace 'name' with the appropriate attribute for the user's name
             onDeleted: () {
               // Handle the logic to remove the user when "X" is tapped
               Provider.of<UserVM>(context, listen: false)

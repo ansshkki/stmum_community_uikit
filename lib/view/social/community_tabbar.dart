@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,8 +6,8 @@ import '../../viewmodel/community_viewmodel.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import 'community_list.dart';
 
-class CommunityTabbar extends StatelessWidget {
-  const CommunityTabbar({super.key});
+class CommunityTabBar extends StatelessWidget {
+  const CommunityTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,10 @@ class CommunityTabbar extends StatelessWidget {
           labelColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
           unselectedLabelColor: Colors.black,
           indicatorSize: TabBarIndicatorSize.label,
-          tabs: const [
-            Tab(text: "موصى بها"), //Recommended
-            Tab(text: "شائع"), //Trending
-            Tab(text: "كوني معنا"), //Joined
+          tabs: [
+            Tab(text: "community.recommended".tr()), //Recommended
+            Tab(text: "community.trending".tr()), //Trending
+            Tab(text: "community.join".tr()), //Joined
           ],
         ),
         body: const TabBarView(

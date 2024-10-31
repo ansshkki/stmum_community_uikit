@@ -1,13 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
+
 // import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageViewer extends StatelessWidget {
   final List<String> imageURLs;
   final int initialIndex;
-  const ImageViewer(
-      {Key? key, required this.imageURLs, required this.initialIndex})
-      : super(key: key);
+
+  const ImageViewer({
+    super.key,
+    required this.imageURLs,
+    required this.initialIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +80,16 @@ class ImageViewer extends StatelessWidget {
               }).toList(),
             ),
             Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Icon(Icons.close_rounded,
-                      size: 30, color: Colors.white),
-                )),
+              alignment: AlignmentDirectional.topEnd,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Icon(Icons.close_rounded,
+                    size: 30, color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),

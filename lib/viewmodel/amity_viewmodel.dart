@@ -1,12 +1,13 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../components/alert_dialog.dart';
 
 class AmityVM extends ChangeNotifier {
-  AmityUser? currentamityUser;
+  AmityUser? currentAmityUser;
   String? accessToken;
   String? generalAccessToken;
 
@@ -29,7 +30,7 @@ class AmityVM extends ChangeNotifier {
             .then((value) async {
           log("success");
 
-          currentamityUser = value;
+          currentAmityUser = value;
           notifyListeners();
         }).catchError((error, stackTrace) async {
           log("error");
@@ -42,7 +43,7 @@ class AmityVM extends ChangeNotifier {
         await AmityCoreClient.login(userID).submit().then((value) async {
           log("success");
 
-          currentamityUser = value;
+          currentAmityUser = value;
           notifyListeners();
         }).catchError((error, stackTrace) async {
           log("error");
@@ -63,7 +64,7 @@ class AmityVM extends ChangeNotifier {
             .then((value) async {
           log("success");
           print("current amity user :$value");
-          currentamityUser = value;
+          currentAmityUser = value;
           notifyListeners();
         }).catchError((error, stackTrace) async {
           log("error");
@@ -81,7 +82,7 @@ class AmityVM extends ChangeNotifier {
           log("success");
           print("current amity user :$value");
 
-          currentamityUser = value;
+          currentAmityUser = value;
           notifyListeners();
         }).catchError((error, stackTrace) async {
           print("error");
@@ -95,16 +96,16 @@ class AmityVM extends ChangeNotifier {
   }
 
   Future<void> refreshCurrentUserData() async {
-    if (currentamityUser != null) {
+    if (currentAmityUser != null) {
       await AmityCoreClient.newUserRepository()
-          .getUser(currentamityUser!.userId!)
+          .getUser(currentAmityUser!.userId!)
           .then((user) {
-        currentamityUser = user;
+        currentAmityUser = user;
         notifyListeners();
       }).onError((error, stackTrace) async {
         log(error.toString());
         await AmityDialog().showAlertErrorDialog(
-            title: "خطأ!", message: error.toString()); //Error!
+            title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       });
     }
   }

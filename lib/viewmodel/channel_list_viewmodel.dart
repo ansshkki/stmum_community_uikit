@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,15 +17,17 @@ class ChannelVM extends ChangeNotifier {
   final List<Channels> _amityChannelList = [];
   Channels? amitySingleChannel;
   Map<String, ChannelUsers> channelUserMap = {};
+
   List<Channels> getChannelList() {
     return _amityChannelList;
   }
 
   Future<void> initVM() async {
     log("initVM");
-    var accessToken = Provider.of<UserVM>(
-            NavigationService.navigatorKey.currentContext!,
-            listen: false)
+    var accessToken = Provider
+        .of<UserVM>(
+        NavigationService.navigatorKey.currentContext!,
+        listen: false)
         .accessToken;
 
     if (accessToken != null) {
@@ -32,15 +35,18 @@ class ChannelVM extends ChangeNotifier {
       await channelRepoImp.listenToChannel((messages) {
         ///get channel where channel id == new message channelId
         var channel = _amityChannelList.firstWhere((amityMessage) =>
-            amityMessage.channelId == messages.messages?[0].channelId);
-        log("${channel.channelId} got new message from ${messages.messages![0].userId}");
+        amityMessage.channelId == messages.messages?[0].channelId);
+        log("${channel.channelId} got new message from ${messages.messages![0]
+            .userId}");
         channel.lastActivity = messages.messages![0].createdAt;
 
         channel.setLatestMessage(
             messages.messages![0].data!.text ?? "Not Text message: 📷");
 
         if (messages.messages![0].userId !=
-            AmityCoreClient.getCurrentUser().userId) {
+            AmityCoreClient
+                .getCurrentUser()
+                .userId) {
           ///add unread count by 1
           channel.setUnreadCount(channel.unreadCount + 1);
         }
@@ -75,7 +81,9 @@ class ChannelVM extends ChangeNotifier {
             _addLatestMessage(channel);
             _amityChannelList.add(channel);
             String key =
-                channel.channelId! + AmityCoreClient.getCurrentUser().userId!;
+                channel.channelId! + AmityCoreClient
+                    .getCurrentUser()
+                    .userId!;
             if (channelUserMap[key] != null) {
               var count =
                   channel.messageCount! - channelUserMap[key]!.readToSegment!;
@@ -85,20 +93,19 @@ class ChannelVM extends ChangeNotifier {
         }
       } else {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error!); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(), message: error!); //Error!
       }
 
       notifyListeners();
     });
   }
 
-  Future<void> initSingleChannel(
-    String channelId,
-  ) async {
-    var accessToken = Provider.of<UserVM>(
-            NavigationService.navigatorKey.currentContext!,
-            listen: false)
+  Future<void> initSingleChannel(String channelId,) async {
+    var accessToken = Provider
+        .of<UserVM>(
+        NavigationService.navigatorKey.currentContext!,
+        listen: false)
         .accessToken;
     if (accessToken != null) {
       await channelRepoImp.initRepo(accessToken);
@@ -129,7 +136,8 @@ class ChannelVM extends ChangeNotifier {
           if (data.messages!.isNotEmpty) {
             var latestMessage =
                 data.messages![0].data?.text ?? "Not Text message: 📷";
-            log("get latest message from ${channel.channelId} as $latestMessage");
+            log("get latest message from ${channel
+                .channelId} as $latestMessage");
             channel.setLatestMessage(latestMessage);
             notifyListeners();
           } else {
@@ -148,34 +156,36 @@ class ChannelVM extends ChangeNotifier {
       Function(ChannelList? data, String? error) callback,
       {String? avatarFileId}) async {
     await channelRepoImp.createGroupChannel(displayName, userIds,
-        (data, error) async {
-      if (data != null) {
-        log("createGroupChannel: success");
-        callback(data, null);
-      } else {
-        log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error!); //Error!
-        callback(null, error);
-      }
-    }, avatarFileId: avatarFileId);
+            (data, error) async {
+          if (data != null) {
+            log("createGroupChannel: success");
+            callback(data, null);
+          } else {
+            log(error.toString());
+            await AmityDialog()
+                .showAlertErrorDialog(
+                title: "repo.unknown_error".tr(), message: error!); //Error!
+            callback(null, error);
+          }
+        }, avatarFileId: avatarFileId);
   }
 
   createConversationChannel(List<String> userIds,
       Function(ChannelList? data, String? error) callback) async {
     await channelRepoImp.createConversationChannel(userIds,
-        (data, error) async {
-      if (data != null) {
-        log("createConversationChannel: success $data");
+            (data, error) async {
+          if (data != null) {
+            log("createConversationChannel: success $data");
 
-        callback(data, null);
-      } else {
-        log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error!); //Error!
-        callback(null, error);
-      }
-    });
+            callback(data, null);
+          } else {
+            log(error.toString());
+            await AmityDialog()
+                .showAlertErrorDialog(
+                title: "repo.unknown_error".tr(), message: error!); //Error!
+            callback(null, error);
+          }
+        });
   }
 
   void _addUnreadCountToEachChannel(ChannelList data) {
@@ -200,8 +210,8 @@ class ChannelVM extends ChangeNotifier {
         notifyListeners();
       }
     } catch (error) {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       log(error.toString());
     }
   }

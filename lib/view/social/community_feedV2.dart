@@ -9,6 +9,7 @@ import 'package:amity_uikit_beta_service/view/social/global_feed.dart';
 import 'package:amity_uikit_beta_service/view/social/pending_page.dart';
 import 'package:amity_uikit_beta_service/viewmodel/explore_page_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +25,11 @@ class CommunityScreen extends StatefulWidget {
   final bool isFromFeed;
   static const routeName = '/CommunityScreen';
 
-  const CommunityScreen(
-      {Key? key, required this.community, this.isFromFeed = false})
-      : super(key: key);
+  const CommunityScreen({
+    super.key,
+    required this.community,
+    this.isFromFeed = false,
+  });
 
   @override
   CommunityScreenState createState() => CommunityScreenState();
@@ -109,8 +112,9 @@ class CommunityScreenState extends State<CommunityScreen>
               children: [
                 Text("${Provider.of<CommuFeedVM>(context).postCount}",
                     style: const TextStyle(fontSize: 16)),
-                const Text('المنشورات', //posts
-                    style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                Text("post.posts".tr(), //posts
+                    style:
+                        const TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
             ),
             Container(
@@ -128,7 +132,12 @@ class CommunityScreenState extends State<CommunityScreen>
                     community.membersCount.toString(),
                     style: const TextStyle(fontSize: 16),
                   ),
-                  Text(community.membersCount == 1 ? 'عضو' : 'أعضاء',
+                  Text(
+                      "community.member".plural(
+                        community.membersCount ?? 0,
+                        format: NumberFormat.compact(
+                            locale: context.locale.toString()),
+                      ),
                       //member //members
                       style: const TextStyle(
                           fontSize: 16, color: Color(0xff898E9E)))
@@ -272,9 +281,7 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                         fontSize: 18,
                       ),
                 ),
-                child: const Text(
-                  "انضمي إلينا", //Join
-                ),
+                child: Text("community.join_2".tr()),
               )
         : InkWell(
             onTap: () {
@@ -307,7 +314,7 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                       ),
                   const SizedBox(width: 8.0), // Space between icon and text
                   Text(
-                    "تعديل الملف الشخصي", //Edit Profile
+                    "user.edit".tr(), //Edit Profile
                     style: TextStyle(
                       color: Provider.of<AmityUIConfiguration>(context)
                           .appColors
@@ -321,10 +328,10 @@ class _EditProfileButtonState extends State<EditProfileButton> {
   }
 }
 
-class PedindingButton extends StatelessWidget {
+class PendingButton extends StatelessWidget {
   final AmityCommunity community;
 
-  const PedindingButton({super.key, required this.community});
+  const PendingButton({super.key, required this.community});
 
   @override
   Widget build(BuildContext context) {
@@ -334,7 +341,7 @@ class PedindingButton extends StatelessWidget {
       onTap: () {
         // Navigate to Edit Profile Page or perform an action
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => PendingFeddScreen(
+            builder: (context) => PendingFeedScreen(
                   community: community,
                 )));
       },
@@ -365,7 +372,7 @@ class PedindingButton extends StatelessWidget {
                 ),
                 const SizedBox(width: 8.0), // Space between icon and text
                 Text(
-                  "المنشورات معلقة", //Pending posts
+                  "post.pending".tr(), //Pending posts
                   style: TextStyle(
                     color: Provider.of<AmityUIConfiguration>(context)
                         .appColors
@@ -382,7 +389,8 @@ class PedindingButton extends StatelessWidget {
                 Text(
                   !community
                           .hasPermission(AmityPermission.REVIEW_COMMUNITY_POST)
-                      ? "منشوراتك معلقة للمراجعة" //Your posts are pending for review
+                      ? "post.pending_content"
+                          .tr() //Your posts are pending for review
                       : "${Provider.of<CommuFeedVM>(context).reviewingPostCount}المشاركات تحتاج إلى موافقة ",
                   //posts need approval
                   style: TextStyle(
@@ -472,8 +480,12 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                           .base,
                     ),
                   ),
-                  Text("أم داعمة",
-                      //member //members
+                  Text(
+                      "community.member".plural(
+                        community.membersCount ?? 0,
+                        format: NumberFormat.compact(
+                            locale: context.locale.toString()),
+                      ),
                       style: const TextStyle(
                           fontSize: 13, color: Color(0xff898E9E)))
                 ],
@@ -496,8 +508,9 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                           .appColors
                           .base,
                     )),
-                const Text('مشاركات', //posts
-                    style: TextStyle(fontSize: 13, color: Color(0xff898E9E)))
+                Text("post.posts".tr(), //posts
+                    style:
+                        const TextStyle(fontSize: 13, color: Color(0xff898E9E)))
               ],
             ),
           ],
@@ -599,7 +612,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                         Text(
                             widget.community.displayName != null
                                 ? widget.community.displayName!
-                                : "مجتمع", //Community
+                                : "community.community".tr(), //Community
                             style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w800,
@@ -619,7 +632,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                         : Text(
                             widget.community.displayName != null
                                 ? widget.community.categories!.isEmpty
-                                    ? "لا يوجد تصنيف" //no category
+                                    ? "community.no_category".tr() //no category
                                     : widget.community.categories![0]?.name ??
                                         ""
                                 : "",
@@ -674,9 +687,10 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      child: PedindingButton(
-                                    community: widget.community,
-                                  )),
+                                    child: PendingButton(
+                                      community: widget.community,
+                                    ),
+                                  ),
                                 ],
                               )
               ],
@@ -690,10 +704,10 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
 
 class _Item extends StatelessWidget {
   const _Item({
-    Key? key,
+    super.key,
     required this.text,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final String text;
   final WidgetBuilder builder;
@@ -720,12 +734,12 @@ class _Item extends StatelessWidget {
 
 class _StickyHeaderList extends StatelessWidget {
   const _StickyHeaderList({
-    Key? key,
+    super.key,
     this.index,
     this.profileSectionWidget,
     required this.theme,
     required this.bheight,
-  }) : super(key: key);
+  });
 
   final int? index;
   final Widget? profileSectionWidget;
@@ -738,7 +752,7 @@ class _StickyHeaderList extends StatelessWidget {
       // header: Header(
       //   index: index,
       // ),
-      header: SizedBox(height: 20),
+      header: const SizedBox(height: 20),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, i) {
@@ -761,7 +775,7 @@ class _StickyHeaderList extends StatelessWidget {
                             return PostWidget(
                               isPostDetail: false,
                               showCommunity: false,
-                              showlatestComment: false,
+                              showLatestComment: false,
                               isFromFeed: true,
                               post: snapshot.data!,
                               theme: theme,
@@ -895,12 +909,12 @@ class _StickyHeaderList extends StatelessWidget {
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
-    Key? key,
+    super.key,
     required this.title,
     required this.slivers,
     this.reverse = false,
     required this.amityCommunity,
-  }) : super(key: key);
+  });
 
   final String title;
   final List<Widget> slivers;
@@ -920,7 +934,7 @@ class AppScaffold extends StatelessWidget {
                   await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(12),
                       ),
@@ -1011,11 +1025,11 @@ class AppScaffold extends StatelessWidget {
 
 class Header extends StatelessWidget {
   const Header({
-    Key? key,
+    super.key,
     this.index,
     this.title,
     this.color = Colors.lightBlue,
-  }) : super(key: key);
+  });
 
   final String? title;
   final int? index;
@@ -1058,9 +1072,9 @@ class Header extends StatelessWidget {
                         //   fontWeight: FontWeight.w600,
                         //   fontFamily: 'SF Pro Text',
                         // ),
-                        tabs: const [
-                          Tab(text: "الجدول الزمني"), //Timeline
-                          Tab(text: "المعرض"), //Gallery
+                        tabs: [
+                          Tab(text: "community.timeline".tr()), //Timeline
+                          Tab(text: "community.gallery".tr()), //Gallery
                         ],
                       ),
                     ),

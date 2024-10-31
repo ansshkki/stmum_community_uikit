@@ -54,7 +54,7 @@ class CategoryVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  final scrollcontroller = ScrollController();
+  final scrollController = ScrollController();
 
   void initCategoryList({List<String>? ids}) async {
     print("initCategoryList");
@@ -86,7 +86,7 @@ class CategoryVM extends ChangeNotifier {
     // fetch the data for the first page
     _communityCategoryController.fetchNextPage();
 
-    scrollcontroller.addListener(pagination);
+    scrollController.addListener(pagination);
   }
 
   bool checkIfSelected(String id) {
@@ -98,8 +98,8 @@ class CategoryVM extends ChangeNotifier {
     // print(scrollcontroller.position.pixels);
     // print(scrollcontroller.position.maxScrollExtent);
     // print(_communityCategoryController.hasMoreItems);
-    if ((scrollcontroller.position.pixels >=
-        (scrollcontroller.position.maxScrollExtent - 100))) {
+    if ((scrollController.position.pixels >=
+        (scrollController.position.maxScrollExtent - 100))) {
       print("load more");
       _communityCategoryController.fetchNextPage();
       notifyListeners();

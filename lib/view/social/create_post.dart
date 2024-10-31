@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,9 @@ import '../../viewmodel/configuration_viewmodel.dart';
 
 class CreatePostScreen extends StatefulWidget {
   final AmityPost? post;
+
   const CreatePostScreen({super.key, this.post});
+
   @override
   CreatePostScreenState createState() => CreatePostScreenState();
 }
@@ -21,7 +24,7 @@ class CreatePostScreenState extends State<CreatePostScreen> {
     final myAppbar = AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Text("إنشاء منشور", //create Post
+      title: Text("post.create.title".tr(), //create Post
           style: theme.textTheme.titleLarge!
               .copyWith(fontWeight: FontWeight.w500)),
       leading: IconButton(
@@ -53,10 +56,11 @@ class CreatePostScreenState extends State<CreatePostScreen> {
                   const SizedBox(width: 15),
                   SizedBox(
                     width: mediaQuery.size.width - 150,
-                    child: const TextField(
+                    child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'قل شيء عن هذه الصورة', //Say Something about this photo
+                        hintText: "post.create.content"
+                            .tr(), //Say Something about this photo
                       ),
                       // style: theme.textTheme.bodyText1.copyWith(color: Colors.grey),
                     ),
@@ -87,7 +91,7 @@ class CreatePostScreenState extends State<CreatePostScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    "إرسال المنشور", //Submit Post
+                    "post.create.submit".tr(), //Submit Post
                     style: theme.textTheme.labelLarge,
                   ),
                 ),
@@ -99,5 +103,3 @@ class CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 }
-
-class ApplicationColors {}

@@ -8,6 +8,7 @@ import 'package:amity_uikit_beta_service/view/social/imag_viewer.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class AmityPostWidget extends StatefulWidget {
   final bool haveChildrenPost;
   final bool shouldShowTextPost;
   final FeedType feedType;
+
   const AmityPostWidget(
     this.posts,
     this.isChildrenPost,
@@ -35,6 +37,7 @@ class AmityPostWidget extends StatefulWidget {
     this.haveChildrenPost = false,
     this.shouldShowTextPost = true,
   });
+
   @override
   AmityPostWidgetState createState() => AmityPostWidgetState();
 }
@@ -44,6 +47,7 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
   String? videoUrl;
   bool isLoading = true;
   Map<String, PreviewData> datas = {};
+
   @override
   void initState() {
     super.initState();
@@ -218,17 +222,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
     switch (files.length) {
       case 1:
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VideoPlayerScreen(
-                  files: files,
-                  initialIndex: 0,
-                ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VideoPlayerScreen(
+                files: files,
+                initialIndex: 0,
               ),
-            );
-          },
+            ),
+          ),
           child: AspectRatio(
             aspectRatio: 1,
             child: backgroundThumbnail(getURL(files[0].data!), 0,
@@ -291,17 +293,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoPlayerScreen(
-                          files: files,
-                          initialIndex: 0,
-                        ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPlayerScreen(
+                        files: files,
+                        initialIndex: 0,
                       ),
-                    );
-                  },
+                    ),
+                  ),
                   child: backgroundThumbnail(getURL(files[0].data!), 0,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
@@ -361,17 +361,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
             children: [
               Expanded(
                   child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VideoPlayerScreen(
-                        files: files,
-                        initialIndex: 0,
-                      ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoPlayerScreen(
+                      files: files,
+                      initialIndex: 0,
                     ),
-                  );
-                },
+                  ),
+                ),
                 child: backgroundThumbnail(getURL(files[0].data!), 0,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
@@ -422,17 +420,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen(
-                              files: files,
-                              initialIndex: 3,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                            files: files,
+                            initialIndex: 3,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(files[3].data!), 3,
@@ -454,17 +450,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
             children: [
               Expanded(
                   child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VideoPlayerScreen(
-                        files: files,
-                        initialIndex: 0,
-                      ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoPlayerScreen(
+                      files: files,
+                      initialIndex: 0,
                     ),
-                  );
-                },
+                  ),
+                ),
                 child: backgroundThumbnail(getURL(files[0].data!), 0,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
@@ -475,17 +469,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen(
-                              files: files,
-                              initialIndex: 1,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                            files: files,
+                            initialIndex: 1,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(files[1].data!), 1,
@@ -497,17 +489,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen(
-                              files: files,
-                              initialIndex: 2,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                            files: files,
+                            initialIndex: 2,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: backgroundThumbnail(getURL(files[2].data!), 2),
@@ -516,17 +506,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen(
-                              files: files,
-                              initialIndex: 3,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                            files: files,
+                            initialIndex: 3,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Stack(
@@ -602,17 +590,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
       return AspectRatio(
         aspectRatio: 1,
         child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ImageViewerScreen(
-                  files: files,
-                  initialIndex: 0,
-                ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ImageViewerScreen(
+                files: files,
+                initialIndex: 0,
               ),
-            );
-          },
+            ),
+          ),
           child: backgroundImage(getURL(files[0].data!), 0,
               borderRadius: BorderRadius.circular(8)),
         ),
@@ -625,17 +611,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
         child: Row(children: [
           Expanded(
               child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ImageViewerScreen(
-                    files: files,
-                    initialIndex: 0,
-                  ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ImageViewerScreen(
+                  files: files,
+                  initialIndex: 0,
                 ),
-              );
-            },
+              ),
+            ),
             child: backgroundImage(getURL(files[0].data!), 0,
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
@@ -643,17 +627,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
           )),
           Expanded(
               child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ImageViewerScreen(
-                    files: files,
-                    initialIndex: 1,
-                  ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ImageViewerScreen(
+                  files: files,
+                  initialIndex: 1,
                 ),
-              );
-            },
+              ),
+            ),
             child: backgroundImage(getURL(files[1].data!), 1,
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
@@ -670,17 +652,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
           children: [
             Expanded(
                 child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ImageViewerScreen(
-                      files: files,
-                      initialIndex: 0,
-                    ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ImageViewerScreen(
+                    files: files,
+                    initialIndex: 0,
                   ),
-                );
-              },
+                ),
+              ),
               child: backgroundImage(getURL(files[0].data!), 0,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
@@ -691,17 +671,15 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                 children: [
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImageViewerScreen(
-                            files: files,
-                            initialIndex: 1,
-                          ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImageViewerScreen(
+                          files: files,
+                          initialIndex: 1,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                     child: backgroundImage(getURL(files[1].data!), 1,
                         borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(8))),
@@ -1033,13 +1011,16 @@ Widget _listMediaGrid(List<AmityPost> files) {
                 );
               },
               contentPadding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 8, horizontal: 14), // Reduced padding
+                  vertical: 8, horizontal: 14),
+              // Reduced padding
               tileColor: Colors.white.withOpacity(0.0),
               leading: Container(
-                height: 100, // Reduced height to make it slimmer
-                width: 40, // Added width to align the image
-                alignment:
-                    AlignmentDirectional.centerStart, // Center alignment for the image
+                height: 100,
+                // Reduced height to make it slimmer
+                width: 40,
+                // Added width to align the image
+                alignment: AlignmentDirectional.centerStart,
+                // Center alignment for the image
                 child: Image(
                   image: AssetImage(fileImage,
                       package: 'amity_uikit_beta_service'),
@@ -1077,8 +1058,11 @@ class TextPost extends StatefulWidget {
   final AmityPost post;
   final FeedType feedType;
 
-  const TextPost({Key? key, required this.post, required this.feedType})
-      : super(key: key);
+  const TextPost({
+    super.key,
+    required this.post,
+    required this.feedType,
+  });
 
   @override
   _TextPostState createState() => _TextPostState();
@@ -1091,7 +1075,7 @@ class _TextPostState extends State<TextPost> {
     if (await canLaunchUrl(Uri.parse(link.url))) {
       await launchUrl(Uri.parse(link.url));
     } else {
-      throw 'Could not launch $link';
+      throw "util.launch_error".tr(args: ["$link"]);
     }
   }
 
@@ -1123,15 +1107,15 @@ class _TextPostState extends State<TextPost> {
     final bool shouldShorten = text.length > 180 && !isExpanded;
 
     TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-      color: Provider.of<AmityUIConfiguration>(context).appColors.base,
-      fontSize: 12,
-    );
+          color: Provider.of<AmityUIConfiguration>(context).appColors.base,
+          fontSize: 12,
+        );
     TextStyle? linkStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-      color: Provider.of<AmityUIConfiguration>(context, listen: false)
-          .appColors
-          .primary,
-      fontSize: 12,
-    );
+          color: Provider.of<AmityUIConfiguration>(context, listen: false)
+              .appColors
+              .primary,
+          fontSize: 12,
+        );
 
     return Column(
       children: [
@@ -1151,14 +1135,12 @@ class _TextPostState extends State<TextPost> {
                                       ..._buildTextSpans(text.substring(0, 180),
                                           textStyle, linkStyle),
                                       TextSpan(
-                                        text: " ... قراءة المزيد", //... Load more
+                                        text: "post.more_content"
+                                            .tr(), //... Load more
                                         style: linkStyle,
                                         recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            setState(() {
-                                              isExpanded = true;
-                                            });
-                                          },
+                                          ..onTap = () =>
+                                              setState(() => isExpanded = true),
                                       ),
                                     ],
                                   ),
@@ -1166,9 +1148,7 @@ class _TextPostState extends State<TextPost> {
                               : GestureDetector(
                                   onTap: () {
                                     if (text.length > 180) {
-                                      setState(() {
-                                        isExpanded = false;
-                                      });
+                                      setState(() => isExpanded = false);
                                     }
                                   },
                                   child: RichText(
@@ -1194,12 +1174,13 @@ class ImagePost extends StatelessWidget {
   final List<AmityPost> posts;
   final List<String> imageURLs;
   final bool isCornerRadiusEnabled;
-  const ImagePost(
-      {Key? key,
-      required this.posts,
-      required this.imageURLs,
-      required this.isCornerRadiusEnabled})
-      : super(key: key);
+
+  const ImagePost({
+    super.key,
+    required this.posts,
+    required this.imageURLs,
+    required this.isCornerRadiusEnabled,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1277,6 +1258,6 @@ Future<Uint8List?> downloadFile(String url) async {
 
 Future<void> _launchUrl(String url) async {
   if (!await launchUrl(Uri.parse(url))) {
-    throw Exception('Could not launch $url');
+    throw Exception("util.launch_error".tr(args: [url]));
   }
 }

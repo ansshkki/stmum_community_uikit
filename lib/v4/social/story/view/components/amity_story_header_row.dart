@@ -295,9 +295,7 @@ class AmityStoryHeaderRow extends StatelessWidget {
                           width: 5,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
+                          onTap: () => Navigator.pop(context),
                           child: SvgPicture.asset(
                             "assets/Icons/ic_close_white.svg",
                             package: 'amity_uikit_beta_service',

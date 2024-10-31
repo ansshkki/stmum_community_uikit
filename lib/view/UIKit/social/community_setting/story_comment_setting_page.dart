@@ -7,14 +7,16 @@ import 'package:provider/provider.dart'; // Import provider
 class StoryCommentSettingPage extends StatefulWidget {
   final AmityCommunity community;
 
-  const StoryCommentSettingPage({Key? key, required this.community}) : super(key: key);
+  const StoryCommentSettingPage({super.key, required this.community});
 
   @override
-  _StoryCommentSettingPageState createState() => _StoryCommentSettingPageState();
+  _StoryCommentSettingPageState createState() =>
+      _StoryCommentSettingPageState();
 }
 
 class _StoryCommentSettingPageState extends State<StoryCommentSettingPage> {
   bool isStoryCommentEnabled = false;
+
   @override
   void initState() {
     // TODO: implement initState

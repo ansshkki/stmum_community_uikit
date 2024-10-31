@@ -4,6 +4,7 @@ import 'package:amity_uikit_beta_service/view/social/community_feedV2.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +64,7 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
             },
           ),
           title: Text(
-            'مجتمعي', //My Community
+            "community.my_community".tr(), //My Community
             style: Provider.of<AmityUIConfiguration>(context)
                 .titleTextStyle
                 .copyWith(
@@ -104,7 +105,7 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
                       Icons.search,
                       color: Colors.grey,
                     ),
-                    hintText: 'بحث', //Search
+                    hintText: "search.search".tr(), //Search
                     filled: true,
                     contentPadding: const EdgeInsetsDirectional.symmetric(vertical: 0),
                     fillColor: Colors.grey[3],
@@ -184,7 +185,7 @@ class CommunityWidget extends StatelessWidget {
                     ),
                   const SizedBox(width: 4.0),
                   Text(
-                    communityStream.displayName ?? "مجتمع", //Community
+                    communityStream.displayName ?? "community.community".tr(), //Community
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
                       color: Provider.of<AmityUIConfiguration>(context)
@@ -218,12 +219,12 @@ class CommunityWidget extends StatelessWidget {
 }
 
 class CommunityIconList extends StatelessWidget {
-  final List<AmityCommunity> amityCommunites;
+  final List<AmityCommunity> amityCommunities;
   final bool canCreateCommunity;
 
   const CommunityIconList({
     super.key,
-    required this.amityCommunites,
+    required this.amityCommunities,
     this.canCreateCommunity = true,
   });
 
@@ -238,7 +239,7 @@ class CommunityIconList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'مجموعاتي', //My Community
+                "community.my_community".tr(), //My Community
                 style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.bold,
@@ -264,27 +265,27 @@ class CommunityIconList extends StatelessWidget {
                       .appColors
                       .primary,
                 ),
-                icon: Icon(Icons.chevron_right),
+                icon: const Icon(Icons.chevron_right),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           // padding: const EdgeInsetsDirectional.only(bottom: 0),
           height: 90.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: amityCommunites.length,
+            itemCount: amityCommunities.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: EdgeInsetsDirectional.only(start: index != 0 ? 0 : 16),
                 child: CommunityIconWidget(
-                    amityCommunity: amityCommunites[index]),
+                    amityCommunity: amityCommunities[index]),
               );
             },
           ),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
       ],
     );
   }
@@ -308,7 +309,7 @@ class CommunityIconWidget extends StatelessWidget {
                 borderRadius:
                 BorderRadius.circular(12), // No border radius
               ),
-              margin: EdgeInsets.symmetric(horizontal: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               child: Stack(
                 children: [
                   if (community.avatarImage?.fileUrl != null)
@@ -334,12 +335,12 @@ class CommunityIconWidget extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     child: Text(
                       community.displayName ?? "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.white,
                         fontWeight: FontWeight.w500,

@@ -301,7 +301,7 @@ class CommentScreenState extends State<CommentScreen> {
                                                   AmityPostTargetType.COMMUNITY
                                               ? true
                                               : false,
-                                          showlatestComment: false,
+                                          showLatestComment: false,
                                           post: snapshot.data!,
                                           theme: theme,
                                           postIndex: 0,
@@ -426,7 +426,7 @@ class CommentTextField extends StatelessWidget {
           horizontalTitleGap: 0,
           contentPadding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
           leading: getAvatarImage(
-              Provider.of<AmityVM>(context).currentamityUser?.avatarUrl),
+              Provider.of<AmityVM>(context).currentAmityUser?.avatarUrl),
           title: ConstrainedBox(
             constraints: const BoxConstraints(
               maxHeight: 200.0, // Maximum height for the text field
@@ -1021,7 +1021,7 @@ class _CommentComponentState extends State<CommentComponent> {
                                                   color: Color(0xff898E9E),
                                                 ),
                                                 onTap: () {
-                                                  AmityGeneralCompomemt
+                                                  AmityGeneralComponent
                                                       .showOptionsBottomSheet(
                                                     context,
                                                     [
@@ -1586,7 +1586,7 @@ class ReplyCommentComponent extends StatelessWidget {
                                   color: Color(0xff898E9E),
                                 ),
                                 onTap: () {
-                                  AmityGeneralCompomemt.showOptionsBottomSheet(
+                                  AmityGeneralComponent.showOptionsBottomSheet(
                                     context,
                                     [
                                       comment.user?.userId! ==

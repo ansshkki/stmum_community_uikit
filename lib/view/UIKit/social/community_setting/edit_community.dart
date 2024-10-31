@@ -5,6 +5,7 @@ import 'package:amity_uikit_beta_service/view/UIKit/social/category_list.dart';
 import 'package:amity_uikit_beta_service/viewmodel/category_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // For using File class
 
@@ -12,7 +13,8 @@ enum CommunityType { public, private }
 
 class AmityEditCommunityScreen extends StatefulWidget {
   final AmityCommunity community;
-  const AmityEditCommunityScreen(this.community, {Key? key}) : super(key: key);
+
+  const AmityEditCommunityScreen(this.community, {super.key});
 
   @override
   AmityEditCommunityScreenState createState() =>
@@ -25,6 +27,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   bool _isPublic = true;
+
   @override
   void initState() {
     super.initState();
@@ -36,9 +39,10 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
     var category = widget.community.categories!;
     var categories = widget.community.categories;
     if (categories != null && categories.isNotEmpty) {
-      _categoryController.text = categories[0]!.name ?? "لا يوجد اسم"; //No Name
+      _categoryController.text =
+          categories[0]!.name ?? "external.empty_name".tr(); //No Name
     } else {
-      _categoryController.text = "لا يوجد تصنيف"; //No Category
+      _categoryController.text = "community.no_category".tr(); //No Category
     }
     communityType = widget.community.isPublic!
         ? CommunityType.public
@@ -57,7 +61,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                 .baseBackground,
             appBar: AppBar(
               title: Text(
-                "تعديل المجتمع", //Edit Community
+                "community.edit".tr(), //Edit Community
                 style: Provider.of<AmityUIConfiguration>(context)
                     .titleTextStyle
                     .copyWith(
@@ -96,7 +100,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "حفظ", //Save
+                    "external.save".tr(), //Save
                     style: TextStyle(
                       color: Provider.of<AmityUIConfiguration>(context)
                           .appColors
@@ -112,10 +116,9 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
               child: ListView(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Provider.of<CommunityVM>(context, listen: false)
-                          .selectFile();
-                    },
+                    onTap: () =>
+                        Provider.of<CommunityVM>(context, listen: false)
+                            .selectFile(),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -147,20 +150,20 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                             borderRadius: BorderRadius.circular(
                                 5.0), // Adding rounded corners
                           ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize
-                                .min, // Making the row only as wide as the children need
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            // Making the row only as wide as the children need
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.camera_alt,
                                 color: Colors.white,
-                              ), // Adding a camera icon
-                              SizedBox(
-                                  width:
-                                      8.0), // Adding some space between the icon and the text
+                              ),
+                              // Adding a camera icon
+                              const SizedBox(width: 8.0),
+                              // Adding some space between the icon and the text
                               Text(
-                                'تحميل الصور', //Upload image
-                                style: TextStyle(
+                                "media.upload_image".tr(), //Upload image
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -171,21 +174,24 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
+                    padding:
+                        const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
                     child: Column(
                       children: [
                         TextFieldWithCounter(
                           controller: _displayNameController,
-                          title: 'سم المجتمع', //Community name
-                          hintText: 'اسم مجتمعك', //Name your community
+                          title: "community.community_name".tr(), //Community name
+                          hintText: "community.hint_name".tr() , //Name your community
                           maxCharacters: 30,
                         ),
                         const SizedBox(height: 16.0),
                         TextFieldWithCounter(
                           isRequired: false,
                           controller: _descriptionController,
-                          title: 'عن المجتمع', //About
-                          hintText: 'اضف الوصف', //Enter description
+                          title: "community.about".tr(),
+                          //About
+                          hintText: "community.add_description".tr(),
+                          //Enter description
                           maxCharacters: 180,
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
@@ -193,8 +199,10 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                         const SizedBox(height: 16.0),
                         TextFieldWithCounter(
                           controller: _categoryController,
-                          title: 'التصنيف', //Category
-                          hintText: 'اختر التصنيف', //Select category
+                          title: "community_category".tr(),
+                          //Category
+                          hintText: "community.select_category".tr(),
+                          //Select category
                           showCount: false,
                           maxCharacters: 30,
                           onTap: () async {
@@ -225,7 +233,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                                 child: const Icon(Icons.public),
                               ),
                               title: Text(
-                                'عام', //Public
+                                "community.global".tr(), //Public
                                 style: TextStyle(
                                     color: Provider.of<AmityUIConfiguration>(
                                             context)
@@ -233,7 +241,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                                         .base),
                               ),
                               subtitle: Text(
-                                'يمكن لأي شخص الانضمام إلى هذا المجتمع وزيارته والبحث فيه', //Anyone can join, view and search this community
+                                "community.global_content".tr(),//Anyone can join, view and search this community
                                 style: TextStyle(
                                     color: Provider.of<AmityUIConfiguration>(
                                             context)
@@ -268,7 +276,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                                 child: const Icon(Icons.lock),
                               ),
                               title: Text(
-                                'خاص', //Private
+                                "community.private".tr(), //Private
                                 style: TextStyle(
                                     color: Provider.of<AmityUIConfiguration>(
                                             context)
@@ -276,7 +284,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                                         .base),
                               ),
                               subtitle: Text(
-                                'يمكن فقط للأعضاء المدعوين من قبل المشرفين الانضمام إلى هذا المجتمع وزيارته والبحث فيه', //Only members invited by the moderators can join, view and search this community
+                                "community.private_content".tr(),//Only members invited by the moderators can join, view and search this community
                                 style: TextStyle(
                                     color: Provider.of<AmityUIConfiguration>(
                                             context)

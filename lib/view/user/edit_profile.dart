@@ -4,6 +4,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/components/custom_textfield.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     ).amityImage?.fileUrl}");
     log("AmityVM:${Provider.of<AmityVM>(
       context,
-    ).currentamityUser?.avatarUrl}");
+    ).currentAmityUser?.avatarUrl}");
     var avatarWidget = const CircleAvatar();
     switch (imageState) {
       case ImageState.loading:
@@ -69,7 +70,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   : getImageProvider(
                       "${Provider.of<AmityVM>(
                         context,
-                      ).currentamityUser?.avatarUrl}?size=medium",
+                      ).currentAmityUser?.avatarUrl}?size=medium",
                     ),
         );
         break;
@@ -81,14 +82,14 @@ class ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     Provider.of<ImagePickerVM>(context, listen: false).init(
         Provider.of<AmityVM>(context, listen: false)
-            .currentamityUser
+            .currentAmityUser
             ?.avatarUrl);
     _displayNameController.text = Provider.of<AmityVM>(context, listen: false)
-            .currentamityUser!
+            .currentAmityUser!
             .displayName ??
         "";
     _descriptionController.text = Provider.of<AmityVM>(context, listen: false)
-            .currentamityUser!
+            .currentAmityUser!
             .description ??
         "";
     super.initState();
@@ -100,7 +101,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     final mediaQuery = MediaQuery.of(context);
     final myAppBar = AppBar(
       title: Text(
-        "تعديل الملف الشخصي", //Edit Profile
+        "user.edit".tr(), //Edit Profile
         style: Provider.of<AmityUIConfiguration>(context)
             .titleTextStyle
             .copyWith(
@@ -148,7 +149,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         description: _descriptionController.text,
                         avatarFileId:
                             Provider.of<AmityVM>(context, listen: false)
-                                .currentamityUser!
+                                .currentAmityUser!
                                 .avatarFileId);
               }
               // ignore: use_build_context_synchronously
@@ -157,13 +158,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                   .then((value) {
                 Navigator.of(context).pop();
                 AmityDialog().showAlertErrorDialog(
-                    title: "تم بنجاح!", //Success
-                    message: "تم تعديل الملف الشخصي بنجاح"); //Profile updated successfully!
+                  title: "external.done".tr(), //Success
+                  message: "external.edit_done".tr(),
+                ); //Profile updated successfully!
               });
             }
           },
           child: Text(
-            "حفظ", //Save
+            "external.save".tr(), //Save
             style: theme.textTheme.labelLarge!.copyWith(
                 color: Provider.of<ImagePickerVM>(
                           context,
@@ -194,7 +196,8 @@ class ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsetsDirectional.only(top: 20, bottom: 20),
+                    margin:
+                        const EdgeInsetsDirectional.only(top: 20, bottom: 20),
                     width: double.infinity,
                     alignment: Alignment.center,
                     child: Stack(
@@ -228,10 +231,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                               //   ),
                               // ],
                             ),
-                            child: const Icon(
-                              Icons.camera_alt_outlined,
-                              size: 18,
-                            ),
+                            child:
+                                const Icon(Icons.camera_alt_outlined, size: 18),
                           ),
                         ),
                       ],
@@ -275,16 +276,16 @@ class ProfileScreenState extends State<ProfileScreen> {
                         // ),
                         TextFieldWithCounter(
                           controller: _displayNameController,
-                          title: 'عرض الاسم', //Display name
-                          hintText: 'عرض الاسم', //Display name
+                          title: "user.name".tr(), //Display name
+                          hintText: "user.name".tr(), //Display name
                           maxCharacters: 50,
                         ),
 
                         TextFieldWithCounter(
                           isRequired: false,
                           controller: _descriptionController,
-                          title: 'عني', //About
-                          hintText: 'اضف الوصف', //Enter description
+                          title: "user.bio".tr(),
+                          hintText: "user.bio_hint".tr(),
                           maxCharacters: 180,
                           keyboardType: TextInputType.multiline,
                           maxLines: null,

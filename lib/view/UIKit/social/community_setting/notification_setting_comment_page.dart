@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +9,7 @@ enum NotificationSetting { everyone, onlyModerator, off }
 class CommentsNotificationSettingPage extends StatefulWidget {
   final AmityCommunity community;
 
-  const CommentsNotificationSettingPage({Key? key, required this.community})
-      : super(key: key);
+  const CommentsNotificationSettingPage({super.key, required this.community});
 
   @override
   _CommentsNotificationSettingPageState createState() =>
@@ -29,7 +29,7 @@ class _CommentsNotificationSettingPageState
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
         title: Text(
-          'التعليقات', //Comments
+          "comment.comments".tr(), //Comments
           style: TextStyle(
             color: Provider.of<AmityUIConfiguration>(context).appColors.base,
             fontSize: 18,
@@ -43,21 +43,17 @@ class _CommentsNotificationSettingPageState
       body: ListView(
         children: [
           // Section 1: React Comments
-          _buildSectionHeader('التفاعل مع المنشورات'), //React Comments
-          _buildDescriptionTile(
-              'تلقي الإشعارات عندما يقوم شخص ما بالإعجاب بتعليقك في هذا المجتمع'), //Receive notifications when someone likes your comment in this community
+          _buildSectionHeader("reaction.react_with_post".tr()),
+          _buildDescriptionTile("notification.reactions".tr()),
           _buildRadioTile<NotificationSetting>(
-            title: 'أي شخص', //Everyone
+            title: "community.anyone".tr(), //Everyone
             value: NotificationSetting.everyone,
             groupValue: _reactCommentsSetting,
-            onChanged: (value) {
-              setState(() {
-                _reactCommentsSetting = value!;
-              });
-            },
+            onChanged: (value) =>
+                setState(() => _reactCommentsSetting = value!),
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'فقط المشرفين', //Only Moderator
+            title: "community.only_moderator".tr(), //Only Moderator
             value: NotificationSetting.onlyModerator,
             groupValue: _reactCommentsSetting,
             onChanged: (value) {
@@ -67,23 +63,20 @@ class _CommentsNotificationSettingPageState
             },
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'مغلق', //Off
+            title: "external.off".tr(), //Off
             value: NotificationSetting.off,
             groupValue: _reactCommentsSetting,
             onChanged: (value) {
-              setState(() {
-                _reactCommentsSetting = value!;
-              });
+              setState(() => _reactCommentsSetting = value!);
             },
           ),
           const Divider(),
 
           // Section 2: New Comments
-          _buildSectionHeader('تعليقات جدد'), //New Comments
-          _buildDescriptionTile(
-              'تلقي اشعارات عندما يعلق احدهم على منشوراتك في هذا المجتمع'), //Receive notifications when someone comments on your posts in this community
+          _buildSectionHeader("comment.new_comments".tr()),
+          _buildDescriptionTile("notification.comments".tr()),
           _buildRadioTile<NotificationSetting>(
-            title: 'أي شخص', //Everyone
+            title: "community.anyone".tr(), //Everyone
             value: NotificationSetting.everyone,
             groupValue: _newCommentsSetting,
             onChanged: (value) {
@@ -93,7 +86,7 @@ class _CommentsNotificationSettingPageState
             },
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'المشرفين فقط', //Only Moderator
+            title: "community.only_moderator".tr(), //Only Moderator
             value: NotificationSetting.onlyModerator,
             groupValue: _newCommentsSetting,
             onChanged: (value) {
@@ -103,23 +96,18 @@ class _CommentsNotificationSettingPageState
             },
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'مغلق', //Off
+            title: "external.off".tr(), //Off
             value: NotificationSetting.off,
             groupValue: _newCommentsSetting,
-            onChanged: (value) {
-              setState(() {
-                _newCommentsSetting = value!;
-              });
-            },
+            onChanged: (value) => setState(() => _newCommentsSetting = value!),
           ),
           const Divider(),
 
           // Section 3: Replies
-          _buildSectionHeader('الردود'), //Replies
-          _buildDescriptionTile(
-              'تلقي اشعارات عندما يرد احدهم على تعليقاتك في هذا المجتمع'), //Receive notifications when someone replies to your comments in this community
+          _buildSectionHeader("comment.reply_s".tr()),
+          _buildDescriptionTile("notification.reply_s".tr()),
           _buildRadioTile<NotificationSetting>(
-            title: 'أي شخص', //Everyone
+            title: "community_anyone".tr(), //Everyone
             value: NotificationSetting.everyone,
             groupValue: _repliesSetting,
             onChanged: (value) {
@@ -129,7 +117,7 @@ class _CommentsNotificationSettingPageState
             },
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'المشرفين فقط', //Only Moderator
+            title: "community.only_moderator".tr(), //Only Moderator
             value: NotificationSetting.onlyModerator,
             groupValue: _repliesSetting,
             onChanged: (value) {
@@ -139,7 +127,7 @@ class _CommentsNotificationSettingPageState
             },
           ),
           _buildRadioTile<NotificationSetting>(
-            title: 'مغلق', //Off
+            title: "external.off".tr(), //Off
             value: NotificationSetting.off,
             groupValue: _repliesSetting,
             onChanged: (value) {
@@ -169,7 +157,8 @@ class _CommentsNotificationSettingPageState
 
   Widget _buildDescriptionTile(String text) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(start: 16.0, bottom: 16, end: 16),
+      padding:
+          const EdgeInsetsDirectional.only(start: 16.0, bottom: 16, end: 16),
       child: Text(
         text,
         style: const TextStyle(

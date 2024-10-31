@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -276,7 +277,7 @@ class CreatePostVMV2 with ChangeNotifier {
         if (pickedImages.isNotEmpty) {
           if (pickedImages.length + files.length > 10) {
             AmityDialog().showAlertErrorDialog(
-                title: "Error",
+                title: "repo.unknown_error".tr(),
                 message: "You can only select a maximum of 10 images");
           } else {
             selectFiles(pickedImages, MyFileType.image);
@@ -430,7 +431,7 @@ class CreatePostVMV2 with ChangeNotifier {
               callback: callback);
         }).onError((error, stackTrace) {
           AmityDialog()
-              .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+              .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
         });
       }
     }

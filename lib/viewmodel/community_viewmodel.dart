@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -47,10 +48,11 @@ class CommunityVM extends ChangeNotifier {
       _amityTrendingCommunities = trendingCommunites;
       notifyListeners();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
+
 //ป่าวๆ
 
   Future<AmityCommunity?> createCommunity({
@@ -113,8 +115,9 @@ class CommunityVM extends ChangeNotifier {
           .update()
           .then((value) => notifyListeners())
           .onError((error, stackTrace) async {
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       await AmitySocialClient.newCommunityRepository()
@@ -126,8 +129,9 @@ class CommunityVM extends ChangeNotifier {
           .update()
           .then((value) => notifyListeners())
           .onError((error, stackTrace) async {
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        await AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
   }
@@ -145,8 +149,8 @@ class CommunityVM extends ChangeNotifier {
       _amityRecommendCommunities = recommendCommunites;
       notifyListeners();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -163,8 +167,8 @@ class CommunityVM extends ChangeNotifier {
       notifyListeners();
       callback(true); // Calling the callback with success status
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -181,8 +185,8 @@ class CommunityVM extends ChangeNotifier {
       notifyListeners();
       callback(true); // Calling the callback with success status
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       callback(false); // Calling the callback with failure status
     });
   }
@@ -260,7 +264,9 @@ class CommunityVM extends ChangeNotifier {
           error: (error) async {
             final AmityException amityException = error;
             //handle error
-            await AmityDialog().showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+            await AmityDialog().showAlertErrorDialog(
+                title: "repo.unknown_error".tr(),
+                message: error.toString()); //Error!
           },
           cancel: () {
             //upload is cancelled
@@ -270,11 +276,12 @@ class CommunityVM extends ChangeNotifier {
     }
   }
 
-  XFile? _seletedFIle;
+  XFile? _selectedFIle;
+
   Future selectFile() async {
-    _seletedFIle = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (_seletedFIle != null) {
-      pickedFile = File(_seletedFIle!.path);
+    _selectedFIle = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (_selectedFIle != null) {
+      pickedFile = File(_selectedFIle!.path);
       notifyListeners();
 
       //log(xFile.path);
@@ -305,12 +312,14 @@ class CommunityVM extends ChangeNotifier {
             error: (error) async {
               final AmityException amityException = error;
               //handle error
-              await AmityDialog().showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+              await AmityDialog().showAlertErrorDialog(
+                  title: "خطأ!", message: error.toString()); //Error!
               completer.completeError(error);
             },
             cancel: () {
               //upload is cancelled
-              completer.completeError(Exception('فشل في التحميل')); //Upload cancelled
+              completer.completeError(
+                  Exception("util.load_error".tr())); //Upload cancelled
             },
           );
         },
@@ -336,8 +345,8 @@ class CommunityVM extends ChangeNotifier {
       callback(true); // Success status
     }).onError((error, stackTrace) async {
       //handle error
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       callback(false); // Failure status
     });
   }
@@ -355,12 +364,12 @@ class CommunityVM extends ChangeNotifier {
             : AmityCommunityPostSettings.ANYONE_CAN_POST)
         .update()
         .then((value) {
-      //handle result
+//handle result
       log("success");
     }).onError((error, stackTrace) async {
-      //handle error
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+//handle error
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -372,17 +381,17 @@ class CommunityVM extends ChangeNotifier {
     AmitySocialClient.newCommunityRepository()
         .updateCommunity(communityId)
         .isPublic(ispublic)
-        .storySettings( isEnabled
+        .storySettings(isEnabled
             ? AmityCommunityStorySettings(allowComment: true)
             : AmityCommunityStorySettings(allowComment: false))
         .update()
         .then((value) {
-      //handle result
+//handle result
       log("success");
     }).onError((error, stackTrace) async {
-      //handle error
-      await AmityDialog()
-          .showAlertErrorDialog(title: "Error!", message: error.toString());
+//handle error
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString());
     });
   }
 
@@ -392,9 +401,9 @@ class CommunityVM extends ChangeNotifier {
         .addMembers(userIds)
         .then((members) {})
         .onError((error, stackTrace) async {
-      //handle error
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+//handle error
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 }

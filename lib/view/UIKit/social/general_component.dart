@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class AmityGeneralCompomemt {
+class AmityGeneralComponent {
   static void showOptionsBottomSheet(
       BuildContext context, List<Widget> listTiles) {
     showModalBottomSheet(
@@ -29,13 +30,12 @@ class TimeAgoWidget extends StatelessWidget {
   final DateTime createdAt; // Assuming createdAt is a DateTime object
   final Color? textColor;
 
-  const TimeAgoWidget({Key? key, required this.createdAt, this.textColor})
-      : super(key: key);
+  const TimeAgoWidget({super.key, required this.createdAt, this.textColor});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      _formatDate(createdAt),
+      _formatDate(context, createdAt),
       style: TextStyle(
         fontSize: 12,
         color: textColor ?? Colors.grey,
@@ -43,7 +43,7 @@ class TimeAgoWidget extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     DateTime localDate = date.toLocal();
     Duration difference = DateTime.now().difference(localDate);
 
@@ -53,19 +53,37 @@ class TimeAgoWidget extends StatelessWidget {
     int years = (difference.inDays / 365).floor(); // Approximation
 
     if (years > 0) {
-      return '$years ${years > 1 ? 'من سنوات' : 'سنة'}'; //year
+      return "time.year".plural(
+        years,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      ); //year
     } else if (months > 0) {
-      return '$months ${months > 1 ? 'من الشهور' : 'شهر'}'; // month
+      return "time.month".plural(
+        months,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      );
     } else if (weeks > 0) {
-      return '$weeks ${weeks > 1 ? 'من الأسابيع' : 'اسبوع'}'; //week
+      return "time.week".plural(
+        weeks,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      );
     } else if (difference.inDays > 0) {
-      return '${difference.inDays} ${difference.inDays > 1 ? 'من الأيام' : 'يوم'}'; //day
+      return "time.day".plural(
+        difference.inDays,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      );
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} ${difference.inHours > 1 ? 'من الساعات' : 'ساعة'}'; //hour
+      return "time.hour".plural(
+        difference.inHours,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      );
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} ${difference.inMinutes > 1 ? 'من الدقائق' : 'دقيقة'} '; //minute
+      return "time.minute".plural(
+        difference.inMinutes,
+        format: NumberFormat.compact(locale: context.locale.toString()),
+      );
     } else {
-      return 'الآن'; //Just now
+      return "time.now".tr(); //Just now
     }
   }
 }
