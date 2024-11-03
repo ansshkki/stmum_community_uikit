@@ -136,7 +136,7 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
                         ),
                         Consumer<EditPostVM>(
                           builder: (context, vm, _) => PostMedia(
-                            files: vm.editPostMedie,
+                            files: vm.editPostMedia,
                             isEditPost: true,
                           ),
                         )

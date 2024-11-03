@@ -53,7 +53,7 @@ class _CommunityPageState extends State<CommunityPage> {
 
     myCommunityList.initMyCommunityFeed();
 
-    globalFeedProvider.initAmityGlobalfeed();
+    globalFeedProvider.initAmityGlobalFeed();
   }
 
   @override
@@ -92,7 +92,7 @@ class _CommunityPageState extends State<CommunityPage> {
               );
               if ((posted ?? false) && context.mounted) {
                 Provider.of<FeedVM>(context, listen: false)
-                    .initAmityGlobalfeed();
+                    .initAmityGlobalFeed();
               }
             },
             backgroundColor:
@@ -258,7 +258,7 @@ class ExplorePage extends StatelessWidget {
         }
 
         return ListView.builder(
-          controller: vm.scrollcontroller,
+          controller: vm.scrollController,
           padding: EdgeInsets.only(
             top: 0,
             bottom: MediaQuery.paddingOf(context).bottom + 24,
@@ -314,7 +314,7 @@ class RecommendationSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsetsDirectional.only(start: 16),
                 child: Text(
-                  'مجموعات مُختارة لكِ', //Recommended for you
+                  "community.recommended_for_you".tr(), //Recommended for you
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -440,7 +440,7 @@ class TrendingSection extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 16, top: 20),
               child: Text(
-                "اكتشفي مجموعات تناسبكِ", //Today\'s Trending
+                "community.explore".tr(), //Today\'s Trending
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -909,7 +909,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
       explorePageVM.queryCommunityCategories(
           sortOption: AmityCommunityCategorySortOption.NAME,
-          enablenotifylistener: true);
+          enableNotifyListener: true);
     });
     super.initState();
   }
@@ -953,7 +953,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                         );
                         explorePageVM.queryCommunityCategories(
                           sortOption: AmityCommunityCategorySortOption.NAME,
-                          enablenotifylistener: true,
+                          enableNotifyListener: true,
                         );
                       },
                       child: Text("external.retry".tr()),
@@ -964,7 +964,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
             default:
               return ListView.builder(
                 itemCount: vm.amityCategories.length,
-                controller: vm.categoryScrollcontroller,
+                controller: vm.categoryScrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final category = vm.amityCategories[index];
@@ -1067,7 +1067,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                 child: ListView.builder(
                   padding: EdgeInsetsDirectional.zero,
                   itemCount: communities.length,
-                  controller: vm.communityScrollcontroller,
+                  controller: vm.communityScrollController,
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final community = communities[index];

@@ -461,8 +461,8 @@ class CreatePostVM extends ChangeNotifier {
         } else {
           var viewModel = Provider.of<FeedVM>(context, listen: false);
           viewModel.addPostToFeed(post);
-          if (viewModel.scrollcontroller.hasClients) {
-            viewModel.scrollcontroller.jumpTo(0);
+          if (viewModel.scrollController.hasClients) {
+            viewModel.scrollController.jumpTo(0);
           }
         }
         notifyListeners();
@@ -531,8 +531,8 @@ class CreatePostVM extends ChangeNotifier {
         } else {
           var viewModel = Provider.of<FeedVM>(context, listen: false);
           viewModel.addPostToFeed(post);
-          if (viewModel.scrollcontroller.hasClients) {
-            viewModel.scrollcontroller.jumpTo(0);
+          if (viewModel.scrollController.hasClients) {
+            viewModel.scrollController.jumpTo(0);
           }
         }
       });
@@ -602,8 +602,8 @@ class CreatePostVM extends ChangeNotifier {
         } else {
           var viewModel = Provider.of<FeedVM>(context, listen: false);
           viewModel.addPostToFeed(post);
-          if (viewModel.scrollcontroller.hasClients) {
-            viewModel.scrollcontroller.jumpTo(0);
+          if (viewModel.scrollController.hasClients) {
+            viewModel.scrollController.jumpTo(0);
           }
         }
       }).onError((error, stackTrace) async {
@@ -672,8 +672,8 @@ class CreatePostVM extends ChangeNotifier {
           } else {
             var viewModel = Provider.of<FeedVM>(context, listen: false);
             viewModel.addPostToFeed(post);
-            if (viewModel.scrollcontroller.hasClients) {
-              viewModel.scrollcontroller.jumpTo(0);
+            if (viewModel.scrollController.hasClients) {
+              viewModel.scrollController.jumpTo(0);
             }
           }
         }).onError((error, stackTrace) async {

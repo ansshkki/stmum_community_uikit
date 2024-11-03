@@ -42,7 +42,7 @@ class CommuFeedVM extends ChangeNotifier {
 
   late PagingController<AmityPost> _controllerPendingPost;
 
-  final pendingScrollcontroller = ScrollController();
+  final pendingScrollController = ScrollController();
 
   AmityCommunity? community;
 
@@ -184,7 +184,7 @@ class CommuFeedVM extends ChangeNotifier {
       _controllerPendingPost.fetchNextPage();
     });
 
-    pendingScrollcontroller.addListener(loadnextpage);
+    pendingScrollController.addListener(loadnextpage);
 
     //inititate the PagingController
     await AmitySocialClient.newPostRepository()
@@ -329,8 +329,7 @@ class CommuFeedVM extends ChangeNotifier {
         notifyListeners();
         callback(true, "delete.deleted.post".tr()); //Post deleted successfully.
       } else {
-        callback(false,
-            "لم نستطع ايجاد المنشور في القائمة"); //Post not found in the list.
+        callback(false, "util.not_found".tr()); //Post not found in the list.
       }
     }).onError((error, stackTrace) async {
       String errorMessage = error.toString();

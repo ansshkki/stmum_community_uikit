@@ -25,6 +25,7 @@ import 'package:amity_uikit_beta_service/viewmodel/notification_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/pending_request_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/reply_viewmodel.dart';
 import 'package:camera/camera.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -177,7 +178,7 @@ class AmityUIKit {
       log("registerNotification succesfully ✅");
       callback(true, null);
     }).onError((error, stackTrace) {
-      callback(false, "Initialize push notification fail...❌");
+      callback(false, "util.notification".tr());
     });
   }
 

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class MyCommunityVM with ChangeNotifier {
   // Existing members...
 
-  final scrollcontroller = ScrollController();
+  final scrollController = ScrollController();
   bool loadingNextPage = false;
   bool isEmpty = false;
 
@@ -49,8 +49,8 @@ class MyCommunityVM with ChangeNotifier {
       //     message: _communityController.error.toString());
     });
     communityLiveCollection.loadNext();
-    scrollcontroller.removeListener(() {});
-    scrollcontroller.addListener(loadNextPage);
+    scrollController.removeListener(() {});
+    scrollController.addListener(loadNextPage);
   }
 
   Future<void> initMyCommunityFeed() async {
@@ -76,12 +76,12 @@ class MyCommunityVM with ChangeNotifier {
   }
 
   void loadNextPage() async {
-    if ((scrollcontroller.position.pixels >
-        scrollcontroller.position.maxScrollExtent - 800)) {
+    if ((scrollController.position.pixels >
+        scrollController.position.maxScrollExtent - 800)) {
       print("hasMore: ${communityLiveCollection.hasNextPage()}");
     }
-    if ((scrollcontroller.position.pixels >
-            scrollcontroller.position.maxScrollExtent - 800) &&
+    if ((scrollController.position.pixels >
+            scrollController.position.maxScrollExtent - 800) &&
         communityLiveCollection.hasNextPage() &&
         !loadingNextPage) {
       loadingNextPage = true;

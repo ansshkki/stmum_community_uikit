@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/alert_dialog.dart';
 
 class UserFeedVM extends ChangeNotifier {
   MediaType _selectedMediaType = MediaType.photos;
+
   void doSelectMedieType(MediaType mediaType) {
     _selectedMediaType = mediaType;
     log(_selectedMediaType.toString());
@@ -27,6 +29,7 @@ class UserFeedVM extends ChangeNotifier {
   final scrollcontroller = ScrollController();
   bool loading = false;
   TabController? userFeedTabController;
+
   void changeTab() {
     notifyListeners();
   }
@@ -70,8 +73,8 @@ class UserFeedVM extends ChangeNotifier {
       amityMyFollowInfo = value;
       notifyListeners();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -234,7 +237,10 @@ class UserFeedVM extends ChangeNotifier {
     } else if (amityFollowStatus == AmityFollowStatus.BLOCKED) {
       //do nothing
     } else {
-      AmityDialog().showAlertErrorDialog(title: "خطأ!", message: "followButtonAction: cant handle amityFollowStatus"); //Error!
+      AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: "repo.unknown_error".tr(),
+      ); //Error!
     }
   }
 
@@ -252,13 +258,13 @@ class UserFeedVM extends ChangeNotifier {
       notifyListeners();
       print("notifyListeners");
       listenForUserFeed(amityUser!.userId!);
-      callback(true, "Post deleted successfully.");
+      callback(true, "delete.deleted.post".tr());
 
-      callback(false, "Post not found in the list.");
+      callback(false, "util.not_found".tr());
     }).onError((error, stackTrace) async {
       String errorMessage = error.toString();
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       callback(false, errorMessage);
     });
   }
@@ -275,8 +281,8 @@ class UserFeedVM extends ChangeNotifier {
       notifyListeners();
     }).onError((error, stackTrace) {
       //handle error
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -289,8 +295,8 @@ class UserFeedVM extends ChangeNotifier {
       log("withdrawFollowRequest: Success");
       notifyListeners();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -308,8 +314,8 @@ class UserFeedVM extends ChangeNotifier {
       notifyListeners();
       initUserFeed(userId: amityUser!.userId!);
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -319,13 +325,13 @@ class UserFeedVM extends ChangeNotifier {
         .blockUser(userId)
         .then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("المستخدم محظور"); //Blocked user
+      AmitySuccessDialog.showTimedDialog("user.blocked".tr()); //Blocked user
       _getUser(userId: userId);
       notifyListeners();
       // onCallBack();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -335,12 +341,12 @@ class UserFeedVM extends ChangeNotifier {
         .unblockUser(userId)
         .then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("إلغاء حظر المستخدم"); //Unblock user
+      AmitySuccessDialog.showTimedDialog("user.unBlocked".tr()); //Unblock user
       _getUser(userId: userId);
       notifyListeners();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 }

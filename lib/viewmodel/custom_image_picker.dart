@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -49,7 +50,7 @@ class ImagePickerVM extends ChangeNotifier {
                 ),
                 ListTile(
                     leading: const Icon(Icons.photo),
-                    title: const Text('المعرض'), //Gallery
+                    title: Text("community.gallery".tr()), //Gallery
                     onTap: () async {
                       Navigator.pop(context);
                       final XFile? image =
@@ -96,7 +97,7 @@ class ImagePickerVM extends ChangeNotifier {
                 ),
                 ListTile(
                   leading: const Icon(Icons.camera_alt),
-                  title: const Text('كاميرا'), //Camera
+                  title: Text("media.camera".tr()), //Camera
                   onTap: () async {
                     Navigator.pop(context);
                     final XFile? image =

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FollowerVM extends ChangeNotifier {
@@ -82,7 +83,7 @@ class FollowerVM extends ChangeNotifier {
         _followRelationships = value.data;
       }).onError((error, stackTrace) {
         AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+            .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       });
     }
     notifyListeners();

@@ -14,7 +14,7 @@ class ExplorePageVM with ChangeNotifier {
 
   // final amityCategories = <AmityCommunityCategory>[];
   late PagingController<AmityCommunityCategory> _communityCategoryController;
-  final categoryScrollcontroller = ScrollController();
+  final categoryScrollController = ScrollController();
 
   CategoryListState _categoryState = CategoryListState.loading; // Default state
   CategoryListState get categoryState => _categoryState; // Getter for the state
@@ -47,7 +47,7 @@ class ExplorePageVM with ChangeNotifier {
 
   final amityCommunities = <AmityCommunity>[];
   late PagingController<AmityCommunity> _communityController;
-  final communityScrollcontroller = ScrollController();
+  final communityScrollController = ScrollController();
 
   void getCommunitiesInCategory(
       {required String categoryId, bool enableNotifyListener = false}) {
@@ -81,12 +81,12 @@ class ExplorePageVM with ChangeNotifier {
 
     _communityController.fetchNextPage();
 
-    communityScrollcontroller.addListener(communityPagination);
+    communityScrollController.addListener(communityPagination);
   }
 
   void communityPagination() {
-    if ((communityScrollcontroller.position.pixels >=
-        (communityScrollcontroller.position.maxScrollExtent - 100))) {
+    if ((communityScrollController.position.pixels >=
+        (communityScrollController.position.maxScrollExtent - 100))) {
       if (isLoadingFinish && _communityController.hasMoreItems) {
         print("load more");
         _communityController.fetchNextPage();
@@ -98,7 +98,7 @@ class ExplorePageVM with ChangeNotifier {
 
   void queryCommunityCategories(
       {required AmityCommunityCategorySortOption sortOption,
-      bool enablenotifylistener = false}) async {
+      bool enableNotifyListener = false}) async {
     try {
       print("queryCommunityCategories");
       _categoryState = CategoryListState.loading; // Set loading state
@@ -124,7 +124,7 @@ class ExplorePageVM with ChangeNotifier {
               if (amityCategories.isNotEmpty) {
                 _categoryState = CategoryListState.success; // Success state
               }
-              if (enablenotifylistener) {
+              if (enableNotifyListener) {
                 notifyListeners();
               }
               isLoadingFinish = true;
@@ -141,7 +141,7 @@ class ExplorePageVM with ChangeNotifier {
       // fetch the data for the first page
       _communityCategoryController.fetchNextPage();
 
-      categoryScrollcontroller.addListener(categoryPagination);
+      categoryScrollController.addListener(categoryPagination);
     } catch (e) {
       _categoryState = CategoryListState.error; // Error state
     }
@@ -150,8 +150,8 @@ class ExplorePageVM with ChangeNotifier {
   var isLoadingFinish = true;
 
   void categoryPagination() {
-    if ((categoryScrollcontroller.position.pixels >=
-        (categoryScrollcontroller.position.maxScrollExtent - 100))) {
+    if ((categoryScrollController.position.pixels >=
+        (categoryScrollController.position.maxScrollExtent - 100))) {
       if (isLoadingFinish && _communityCategoryController.hasMoreItems) {
         print("load more");
         _communityCategoryController.fetchNextPage();

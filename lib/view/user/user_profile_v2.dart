@@ -3,9 +3,8 @@ import 'package:amity_uikit_beta_service/components/custom_user_avatar.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.dart';
 import 'package:amity_uikit_beta_service/view/social/global_feed.dart';
 import 'package:amity_uikit_beta_service/view/social/user_follow_screen.dart';
-import 'package:amity_uikit_beta_service/view/user/edit_profile.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
-import 'package:amity_uikit_beta_service/view/user/user_setting.dart';
+import 'user_setting.dart';
 import 'package:amity_uikit_beta_service/viewmodel/follower_following_viewmodel.dart';
 import 'package:animation_wrappers/animations/fade_animation.dart';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
@@ -64,16 +63,17 @@ class UserProfileScreenState extends State<UserProfileScreen>
   }
 
   String getFollowingStatusString(AmityFollowStatus amityFollowStatus) {
-    if (amityFollowStatus == AmityFollowStatus.NONE) {
-      return "تابع"; //Follow
-    } else if (amityFollowStatus == AmityFollowStatus.PENDING) {
-      return "قيد الانتظار"; //Pending
-    } else if (amityFollowStatus == AmityFollowStatus.ACCEPTED) {
-      return "متابع"; //Following
-    } else if (amityFollowStatus == AmityFollowStatus.BLOCKED) {
-      return "محظور"; //Blocked
-    } else {
-      return "غير محدد"; //Miss Type
+    switch (amityFollowStatus) {
+      case AmityFollowStatus.NONE:
+        return "follow.follow".tr();
+      case AmityFollowStatus.PENDING:
+        return "follow.pending".tr();
+      case AmityFollowStatus.ACCEPTED:
+        return "follow.followed".tr();
+      case AmityFollowStatus.BLOCKED:
+        return "follow.blocked".tr();
+      default:
+        return "follow.miss_type".tr();
     }
   }
 
@@ -207,7 +207,13 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                           );
                                         },
                                         child: Text(
-                                            '${snapshot.data!.followingCount} متابع', //following
+                                            "community.member".plural(
+                                              snapshot.data!.followingCount!
+                                                  .toInt(),
+                                              format: NumberFormat.compact(
+                                                  locale: context.locale
+                                                      .toString()),
+                                            ), //following
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 13,
@@ -235,7 +241,12 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                           );
                                         },
                                         child: Text(
-                                          '${snapshot.data!.followerCount} متابعين',
+                                          "community.follower".plural(
+                                            snapshot.data!.followerCount!,
+                                            format: NumberFormat.compact(
+                                                locale:
+                                                    context.locale.toString()),
+                                          ),
                                           //followers
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w500,

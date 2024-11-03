@@ -4,61 +4,63 @@ import 'dart:io';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/viewmodel/create_postV2_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class EditPostVM extends CreatePostVMV2 {
-  List<UIKitFileSystem> editPostMedie = [];
+  List<UIKitFileSystem> editPostMedia = [];
   AmityPost? amityPost;
   int originalPostLength = 0;
-  AmityDataType? postDataForEditMedie;
+  AmityDataType? postDataForEditMedia;
+
   void initForEditPost(AmityPost post) {
     print("initForEditPost");
     amityPost = post;
     if (amityPost!.children != null) {
       originalPostLength = amityPost!.children!.length;
       if (amityPost!.children!.isNotEmpty) {
-        postDataForEditMedie = amityPost!.children![0].type;
+        postDataForEditMedia = amityPost!.children![0].type;
       }
     }
 
     textEditingController.clear();
-    editPostMedie.clear();
+    editPostMedia.clear();
 
-    var textdata = post.data as TextData;
-    textEditingController.text = textdata.text ?? "";
+    var textData = post.data as TextData;
+    textEditingController.text = textData.text ?? "";
     var children = post.children;
     if (children != null) {
       print(children.length);
       print(children[0].type);
       if (children[0].type == AmityDataType.IMAGE) {
         print(children[0].data!.fileId);
-        editPostMedie = [];
+        editPostMedia = [];
         for (var child in children) {
           var uikitFile = UIKitFileSystem(
               postDataForEditMedie: child.data,
               status: FileStatus.complete,
               fileType: MyFileType.image,
               file: File(""));
-          editPostMedie.add(uikitFile);
+          editPostMedia.add(uikitFile);
         }
 
-        log("ImageData: $editPostMedie");
+        log("ImageData: $editPostMedia");
       } else if (children[0].type == AmityDataType.VIDEO) {
         var videoData = children[0].data as VideoData;
 
-        editPostMedie = [];
+        editPostMedia = [];
         for (var child in children) {
           var uikitFile = UIKitFileSystem(
               postDataForEditMedie: child.data,
               status: FileStatus.complete,
               fileType: MyFileType.image,
               file: File(""));
-          editPostMedie.add(uikitFile);
+          editPostMedia.add(uikitFile);
         }
       } else if (children[0].type == AmityDataType.FILE) {
         var fileData = children[0].data as FileData;
         var fileName = fileData.fileInfo.fileName!;
-        editPostMedie = [];
+        editPostMedia = [];
         for (var child in children) {
           var uikitFile = UIKitFileSystem(
               postDataForEditMedie: child.data,
@@ -66,7 +68,7 @@ class EditPostVM extends CreatePostVMV2 {
               progress: -1,
               fileType: MyFileType.file,
               file: File(fileName));
-          editPostMedie.add(uikitFile);
+          editPostMedia.add(uikitFile);
         }
       }
     }
@@ -78,9 +80,9 @@ class EditPostVM extends CreatePostVMV2 {
       {required BuildContext context, Function? callback}) async {
     var builder = amityPost!.edit().text(textEditingController.text);
 
-    if (editPostMedie.length != originalPostLength) {
+    if (editPostMedia.length != originalPostLength) {
       print("Children Length is not equal");
-      if (editPostMedie.isNotEmpty) {
+      if (editPostMedia.isNotEmpty) {
         var childPost = amityPost!.children![0];
         var postType = childPost.type;
         print(postType);
@@ -103,12 +105,12 @@ class EditPostVM extends CreatePostVMV2 {
       } else {
         print("Empty Children");
 
-        print(postDataForEditMedie);
-        if (postDataForEditMedie == AmityDataType.IMAGE) {
+        print(postDataForEditMedia);
+        if (postDataForEditMedia == AmityDataType.IMAGE) {
           builder = builder.image([]);
-        } else if (postDataForEditMedie == AmityDataType.VIDEO) {
+        } else if (postDataForEditMedia == AmityDataType.VIDEO) {
           builder = builder.video([]);
-        } else if (postDataForEditMedie == AmityDataType.FILE) {
+        } else if (postDataForEditMedia == AmityDataType.FILE) {
           builder = builder.file([]);
         }
       }
@@ -117,13 +119,13 @@ class EditPostVM extends CreatePostVMV2 {
       notifyListeners();
       callback!();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
   void deselectFileAt(int index) {
-    editPostMedie.removeAt(index);
+    editPostMedia.removeAt(index);
     amityPost!.children!.removeAt(index);
     notifyListeners();
   }

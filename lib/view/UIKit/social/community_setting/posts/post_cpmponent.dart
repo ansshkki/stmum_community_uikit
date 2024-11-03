@@ -231,7 +231,7 @@ class PostMedia extends StatelessWidget {
           print("file: ${file.fileInfo.toString()}");
           print("path to render: ${file.file.path}");
           int rawprogress = isEditPost
-              ? Provider.of<EditPostVM>(context).editPostMedie[index].progress
+              ? Provider.of<EditPostVM>(context).editPostMedia[index].progress
               : Provider.of<CreatePostVMV2>(context).files[index].progress;
           var progress = rawprogress / 100.0;
 

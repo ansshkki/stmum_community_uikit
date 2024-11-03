@@ -65,7 +65,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
 
         myCommunityList.initMyCommunityFeed();
 
-        globalFeedProvider.initAmityGlobalfeed();
+        globalFeedProvider.initAmityGlobalFeed();
       });
     }
   }
@@ -88,7 +88,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
 
           myCommunityList.initMyCommunityFeed();
 
-          globalFeedProvider.initAmityGlobalfeed(
+          globalFeedProvider.initAmityGlobalFeed(
               // isCustomPostRanking: widget.isCustomPostRanking
               isCustomPostRanking: false);
         },
@@ -105,7 +105,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
                       slideCurve: Curves.linearToEaseOut,
                       child: ListView.builder(
                         // shrinkWrap: true,
-                        controller: vm.scrollcontroller,
+                        controller: vm.scrollController,
                         padding: EdgeInsets.only(
                           top: 24,
                           bottom: MediaQuery.paddingOf(context).bottom + 24,

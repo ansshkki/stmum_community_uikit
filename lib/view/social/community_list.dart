@@ -255,7 +255,7 @@ class CommunityWidget extends StatelessWidget {
                             print(i.displayName);
                           }
                           print(myCommunityList.amityCommunities);
-                          globalFeedProvider.initAmityGlobalfeed(
+                          globalFeedProvider.initAmityGlobalFeed(
                               // isCustomPostRanking: widget.isCustomPostRanking
                               isCustomPostRanking: false);
                         });
@@ -276,7 +276,7 @@ class CommunityWidget extends StatelessWidget {
                               print(">>>>>>>>>>>>>>>${i.displayName}");
                             }
                             print(myCommunityList.amityCommunities);
-                            globalFeedProvider.initAmityGlobalfeed(
+                            globalFeedProvider.initAmityGlobalFeed(
                                 // isCustomPostRanking: widget.isCustomPostRanking
                                 isCustomPostRanking: false);
                           },

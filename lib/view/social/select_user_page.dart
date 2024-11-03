@@ -214,7 +214,7 @@ class _UserListPageState extends State<UserListPage> {
                       )),
               Expanded(
                   child: CustomScrollView(
-                controller: Provider.of<UserVM>(context).scrollcontroller,
+                controller: Provider.of<UserVM>(context).scrollController,
                 slivers: Provider.of<UserVM>(context)
                     .listWithHeaders
                     .map<Widget>((item) {

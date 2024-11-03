@@ -45,6 +45,7 @@ class CreatePostVMV2 with ChangeNotifier {
   List<UIKitFileSystem> files = [];
   bool isUploadComplete = false;
   MyFileType? selectedFileType;
+
   bool get isPostValid {
     // Check if there are any files
     bool hasFiles = files.isNotEmpty;
@@ -74,7 +75,7 @@ class CreatePostVMV2 with ChangeNotifier {
     notifyListeners();
   }
 
-  void inits() {
+  void init() {
     isUploadComplete = false;
     files.clear();
     textEditingController.clear();
@@ -211,7 +212,9 @@ class CreatePostVMV2 with ChangeNotifier {
           },
           error: (error) {
             AmityDialog().showAlertErrorDialog(
-                title: "Upload fail", message: error.toString());
+              title: "util.upload_error".tr(),
+              message: error.toString(),
+            );
             uikitFile.status = FileStatus.rejected;
             notifyListeners();
             throw Exception(error);
@@ -278,7 +281,7 @@ class CreatePostVMV2 with ChangeNotifier {
           if (pickedImages.length + files.length > 10) {
             AmityDialog().showAlertErrorDialog(
                 title: "repo.unknown_error".tr(),
-                message: "You can only select a maximum of 10 images");
+                message: "media.limit.message".tr());
           } else {
             selectFiles(pickedImages, MyFileType.image);
           }
@@ -329,8 +332,9 @@ class CreatePostVMV2 with ChangeNotifier {
         .toList();
   }
 
-  Future<void> createPost(BuildContext context,
-      {String? communityId,
+  Future<void> createPost(
+    BuildContext context, {
+    String? communityId,
     required Function(bool success, String? error, AmityPost? post) callback,
   }) async {
     if (isUploadComplete) {
@@ -430,8 +434,9 @@ class CreatePostVMV2 with ChangeNotifier {
               context: context,
               callback: callback);
         }).onError((error, stackTrace) {
-          AmityDialog()
-              .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
+          AmityDialog().showAlertErrorDialog(
+              title: "repo.unknown_error".tr(),
+              message: error.toString()); //Error!
         });
       }
     }
@@ -465,6 +470,7 @@ class CreatePostVMV2 with ChangeNotifier {
 
 // Declare the map outside the function
   Map<String, Uint8List> thumbnailCache = {};
+
   ImageProvider getImageProvider(String path) {
     if (path.endsWith('.mp4') || path.endsWith('.MOV')) {
       log("Checking for thumbnail...");
@@ -474,7 +480,7 @@ class CreatePostVMV2 with ChangeNotifier {
         log("found in cache");
         return MemoryImage(thumbnailCache[path]!);
       } else {
-        throw Exception('Failed to generate video thumbnail: $path');
+        throw Exception("util.generate".tr());
       }
     } else {
       return FileImage(File(path));

@@ -65,7 +65,7 @@ class _AmityStoryTargetSelectionPageState
         body: Consumer<MyCommunityVM>(
           builder: (context, viewModel, child) {
             return SingleChildScrollView(
-              controller: viewModel.scrollcontroller,
+              controller: viewModel.scrollController,
               child: ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

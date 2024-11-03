@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FollowerVM extends ChangeNotifier {
   var _followerList = <AmityFollowRelationship>[];
+
   List<AmityFollowRelationship> get getFollowerList => _followerList;
 
   var _followingList = <AmityFollowRelationship>[];
+
   List<AmityFollowRelationship> get getFollowingList => _followingList;
 
   ScrollController? followingScrollController;
@@ -66,8 +69,8 @@ class FollowerVM extends ChangeNotifier {
         log("getFollowerListOf....Successs");
         _followingList = value.data;
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "خطأ!", message: error.toString()); //Error!
       });
     } else {
       await AmityCoreClient.newUserRepository()
@@ -81,8 +84,8 @@ class FollowerVM extends ChangeNotifier {
         followingScrollController = ScrollController();
         _followingList = value.data;
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "خطأ!", message: error.toString()); //Error!
       });
     }
     notifyListeners();
@@ -139,8 +142,8 @@ class FollowerVM extends ChangeNotifier {
         log("getFollowerListOf....Successs");
         _followerList = value.data;
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "خطأ!", message: error.toString()); //Error!
       });
     } else {
       await AmityCoreClient.newUserRepository()
@@ -154,8 +157,8 @@ class FollowerVM extends ChangeNotifier {
         followerScrollController = ScrollController();
         _followerList = value.data;
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "خطأ!", message: error.toString()); //Error!
       });
     }
     notifyListeners();
@@ -169,8 +172,10 @@ class FollowerVM extends ChangeNotifier {
     } else if (amityFollowStatus == AmityFollowStatus.ACCEPTED) {
       withdrawFollowRequest(user);
     } else {
-      AmityDialog().showAlertErrorDialog(title: "خطأ!",
-          message: "followButtonAction: cant handle amityFollowStatus"); //Error!
+      AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: "repo.unknown_error".tr(),
+      ); //Error!
     }
   }
 
@@ -185,8 +190,8 @@ class FollowerVM extends ChangeNotifier {
       notifyListeners();
     }).onError((error, stackTrace) {
       //handle error
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -199,8 +204,8 @@ class FollowerVM extends ChangeNotifier {
       log("with Draw Success");
       notifyListeners();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 

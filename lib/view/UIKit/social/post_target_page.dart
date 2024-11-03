@@ -2,6 +2,7 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +41,7 @@ class _PostToPageState extends State<PostToPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "اذهب بها إلى مجتمع..", //Post to
+          "post.share".tr(), //Post to
           style: Provider.of<AmityUIConfiguration>(context)
               .titleTextStyle
               .copyWith(
@@ -54,7 +55,7 @@ class _PostToPageState extends State<PostToPage> {
       body: Consumer<MyCommunityVM>(
         builder: (context, viewModel, child) {
           return SingleChildScrollView(
-            controller: viewModel.scrollcontroller,
+            controller: viewModel.scrollController,
             child: ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -82,13 +83,14 @@ class _PostToPageState extends State<PostToPage> {
                           ),
                         ),
                   title: Text(
-                    "صفحتي الشخصية", //My Timeline
+                    "user.timeline".tr(), //My Timeline
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Provider.of<AmityUIConfiguration>(context)
-                            .appColors
-                            .base),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Provider.of<AmityUIConfiguration>(context)
+                          .appColors
+                          .base,
+                    ),
                     // Adjust as needed),
                   ),
                   onTap: () {
@@ -104,7 +106,7 @@ class _PostToPageState extends State<PostToPage> {
                 Padding(
                   padding: const EdgeInsetsDirectional.all(16.0),
                   child: Text(
-                    "المجتمعات التي انضممت إليها:", //My community
+                    "${"user.communities".tr()} :", //My community
                     style: TextStyle(
                         fontSize: 15,
                         color: Provider.of<AmityUIConfiguration>(context)

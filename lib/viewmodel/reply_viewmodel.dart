@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/viewmodel/post_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ReplyTo {
   ReplyTo(this._replyToComment, this._replyingToUser);
+
   AmityUser _replyingToUser;
 
   AmityUser get replyingToUser => _replyingToUser;
@@ -154,8 +156,8 @@ class ReplyVM extends PostVM {
 
       notifyListeners();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -186,8 +188,8 @@ class ReplyVM extends PostVM {
       // });
     }).onError((error, stackTrace) async {
       log(error.toString());
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 }

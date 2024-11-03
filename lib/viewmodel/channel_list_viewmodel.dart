@@ -118,7 +118,7 @@ class ChannelVM extends ChangeNotifier {
             notifyListeners();
           } else {
             await AmityDialog()
-                .showAlertErrorDialog(title: "خطأ!", message: error!); //Error!
+                .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error!); //Error!
           }
         },
       );

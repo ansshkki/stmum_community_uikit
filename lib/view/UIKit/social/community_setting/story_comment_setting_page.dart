@@ -1,6 +1,7 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import provider
 
@@ -33,9 +34,9 @@ class _StoryCommentSettingPageState extends State<StoryCommentSettingPage> {
       backgroundColor:
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
-        title: const Text(
-          'Story comments',
-          style: TextStyle(
+        title: Text(
+          "story.comments".tr(),
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -50,19 +51,19 @@ class _StoryCommentSettingPageState extends State<StoryCommentSettingPage> {
           // Section 1: Post Review Setting
 
           ListTile(
-            title: const Text(
-              'Allow comments on community stories',
-              style: TextStyle(
+            title: Text(
+              "story.allow".tr(),
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff292B32),
               ),
             ),
-            subtitle: const Padding(
-              padding: EdgeInsets.only(top: 8.0),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
               child: Text(
-                'Turn on to receive comments on stories in this community.',
-                style: TextStyle(
+                "story.allow_comments".tr(),
+                style: const TextStyle(
                   fontSize: 12,
                   color: Color(0xff636878),
                 ),

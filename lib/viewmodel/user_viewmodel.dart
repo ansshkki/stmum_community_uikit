@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/alert_dialog.dart';
@@ -10,6 +11,7 @@ class UserVM extends ChangeNotifier {
   final List<AmityUser> _userList = [];
   List<String> selectedUserList = [];
   String? accessToken;
+
   List<AmityUser> getUserList() {
     return _userList;
   }
@@ -52,8 +54,8 @@ class UserVM extends ChangeNotifier {
       amityUser = user;
     }).onError((error, stackTrace) async {
       log(error.toString());
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     return amityUser;
   }
@@ -82,13 +84,13 @@ class UserVM extends ChangeNotifier {
       notifyListeners();
     }).catchError((error, stackTrace) async {
       log(error.toString());
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       notifyListeners();
     });
   }
 
-  final scrollcontroller = ScrollController();
+  final scrollController = ScrollController();
   bool loadingNexPage = false;
 
   void clearUserList() {
@@ -122,17 +124,17 @@ class UserVM extends ChangeNotifier {
       _amityUsersController.fetchNextPage();
     });
 
-    scrollcontroller.removeListener(() {});
-    scrollcontroller.addListener(loadnextpage);
+    scrollController.removeListener(() {});
+    scrollController.addListener(loadnextpage);
   }
 
   void loadnextpage() async {
-    if ((scrollcontroller.position.pixels >
-        scrollcontroller.position.maxScrollExtent - 800)) {
+    if ((scrollController.position.pixels >
+        scrollController.position.maxScrollExtent - 800)) {
       log("hasmore: ${_amityUsersController.hasMoreItems}");
     }
-    if ((scrollcontroller.position.pixels >
-            scrollcontroller.position.maxScrollExtent - 800) &&
+    if ((scrollController.position.pixels >
+            scrollController.position.maxScrollExtent - 800) &&
         _amityUsersController.hasMoreItems &&
         !loadingNexPage) {
       loadingNexPage = true;
@@ -244,6 +246,7 @@ class UserVM extends ChangeNotifier {
   }
 
   final List<AmityUser> _selectedCommunityUsers = [];
+
   List<AmityUser> get selectedCommunityUsers => _selectedCommunityUsers;
 
   void clearselectedCommunityUsers() {
@@ -265,17 +268,20 @@ class UserVM extends ChangeNotifier {
   void reportOrUnReportUser(AmityUser user) {
     if (user.isFlaggedByMe) {
       user.report().unflag().then((value) {
-        AmitySuccessDialog.showTimedDialog("إلغاء إرسال التبليغ"); //Unreport sent
+        AmitySuccessDialog.showTimedDialog(
+            "report.unReport".tr()); //Unreport sent
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       user.report().flag().then((value) {
-        AmitySuccessDialog.showTimedDialog("تم إرسال التبليغ"); //Report sent
+        AmitySuccessDialog.showTimedDialog("report.report".tr()); //Report sent
       }).onError((error, stackTrace) {
-        AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+        AmityDialog().showAlertErrorDialog(
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
   }
@@ -293,12 +299,12 @@ class UserVM extends ChangeNotifier {
         .blockUser(userId)
         .then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("مستخدم محظور"); //Blocked user
+      AmitySuccessDialog.showTimedDialog("user.blocked".tr()); //Blocked user
       notifyListeners();
       onCallBack();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -308,11 +314,11 @@ class UserVM extends ChangeNotifier {
         .unblockUser(userId)
         .then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("إلغاء حظر المستخدم"); //Unblock user
+      AmitySuccessDialog.showTimedDialog("user.unBlocked".tr()); //Unblock user
       notifyListeners();
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 

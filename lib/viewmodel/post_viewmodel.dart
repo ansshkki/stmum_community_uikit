@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/utils/navigation_key.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,8 +27,10 @@ class PostVM extends ChangeNotifier {
       amityPost = event;
     }).onError((error, stackTrace) async {
       log(error.toString());
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: error.toString(),
+      ); //Error!
     });
   }
 
@@ -104,26 +107,38 @@ class PostVM extends ChangeNotifier {
       });
     }).onError((error, stackTrace) async {
       log(error.toString());
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: error.toString(),
+      ); //Error!
     });
   }
 
   void flagComment(AmityComment comment, BuildContext context) {
     comment.report().flag().then((value) {
-      AmitySuccessDialog.showTimedDialog("ناجح", context: context); // Success
+      AmitySuccessDialog.showTimedDialog(
+        "external.done".tr(),
+        context: context,
+      ); // Success
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: error.toString(),
+      ); //Error!
     });
   }
 
   void unFlagComment(AmityComment comment, BuildContext context) {
     comment.report().unflag().then((value) {
-      AmitySuccessDialog.showTimedDialog("Success", context: context);
+      AmitySuccessDialog.showTimedDialog(
+        "external.done".tr(),
+        context: context,
+      );
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: error.toString(),
+      ); //Error!
     });
   }
 
@@ -136,8 +151,10 @@ class PostVM extends ChangeNotifier {
       getPost(amityPost.postId!, amityPost);
       notifyListeners();
     }).onError((error, stackTrace) async {
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: error.toString(),
+      ); //Error!
     });
   }
 
@@ -156,12 +173,12 @@ class PostVM extends ChangeNotifier {
   void flagPost(AmityPost post) {
     post.report().flag().then((value) {
       log("flag success $value");
-      AmitySuccessDialog.showTimedDialog("Report success");
+      AmitySuccessDialog.showTimedDialog("report.report".tr());
       notifyListeners();
     }).onError((error, stackTrace) async {
       log("flag error ${error.toString()}");
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -169,12 +186,12 @@ class PostVM extends ChangeNotifier {
     post.report().unflag().then((value) {
       //success
       log("unflag success $value");
-      AmitySuccessDialog.showTimedDialog("Undo report success");
+      AmitySuccessDialog.showTimedDialog("report.unReport".tr());
       notifyListeners();
     }).onError((error, stackTrace) async {
       log("unflag error ${error.toString()}");
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -206,8 +223,8 @@ class PostVM extends ChangeNotifier {
       //handle result
     }).onError((error, stackTrace) async {
       log("unflag error ${error.toString()}");
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 }

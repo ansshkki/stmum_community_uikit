@@ -91,7 +91,7 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
           ],
         ),
         body: ListView.builder(
-          controller: vm.scrollcontroller,
+          controller: vm.scrollController,
           itemCount: vm.amityCommunities.length + 1,
           itemBuilder: (context, index) {
             // If it's the first item in the list, return the search bar

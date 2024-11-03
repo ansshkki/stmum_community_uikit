@@ -1,6 +1,7 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import provider
 
@@ -32,9 +33,9 @@ class _PostReviewPageState extends State<PostReviewPage> {
       backgroundColor:
           Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
       appBar: AppBar(
-        title: const Text(
-          'مراجعة المنشور', //Post Review
-          style: TextStyle(
+        title: Text(
+          "post.view".tr(), //Post Review
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -49,9 +50,9 @@ class _PostReviewPageState extends State<PostReviewPage> {
           // Section 1: Post Review Setting
 
           ListTile(
-            title: const Text(
-              'الموافقة على منشور أحد الأعضاء', //Approve Member Posts
-              style: TextStyle(
+            title: Text(
+              "post.approve".tr(), //Approve Member Posts
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff292B32),

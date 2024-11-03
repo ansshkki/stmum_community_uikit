@@ -47,7 +47,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
   @override
   void initState() {
     community = widget.community;
-    Provider.of<CreatePostVMV2>(context, listen: false).inits();
+    Provider.of<CreatePostVMV2>(context, listen: false).init();
 
     super.initState();
   }
@@ -71,7 +71,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
           elevation: 0,
           centerTitle: false,
           title: Text(
-            "مشاركة جديدة", //My Feed
+            "post.new_share".tr(), //My Feed
             style: Provider.of<AmityUIConfiguration>(context)
                 .titleTextStyle
                 .copyWith(
@@ -197,8 +197,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                             maxLines: null,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText:
-                                  "ما الذي تودين مشاركته معنا اليوم؟ ( تجربتكِ، نصيحة، تحدّي..)",
+                              hintText: "post.hint".tr(),
                               //Write something to post
                               hintStyle: TextStyle(
                                   color:
@@ -248,11 +247,13 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                     children: [
                       Expanded(
                         child: Text(
-                          "اذهب بها إلى مجتمع.. ${community?.displayName ?? "صفحتي الشخصية"}",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          "community.share".tr(args: [
+                            community?.displayName ?? "صفحتي الشخصية"
+                          ]),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                       const Icon(Icons.keyboard_arrow_down),

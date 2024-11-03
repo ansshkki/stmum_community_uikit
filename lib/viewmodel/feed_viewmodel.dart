@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/alert_dialog.dart';
@@ -12,12 +13,13 @@ class FeedVM extends ChangeNotifier {
   final _amityGlobalFeedPosts = <AmityPost>[];
   bool isCustomPostRanking = false;
   bool isLoading = true;
-  final scrollcontroller = ScrollController();
+  final scrollController = ScrollController();
   late GlobalFeedLiveCollection globalFeedLiveCollection;
   late CustomRankingLiveCollection customRankingLiveCollection;
   late StreamSubscription<List<AmityPost>> _subscription;
 
   bool loadingNexPage = false;
+
   List<AmityPost> get getAmityPosts {
     return _amityGlobalFeedPosts;
   }
@@ -40,19 +42,19 @@ class FeedVM extends ChangeNotifier {
       if (postIndex != -1) {
         _amityGlobalFeedPosts.removeAt(postIndex);
         notifyListeners();
-        callback(true, "تم حذف المنشولر بنجاح"); //Post deleted successfully.
+        callback(true, "delete.deleted.post".tr()); //Post deleted successfully.
       } else {
-        callback(false, "لم نستطع ايجاد المنشور في القائمة"); //Post not found in the list.
+        callback(false, "util.not_found".tr()); //Post not found in the list.
       }
     }).onError((error, stackTrace) async {
       String errorMessage = error.toString();
-      await AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
       callback(false, errorMessage);
     });
   }
 
-  Future<void> initAmityGlobalfeed({bool isCustomPostRanking = false}) async {
+  Future<void> initAmityGlobalFeed({bool isCustomPostRanking = false}) async {
     isCustomPostRanking = isCustomPostRanking;
     isLoading = true;
     print("isloading1: $isLoading");
@@ -102,7 +104,7 @@ class FeedVM extends ChangeNotifier {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         globalFeedLiveCollection.loadNext();
       });
-      scrollcontroller.addListener(loadnextpage);
+      scrollController.addListener(loadnextpage);
       // if (isCustomPostRanking) {
       //   _controllerGlobal = PagingController(
       //     pageFuture: (token) => AmitySocialClient.newFeedRepository()
@@ -264,8 +266,8 @@ class FeedVM extends ChangeNotifier {
     isLoading = true;
 
     if (isCustomPostRanking) {
-      if ((scrollcontroller.position.pixels >
-              scrollcontroller.position.maxScrollExtent - 800) &&
+      if ((scrollController.position.pixels >
+              scrollController.position.maxScrollExtent - 800) &&
           customRankingLiveCollection.hasNextPage() &&
           !loadingNexPage) {
         loadingNexPage = true;
@@ -277,8 +279,8 @@ class FeedVM extends ChangeNotifier {
         });
       }
     } else {
-      if ((scrollcontroller.position.pixels >
-              scrollcontroller.position.maxScrollExtent - 800) &&
+      if ((scrollController.position.pixels >
+              scrollController.position.maxScrollExtent - 800) &&
           globalFeedLiveCollection.hasNextPage() &&
           !loadingNexPage) {
         loadingNexPage = true;

@@ -109,10 +109,7 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
             child: Stack(
               children: [
                 !isSearching
-                    ? const Center(
-                        child:
-                            Text("قم بالبحث على اكثر من 3 أحرف حتى تصلك نتائج"),
-                      )
+                    ? Center(child: Text("search.minimum".tr()))
                     : TabBarView(
                         children: [
                           !vm.isDone
@@ -159,7 +156,7 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
                                   ],
                                 )
                               : ListView.builder(
-                                  controller: userVM.scrollcontroller,
+                                  controller: userVM.scrollController,
                                   itemCount: userVM.getUserList().length + 1,
                                   itemBuilder: (context, index) {
                                     // If it's the first item in the list, return the search bar
@@ -422,9 +419,9 @@ class CommunityIconList extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            const Scaffold(body: MyCommunityPage()),
-                      )),
+                          builder: (context) =>
+                              const Scaffold(body: MyCommunityPage()),
+                        )),
                     child: const SizedBox(child: Icon(Icons.chevron_right))),
               ],
             ),

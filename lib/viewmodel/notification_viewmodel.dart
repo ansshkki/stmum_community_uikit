@@ -5,7 +5,7 @@ import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/model/amity_notification_model.dart';
 import 'package:amity_uikit_beta_service/repository/noti_repo_imp.dart';
 import 'package:amity_uikit_beta_service/utils/env_manager.dart';
-import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,8 @@ class NotificationVM extends ChangeNotifier {
       log(">>>>updateNotification...");
       await updateNotification();
     } else {
-      AmityDialog().showAlertErrorDialog(title: "خطأ!", message: "accessToken is null"); //Error
+      AmityDialog().showAlertErrorDialog(
+          title: "خطأ!", message: "accessToken is null"); //Error
     }
   }
 
@@ -41,13 +42,16 @@ class NotificationVM extends ChangeNotifier {
           await addImageNotificationWorkAround(notifications);
           notifyListeners();
         } else {
-          AmityDialog()
-              .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+          AmityDialog().showAlertErrorDialog(
+              title: "repo.unknown_error".tr(),
+              message: error.toString()); //Error!
         }
       });
     } else {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: ".env is missing"); //Error!
+      AmityDialog().showAlertErrorDialog(
+        title: "repo.unknown_error".tr(),
+        message: "repo.unknown_error".tr(),
+      ); //Error!
     }
   }
 
@@ -152,26 +156,26 @@ class NotificationVM extends ChangeNotifier {
   }
 
   String prefixStringBuilder(List<Actors> actors) {
-    var emptyDisplayname = "Empty Name";
+    var emptyDisplayName = "external.empty_name".tr();
     var prefixString = "";
     if (actors.length == 1) {
-      prefixString = actors[0].name ?? emptyDisplayname;
+      prefixString = actors[0].name ?? emptyDisplayName;
     } else if (actors.length == 2) {
-      prefixString = actors[0].name ?? emptyDisplayname;
+      prefixString = actors[0].name ?? emptyDisplayName;
       prefixString +=
-          " and ${prefixString = actors[1].name ?? emptyDisplayname}";
+          " and ${prefixString = actors[1].name ?? emptyDisplayName}";
     } else if (actors.length == 3) {
-      prefixString = actors[0].name ?? emptyDisplayname;
-      prefixString += ", ${prefixString = actors[1].name ?? emptyDisplayname}";
+      prefixString = actors[0].name ?? emptyDisplayName;
+      prefixString += ", ${prefixString = actors[1].name ?? emptyDisplayName}";
       prefixString +=
-          ", and ${prefixString = actors[2].name ?? emptyDisplayname}";
+          ", and ${prefixString = actors[2].name ?? emptyDisplayName}";
     } else if (actors.length > 3) {
-      prefixString = actors[0].name ?? emptyDisplayname;
-      prefixString += ", ${prefixString = actors[1].name ?? emptyDisplayname}";
-      prefixString = actors[0].name ?? emptyDisplayname;
+      prefixString = actors[0].name ?? emptyDisplayName;
+      prefixString += ", ${prefixString = actors[1].name ?? emptyDisplayName}";
+      prefixString = actors[0].name ?? emptyDisplayName;
       prefixString += ", and ${actors.length - 2} others";
     } else {
-      prefixString = "Unhandle Notification actors";
+      prefixString = "UnHandle Notification actors";
     }
     return prefixString;
   }

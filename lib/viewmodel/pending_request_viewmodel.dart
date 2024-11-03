@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../components/alert_dialog.dart';
 
 class PendingVM extends ChangeNotifier {
   var _pendingList = <AmityFollowRelationship>[];
+
   List<AmityFollowRelationship> get pendingRequestList => _pendingList;
 
   ScrollController? scrollController;
@@ -50,8 +52,8 @@ class PendingVM extends ChangeNotifier {
       log("getFollowerListOf....Successs");
       _pendingList = value.data;
     }).onError((error, stackTrace) {
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "خطأ!", message: error.toString()); //Error!
     });
 
     notifyListeners();
@@ -85,8 +87,8 @@ class PendingVM extends ChangeNotifier {
       notifyListeners();
     }).onError((error, stackTrace) {
       //handle error
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
@@ -102,8 +104,8 @@ class PendingVM extends ChangeNotifier {
       notifyListeners();
     }).onError((error, stackTrace) {
       //handle error
-      AmityDialog()
-          .showAlertErrorDialog(title: "خطأ!", message: error.toString()); //Error!
+      AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 }
