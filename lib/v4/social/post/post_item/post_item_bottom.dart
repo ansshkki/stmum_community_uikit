@@ -80,9 +80,12 @@ class PostItemBottom extends NewBaseComponent {
         Text(
           hideCommentCount
               ? "comment.comment".tr()
-              : "community.comment".plural(post.commentCount!.toInt(),
+              : "community.comment".plural(
+                  args: ["${post.commentCount}"],
+                  post.commentCount!.toInt(),
                   format:
-                      NumberFormat.compact(locale: context.locale.toString())),
+                      NumberFormat.compact(locale: context.locale.toString()),
+                ),
           style: TextStyle(
             color: theme.baseColorShade2,
             fontSize: 15,

@@ -134,6 +134,7 @@ class CommunityScreenState extends State<CommunityScreen>
                   ),
                   Text(
                       "community.member".plural(
+                        args: ["${community.membersCount}"],
                         community.membersCount ?? 0,
                         format: NumberFormat.compact(
                             locale: context.locale.toString()),
@@ -482,6 +483,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                   ),
                   Text(
                       "community.member".plural(
+                        args: ["${community.membersCount}"],
                         community.membersCount ?? 0,
                         format: NumberFormat.compact(
                             locale: context.locale.toString()),

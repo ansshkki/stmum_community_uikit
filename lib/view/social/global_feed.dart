@@ -936,6 +936,9 @@ class _PostWidgetState
                                         if (widget.post.commentCount! > 1) {
                                           return Text(
                                             "community.comment".plural(
+                                              args: [
+                                                "${widget.post.commentCount}"
+                                              ],
                                               widget.post.commentCount ?? 0,
                                               format: NumberFormat.compact(
                                                   locale: context.locale
@@ -962,6 +965,9 @@ class _PostWidgetState
                                         } else {
                                           return Text(
                                             "community.comment".plural(
+                                              args: [
+                                                "${widget.post.commentCount}"
+                                              ],
                                               widget.post.commentCount ?? 0,
                                               format: NumberFormat.compact(
                                                   locale: context.locale

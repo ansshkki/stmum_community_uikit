@@ -137,6 +137,7 @@ class CommunityScreenState extends State<CommunityScreen> {
                   ),
                   Text(
                       "community.member".plural(
+                        args: ["${community.membersCount}"],
                         community.membersCount?.toInt() ?? 0,
                         format: NumberFormat.compact(
                             locale: context.locale.toString()),
@@ -612,7 +613,8 @@ class PedindingButton extends StatelessWidget {
                 Text(
                   !community
                           .hasPermission(AmityPermission.REVIEW_COMMUNITY_POST)
-                      ? "post.pending_content".tr() //Your posts are pending for review
+                      ? "post.pending_content"
+                          .tr() //Your posts are pending for review
                       : "${Provider.of<CommuFeedVM>(context).reviewingPostCount}المشاركات تحتاج إلى موافقة ",
                   //posts need approval
                   style: TextStyle(
@@ -719,6 +721,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                   ),
                   Text(
                       "community.member".plural(
+                        args: ["${community.membersCount}"],
                         community.membersCount ?? 0,
                         format: NumberFormat.compact(
                             locale: context.locale.toString()),
