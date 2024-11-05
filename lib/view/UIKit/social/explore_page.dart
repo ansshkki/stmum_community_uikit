@@ -976,10 +976,15 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             .primaryShade3,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
-                        Icons.category,
-                        color: Colors.white,
-                      ),
+                      child: category.avatar != null
+                          ? CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(category.avatar!.fileUrl!),
+                            )
+                          : const Icon(
+                              Icons.category,
+                              color: Colors.white,
+                            ),
                     ),
                     title: Text(category.name ?? ''),
                   );
@@ -1052,6 +1057,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                   padding: EdgeInsetsDirectional.zero,
                   itemCount: communities.length,
                   controller: vm.communityScrollcontroller,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final community = communities[index];
 

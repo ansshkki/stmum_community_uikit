@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import 'provider/rate/rate_cubit.dart';
 import 'viewmodel/amity_viewmodel.dart';
 import 'viewmodel/channel_list_viewmodel.dart';
 import 'viewmodel/community_viewmodel.dart';
@@ -130,7 +131,7 @@ class AmityUIKit {
             displayName: displayName,
             authToken: authToken,
             accessToken: accessToken,
-            generalAccessToken:generalAccessToken)
+            generalAccessToken: generalAccessToken)
         .then((value) async {
       log("login success");
 
@@ -214,12 +215,14 @@ class AmityUIKit {
 
 class AmityUIKitProvider extends StatelessWidget {
   final Widget child;
+
   const AmityUIKitProvider({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<RateCubit>(create: (context) => RateCubit()),
         BlocProvider<GlobalFeedBloc>(create: (context) => GlobalFeedBloc()),
         BlocProvider<AmityToastBloc>(create: (context) => AmityToastBloc()),
         BlocProvider<SocialHomeBloc>(create: (context) => SocialHomeBloc()),

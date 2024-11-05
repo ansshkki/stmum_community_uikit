@@ -87,7 +87,7 @@ class ExplorePageVM with ChangeNotifier {
   void communityPagination() {
     if ((communityScrollcontroller.position.pixels >=
         (communityScrollcontroller.position.maxScrollExtent - 100))) {
-      if (isLoadingFinish) {
+      if (isLoadingFinish && _communityController.hasMoreItems) {
         print("load more");
         _communityController.fetchNextPage();
         isLoadingFinish = false;
@@ -102,7 +102,10 @@ class ExplorePageVM with ChangeNotifier {
     try {
       print("queryCommunityCategories");
       _categoryState = CategoryListState.loading; // Set loading state
-      notifyListeners();
+
+      if (enablenotifylistener) {
+        notifyListeners();
+      }
 
       _communityCategoryController = PagingController(
         pageFuture: (token) => AmitySocialClient.newCommunityRepository()
@@ -149,7 +152,7 @@ class ExplorePageVM with ChangeNotifier {
   void categoryPagination() {
     if ((categoryScrollcontroller.position.pixels >=
         (categoryScrollcontroller.position.maxScrollExtent - 100))) {
-      if (isLoadingFinish) {
+      if (isLoadingFinish && _communityCategoryController.hasMoreItems) {
         print("load more");
         _communityCategoryController.fetchNextPage();
         isLoadingFinish = false;
