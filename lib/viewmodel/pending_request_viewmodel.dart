@@ -53,7 +53,7 @@ class PendingVM extends ChangeNotifier {
       _pendingList = value.data;
     }).onError((error, stackTrace) {
       AmityDialog().showAlertErrorDialog(
-          title: "خطأ!", message: error.toString()); //Error!
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
 
     notifyListeners();

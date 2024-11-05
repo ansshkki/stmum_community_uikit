@@ -181,7 +181,8 @@ class CommunityVM extends ChangeNotifier {
       if (type != null) {
         refreshCommunity(type);
       }
-      AmitySuccessDialog.showTimedDialog("مغادرة المجتمع"); //Leave community
+      AmitySuccessDialog.showTimedDialog(
+          "community.leave_content".tr()); //Leave community
       notifyListeners();
       callback(true); // Calling the callback with success status
     }).onError((error, stackTrace) async {
@@ -313,7 +314,9 @@ class CommunityVM extends ChangeNotifier {
               final AmityException amityException = error;
               //handle error
               await AmityDialog().showAlertErrorDialog(
-                  title: "خطأ!", message: error.toString()); //Error!
+                title: "repo.unknown_error".tr(),
+                message: error.toString(),
+              ); //Error!
               completer.completeError(error);
             },
             cancel: () {
@@ -339,7 +342,8 @@ class CommunityVM extends ChangeNotifier {
       //success
       _amityMyCommunities
           .removeWhere((element) => element.communityId == communityId);
-      AmitySuccessDialog.showTimedDialog("المجتمع حذف"); //Community deleted
+      AmitySuccessDialog.showTimedDialog(
+          "delete.community".tr());
       notifyListeners(); // To update the UI after removing the community
 
       callback(true); // Success status

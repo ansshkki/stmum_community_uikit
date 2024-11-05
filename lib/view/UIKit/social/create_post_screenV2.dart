@@ -248,7 +248,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                       Expanded(
                         child: Text(
                           "community.share".tr(args: [
-                            community?.displayName ?? "صفحتي الشخصية"
+                            community?.displayName ?? "user.profile".tr()
                           ]),
                           style: Theme.of(context)
                               .textTheme

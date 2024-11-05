@@ -154,8 +154,10 @@ class MessageVM extends ChangeNotifier {
         log("sendMessage: success");
       } else {
         log(error.toString());
-        await AmityDialog()
-            .showAlertErrorDialog(title: "خطأ!", message: error!); //Error!
+        await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(),
+          message: error!,
+        ); //Error!
       }
     });
   }

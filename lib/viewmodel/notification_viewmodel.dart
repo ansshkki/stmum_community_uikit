@@ -30,7 +30,7 @@ class NotificationVM extends ChangeNotifier {
       await updateNotification();
     } else {
       AmityDialog().showAlertErrorDialog(
-          title: "خطأ!", message: "accessToken is null"); //Error
+          title: "repo.unknown_error".tr(), message: "accessToken is null"); //Error
     }
   }
 

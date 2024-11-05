@@ -70,7 +70,8 @@ class FollowerVM extends ChangeNotifier {
         _followingList = value.data;
       }).onError((error, stackTrace) {
         AmityDialog().showAlertErrorDialog(
-            title: "خطأ!", message: error.toString()); //Error!
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       await AmityCoreClient.newUserRepository()
@@ -85,7 +86,8 @@ class FollowerVM extends ChangeNotifier {
         _followingList = value.data;
       }).onError((error, stackTrace) {
         AmityDialog().showAlertErrorDialog(
-            title: "خطأ!", message: error.toString()); //Error!
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
     notifyListeners();
@@ -143,7 +145,8 @@ class FollowerVM extends ChangeNotifier {
         _followerList = value.data;
       }).onError((error, stackTrace) {
         AmityDialog().showAlertErrorDialog(
-            title: "خطأ!", message: error.toString()); //Error!
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     } else {
       await AmityCoreClient.newUserRepository()
@@ -158,7 +161,8 @@ class FollowerVM extends ChangeNotifier {
         _followerList = value.data;
       }).onError((error, stackTrace) {
         AmityDialog().showAlertErrorDialog(
-            title: "خطأ!", message: error.toString()); //Error!
+            title: "repo.unknown_error".tr(),
+            message: error.toString()); //Error!
       });
     }
     notifyListeners();

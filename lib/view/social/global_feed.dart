@@ -168,7 +168,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "يبدو أنكِ لم تنضمي لأي مجتمع 😓",
+              "feed.no_community".tr(),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -177,7 +177,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              "خذي جولة واختاري المجتمع الذي تريدين",
+              "feed.explore".tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -190,7 +190,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
                 DefaultTabController.of(context).animateTo(2);
               },
               icon: const Icon(Icons.search),
-              label: const Text("اكتشفي مجتمعات سبيستون مام"),
+              label: Text("external.explore".tr()),
             ),
           ),
         ],
@@ -259,7 +259,6 @@ class _PostWidgetState
     List<String> postOwnerMenu = ["external.edit".tr(), "external.delete".tr()];
     List<String> otherPostMenu = [
       isFlaggedByMe ? "report.unReport".tr() : "report.report_comment".tr(),
-      // 'حظر المستخدم'
     ];
 
     return IconButton(
@@ -1227,9 +1226,9 @@ class PendingSectionButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4), // Set border radius
                     border: Border.all(color: Colors.grey), // Border color
                   ),
-                  child: const Center(
-                      child:
-                          Text("انخفاض")), //Decline// Text with default color
+                  child: Center(
+                    child: Text("external.decline".tr()),
+                  ), //Decline// Text with default color
                 ),
               ),
             ),

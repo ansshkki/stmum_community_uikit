@@ -39,20 +39,25 @@ class _NotificationAllTabScreenState extends State<NotificationAllTabScreen> {
       prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName;
     } else if (pendingList.length == 2) {
       prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName;
-      prefixString +=
-          " و ${prefixString = pendingList[1].sourceUser?.displayName ?? emptyDisplayName}"; // And
+      prefixString += "external.and".tr(args: [
+        prefixString =
+            pendingList[1].sourceUser?.displayName ?? emptyDisplayName
+      ]);
     } else if (pendingList.length == 3) {
       prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName;
       prefixString +=
           ", ${prefixString = pendingList[1].sourceUser?.displayName ?? emptyDisplayName}";
-      prefixString +=
-          ", و ${prefixString = pendingList[2].sourceUser?.displayName ?? emptyDisplayName}"; // and
+      prefixString += "external.and".tr(args: [
+        prefixString =
+            pendingList[2].sourceUser?.displayName ?? emptyDisplayName
+      ]);
     } else if (pendingList.length > 3) {
       prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName;
       prefixString +=
           ", ${prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName}";
       prefixString = pendingList[0].sourceUser?.displayName ?? emptyDisplayName;
-      prefixString += ", و ${pendingList.length - 2} آخرين "; // and //others
+      prefixString +=
+          "external.others".tr(args: [(pendingList.length - 2).toString()]);
     } else {
       prefixString = "${pendingList.length}";
     }

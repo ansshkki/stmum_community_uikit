@@ -392,7 +392,11 @@ class PendingButton extends StatelessWidget {
                           .hasPermission(AmityPermission.REVIEW_COMMUNITY_POST)
                       ? "post.pending_content"
                           .tr() //Your posts are pending for review
-                      : "${Provider.of<CommuFeedVM>(context).reviewingPostCount}المشاركات تحتاج إلى موافقة ",
+                      : "post.allow".tr(args: [
+                          Provider.of<CommuFeedVM>(context)
+                              .reviewingPostCount
+                              .toString()
+                        ]),
                   //posts need approval
                   style: TextStyle(
                     fontSize: 13,
