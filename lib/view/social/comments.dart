@@ -505,7 +505,6 @@ class CommentTextField extends StatelessWidget {
                   context.read<RateCubit>().checkRate("community");
                 } else {
                   ///Create Comment with Reply
-                  print("الرد على التعليق"); //reply comment
                   var replyingComment =
                       Provider.of<ReplyVM>(context, listen: false)
                           .replyToObject

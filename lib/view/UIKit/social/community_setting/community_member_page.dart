@@ -172,7 +172,7 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
                   // ),
 
                   tabs: [
-                    Tab(text: "community.member".plural(1)), //Members
+                    Tab(text: "community.members".tr()), //Members
                     Tab(text: "community.moderators".tr()), //Moderators
                   ],
                 ),

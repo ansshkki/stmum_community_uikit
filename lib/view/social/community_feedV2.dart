@@ -133,7 +133,7 @@ class CommunityScreenState extends State<CommunityScreen>
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                      "community.member".plural(
+                      "community.members_pl".plural(
                         args: ["${community.membersCount}"],
                         community.membersCount ?? 0,
                         format: NumberFormat.compact(
@@ -486,7 +486,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                     ),
                   ),
                   Text(
-                      "community.member".plural(
+                      "community.members_pl".plural(
                         args: ["${community.membersCount}"],
                         community.membersCount ?? 0,
                         format: NumberFormat.compact(

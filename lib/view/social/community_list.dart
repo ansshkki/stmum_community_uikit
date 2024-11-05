@@ -225,7 +225,7 @@ class CommunityWidget extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(
-                  "community.member".plural(
+                  "community.members_pl".plural(
                     args: ["${community.membersCount}"],
                     community.membersCount ?? 0,
                     format:

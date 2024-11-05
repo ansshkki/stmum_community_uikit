@@ -111,7 +111,7 @@ class CommunitySettingPage extends StatelessWidget {
                                 .appColors
                                 .base)),
                     title: Text(
-                      "community.member".plural(1), //Members
+                      "community.members".tr(), //Members
                       style: TextStyle(
                         color: Provider.of<AmityUIConfiguration>(context)
                             .appColors

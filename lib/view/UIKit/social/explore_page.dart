@@ -387,13 +387,12 @@ class RecommendationSection extends StatelessWidget {
                                 Text.rich(TextSpan(
                                   children: [
                                     TextSpan(
-                                        text: community.postsCount?.toString()),
-                                    TextSpan(text: " ${"post.title".tr()} - "),
+                                        text:
+                                            "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                    TextSpan(text: " - "),
                                     TextSpan(
                                         text:
-                                            community.membersCount?.toString()),
-                                    TextSpan(
-                                        text: " ${"community.member".tr()}"),
+                                            "${"community.members_pl".plural(community.membersCount ?? 0)}"),
                                   ],
                                   style: const TextStyle(
                                     fontSize: 10,
@@ -511,11 +510,12 @@ class TrendingSection extends StatelessWidget {
                               Text.rich(TextSpan(
                                 children: [
                                   TextSpan(
-                                      text: community.postsCount?.toString()),
-                                  TextSpan(text: " ${"post.title".tr()} - "),
+                                      text:
+                                      "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                  TextSpan(text: " - "),
                                   TextSpan(
-                                      text: community.membersCount?.toString()),
-                                  TextSpan(text: " ${"community.member".tr()}"),
+                                      text:
+                                      "${"community.members_pl".plural(community.membersCount ?? 0)}"),
                                 ],
                                 style: const TextStyle(
                                   fontSize: 10,
@@ -1117,14 +1117,11 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                     children: [
                                       TextSpan(
                                           text:
-                                              community.postsCount?.toString()),
+                                          "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                      TextSpan(text: " - "),
                                       TextSpan(
-                                          text: " ${"post.title".tr()} - "),
-                                      TextSpan(
-                                          text: community.membersCount
-                                              ?.toString()),
-                                      TextSpan(
-                                          text: " ${"community.member".tr()}"),
+                                          text:
+                                          "${"community.members_pl".plural(community.membersCount ?? 0)}"),
                                     ],
                                     style: const TextStyle(
                                       fontSize: 10,

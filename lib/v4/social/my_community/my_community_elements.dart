@@ -144,7 +144,7 @@ class CommunityMemberCountElement extends BaseElement {
   @override
   Widget buildElement(BuildContext context) {
     return Text(
-      "community.member".plural(
+      "community.members_pl".plural(
         args: ["${memberCount!.toInt()}"],
         memberCount!.toInt(),
         format: NumberFormat.compact(locale: context.locale.toString()),

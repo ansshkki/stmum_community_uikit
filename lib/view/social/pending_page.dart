@@ -105,7 +105,7 @@ class PendingFeedScreenState extends State<PendingFeedScreen> {
                   community.membersCount.toString(),
                   style: const TextStyle(fontSize: 16),
                 ),
-                Text("community.member".plural(1), //members
+                Text("community.members".tr(), //members
                     style:
                         const TextStyle(fontSize: 16, color: Color(0xff898E9E)))
               ],
