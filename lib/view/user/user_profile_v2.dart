@@ -208,9 +208,6 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                         },
                                         child: Text(
                                             "community.member".plural(
-                                              args: [
-                                                "${snapshot.data!.followingCount}"
-                                              ],
                                               snapshot.data!.followingCount!
                                                   .toInt(),
                                               format: NumberFormat.compact(
@@ -245,9 +242,6 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                         },
                                         child: Text(
                                           "community.follower".plural(
-                                            args: [
-                                              "${snapshot.data!.followerCount}"
-                                            ],
                                             snapshot.data!.followerCount!,
                                             format: NumberFormat.compact(
                                                 locale:

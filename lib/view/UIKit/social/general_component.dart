@@ -54,37 +54,31 @@ class TimeAgoWidget extends StatelessWidget {
 
     if (years > 0) {
       return "time.year".plural(
-        args: ["${years.toInt()}"],
         years,
         format: NumberFormat.compact(locale: context.locale.toString()),
       ); //year
     } else if (months > 0) {
       return "time.month".plural(
-        args: ["${months.toInt()}"],
         months,
         format: NumberFormat.compact(locale: context.locale.toString()),
       );
     } else if (weeks > 0) {
       return "time.week".plural(
-        args: ["${weeks.toInt()}"],
         weeks,
         format: NumberFormat.compact(locale: context.locale.toString()),
       );
     } else if (difference.inDays > 0) {
       return "time.day".plural(
-        args: ["${difference.inDays.toInt()}"],
         difference.inDays,
         format: NumberFormat.compact(locale: context.locale.toString()),
       );
     } else if (difference.inHours > 0) {
       return "time.hour".plural(
-        args: ["${difference.inHours.toInt()}"],
         difference.inHours,
         format: NumberFormat.compact(locale: context.locale.toString()),
       );
     } else if (difference.inMinutes > 0) {
       return "time.minute".plural(
-        args: ["${difference.inMinutes.toInt()}"],
         difference.inMinutes,
         format: NumberFormat.compact(locale: context.locale.toString()),
       );

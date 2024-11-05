@@ -226,7 +226,6 @@ class CommunityWidget extends StatelessWidget {
                 ),
                 subtitle: Text(
                   "community.members_pl".plural(
-                    args: ["${community.membersCount}"],
                     community.membersCount ?? 0,
                     format:
                         NumberFormat.compact(locale: context.locale.toString()),

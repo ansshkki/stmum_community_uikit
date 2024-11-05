@@ -105,7 +105,6 @@ class PostDetailInfo extends NewBaseComponent {
 
     return Text(
       "community.like".plural(
-        args: ["${reactionCount.toInt()}"],
         reactionCount,
         format: NumberFormat.compact(locale: context.locale.toString()),
       ),
@@ -121,7 +120,6 @@ class PostDetailInfo extends NewBaseComponent {
     final commentCount = post.commentCount ?? 0;
     return Text(
       "community.comment".plural(
-        args: ["${commentCount.toInt()}"],
         commentCount,
         format: NumberFormat.compact(locale: context.locale.toString()),
       ),

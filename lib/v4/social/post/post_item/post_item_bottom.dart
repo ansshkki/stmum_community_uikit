@@ -81,7 +81,6 @@ class PostItemBottom extends NewBaseComponent {
           hideCommentCount
               ? "comment.comment".tr()
               : "community.comment".plural(
-                  args: ["${post.commentCount}"],
                   post.commentCount!.toInt(),
                   format:
                       NumberFormat.compact(locale: context.locale.toString()),
