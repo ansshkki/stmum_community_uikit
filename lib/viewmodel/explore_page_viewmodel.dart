@@ -103,7 +103,7 @@ class ExplorePageVM with ChangeNotifier {
       print("queryCommunityCategories");
       _categoryState = CategoryListState.loading; // Set loading state
 
-      if (enablenotifylistener) {
+      if (enableNotifyListener) {
         notifyListeners();
       }
 
