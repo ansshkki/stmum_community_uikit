@@ -425,14 +425,9 @@ class RecommendationSection extends StatelessWidget {
   }
 }
 
-class TrendingSection extends StatefulWidget {
+class TrendingSection extends StatelessWidget {
   const TrendingSection({Key? key}) : super(key: key);
 
-  @override
-  State<TrendingSection> createState() => _TrendingSectionState();
-}
-
-class _TrendingSectionState extends State<TrendingSection> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExplorePageVM>(
@@ -484,7 +479,7 @@ class _TrendingSectionState extends State<TrendingSection> {
                               ),
                             ),
                           )
-                          .then((_) => refreshData());
+                          .then((_) => refreshData(context));
                     },
                     child: Row(
                       children: [
@@ -684,7 +679,7 @@ class _TrendingSectionState extends State<TrendingSection> {
     );
   }
 
-  void refreshData() {
+  void refreshData(BuildContext context) {
     final vm = Provider.of<ExplorePageVM>(context, listen: false);
     vm.getRecommendedCommunities();
     vm.getTrendingCommunities();
