@@ -53,8 +53,8 @@ class _CreateGroupButtonSheetState extends State<CreateGroupButtonSheet> {
                     TextFormField(
                       controller: groupName,
                       decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "group.name".tr(),
+                        border: InputBorder.none,
+                        hintText: "group.name".tr(),
                       ),
                       validator: (value) {
                         if (value?.trim().isEmpty ?? true) {
@@ -65,62 +65,63 @@ class _CreateGroupButtonSheetState extends State<CreateGroupButtonSheet> {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                    "external.details".tr(),
+                      "group.details_empty".tr(),
                       style: const TextStyle(fontSize: 12),
-                  ),
-                  const SizedBox(height: 4),
-                  TextFormField(
-                    controller: description,
-                    minLines: 2,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: "external.details".tr(),
+                    ),
+                    const SizedBox(height: 4),
+                    TextFormField(
+                      controller: description,
+                      minLines: 2,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: "external.details".tr(),
                         hintStyle: const TextStyle(fontWeight: FontWeight.w400),
                       ),
                       validator: (value) {
                         if (value?.trim().isEmpty ?? true) {
                           return "group.details_empty".tr();
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  vm.status == Statevm.loading
-                      ? const Padding(
-                          padding: EdgeInsets.all(12),
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : SizedBox(
-                          width: double.infinity,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                Provider.of<AmityUIConfiguration>(context)
-                                    .appColors
-                                    .primary,
-                              ),
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    vm.status == Statevm.loading
+                        ? const Padding(
+                            padding: EdgeInsets.all(12),
+                            child: Center(
+                              child: CircularProgressIndicator(),
                             ),
-                            onPressed: () async {
-                              if (globalKey.currentState?.validate() ?? false) {
-                                await Provider.of<CreateGroupRequestVM>(
-                                  context,
-                                  listen: false,
-                                )
-                                    .createGroupRequest(
-                                  groupName.text,
-                                  description.text,
-                                )
-                                    .then((val) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content:
-                                        Text("external.required_done".tr()),
-                                  ));
+                          )
+                        : SizedBox(
+                            width: double.infinity,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Provider.of<AmityUIConfiguration>(context)
+                                      .appColors
+                                      .primary,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (globalKey.currentState?.validate() ??
+                                    false) {
+                                  await Provider.of<CreateGroupRequestVM>(
+                                    context,
+                                    listen: false,
+                                  )
+                                      .createGroupRequest(
+                                    groupName.text,
+                                    description.text,
+                                  )
+                                      .then((val) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                          Text("external.required_done".tr()),
+                                    ));
                                   });
                                   Navigator.pop(context);
                                 }
