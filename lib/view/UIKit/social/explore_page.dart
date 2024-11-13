@@ -511,11 +511,11 @@ class TrendingSection extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                       text:
-                                      "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                          "${"post.title_pl".plural(community.postsCount ?? 0)}"),
                                   TextSpan(text: " - "),
                                   TextSpan(
                                       text:
-                                      "${"community.members_pl".plural(community.membersCount ?? 0)}"),
+                                          "${"community.members_pl".plural(community.membersCount ?? 0)}"),
                                 ],
                                 style: const TextStyle(
                                   fontSize: 10,
@@ -1031,6 +1031,12 @@ class _CommunityListPageState extends State<CommunityListPage> {
     });
   }
 
+  void refreshData(BuildContext context) {
+    final vm = Provider.of<ExplorePageVM>(context, listen: false);
+    vm.getCommunitiesInCategory(
+        categoryId: widget.category.categoryId!, enableNotifyListener: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1079,8 +1085,8 @@ class _CommunityListPageState extends State<CommunityListPage> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 6),
                       child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                        onTap: () async {
+                          await Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ChangeNotifierProvider(
                                     create: (context) => CommuFeedVM(),
                                     child: CommunityScreen(
@@ -1088,6 +1094,9 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                       community: community,
                                     ),
                                   )));
+                          if (context.mounted) {
+                            refreshData(context);
+                          }
                         },
                         child: Row(
                           children: [
@@ -1117,11 +1126,11 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                     children: [
                                       TextSpan(
                                           text:
-                                          "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                              "${"post.title_pl".plural(community.postsCount ?? 0)}"),
                                       TextSpan(text: " - "),
                                       TextSpan(
                                           text:
-                                          "${"community.members_pl".plural(community.membersCount ?? 0)}"),
+                                              "${"community.members_pl".plural(community.membersCount ?? 0)}"),
                                     ],
                                     style: const TextStyle(
                                       fontSize: 10,
