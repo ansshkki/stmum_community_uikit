@@ -17,6 +17,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
 // import 'package:shared/shared.dart';
 
 import '../../components/custom_user_avatar.dart';
@@ -316,199 +317,37 @@ class _PostWidgetState
         },
       ),
     );
-
-    // return PopupMenuButton(
-    //   color:
-    //       Provider.of<AmityUIConfiguration>(context).appColors.baseBackground,
-    //   surfaceTintColor: Colors.white,
-    //   onSelected: (value) {
-    //     switch (value) {
-    //       case 'التبليغ':
-    //       case 'إلغاء التبليغ':
-    //         log("isflag by me $isFlaggedByMe");
-    //         if (isFlaggedByMe) {
-    //           Provider.of<PostVM>(context, listen: false)
-    //               .unflagPost(widget.post);
-    //         } else {
-    //           Provider.of<PostVM>(context, listen: false).flagPost(widget.post);
-    //         }
-    //
-    //         break;
-    //       case 'تعديل':
-    //         Navigator.of(context).push(MaterialPageRoute(
-    //             builder: (context) => ChangeNotifierProvider<EditPostVM>(
-    //                 create: (context) => EditPostVM(),
-    //                 child: AmityEditPostScreen(
-    //                   amityPost: widget.post,
-    //                 ))));
-    //         break;
-    //       case 'حذف':
-    //         if (widget.feedType == FeedType.global) {
-    //           ConfirmationDialog().show(
-    //             context: context,
-    //             title: 'حذف المنشور ؟',
-    //             detailText: 'هل تود حذق المنشور ؟',
-    //Do you want to Delete your post?
-    //             leftButtonText: 'إلغاء',
-    //Cancel
-    //             rightButtonText: 'حذف',
-    //Delete
-    //             onConfirm: () {
-    //               Provider.of<FeedVM>(context, listen: false).deletePost(
-    //                   widget.post, widget.postIndex, (isSuccess, error) {
-    //                 if (isSuccess) {
-    //                   if (widget.isPostDetail) {
-    //                     Navigator.of(context).pop();
-    //                   }
-    //                 }
-    //               });
-    //             },
-    //           );
-    //         } else if (widget.feedType == FeedType.community) {
-    //           ConfirmationDialog().show(
-    //             context: context,
-    //             title: 'حذف المنشور ؟',
-    //Delete Post?
-    //             detailText: 'هل تود حذف منشورك ؟',
-    //Do you want to Delete your post?
-    //             leftButtonText: 'إلغاء',
-    //Cancel
-    //             rightButtonText: 'حذف',
-    //Delete
-    //             onConfirm: () {
-    //               Provider.of<CommuFeedVM>(context, listen: false).deletePost(
-    //                   widget.post, widget.postIndex, (isSuccess, error) {
-    //                 if (isSuccess) {
-    //                   if (widget.isPostDetail) {
-    //                     Navigator.of(context).pop();
-    //                   }
-    //                 }
-    //               });
-    //             },
-    //           );
-    //         } else if (widget.feedType == FeedType.user) {
-    //           ConfirmationDialog().show(
-    //             context: context,
-    //             title: 'حذف المنشور ؟',
-    //Delete Post?
-    //             detailText: 'هل تود حذف منشورك ؟',
-    //Do you want to Delete your post?
-    //             leftButtonText: 'إلغاء',
-    //Cancel
-    //             rightButtonText: 'حذف',
-    //Delete
-    //             onConfirm: () {
-    //               Provider.of<UserFeedVM>(context, listen: false)
-    //                   .deletePost(widget.post, (isSuccess, error) {
-    //                 if (isSuccess) {
-    //                   if (widget.isPostDetail) {
-    //                     Navigator.of(context).pop();
-    //                   }
-    //                 }
-    //               });
-    //             },
-    //           );
-    //         } else if (widget.feedType == FeedType.pending) {
-    //           ConfirmationDialog().show(
-    //             context: context,
-    //             title: 'حذف المنشور ؟',
-    //Delete Post?
-    //             detailText: 'هل تود حذف منشورك ؟',
-    //Do you want to Delete your post?
-    //             leftButtonText: 'إلغاء',
-    //Cancel
-    //             rightButtonText: 'حذف',
-    //Delete
-    //             onConfirm: () {
-    //               Provider.of<CommuFeedVM>(context, listen: false)
-    //                   .deletePendingPost(widget.post, widget.postIndex);
-    //             },
-    //           );
-    //         } else {
-    //           print("unhandle postType");
-    //         }
-    //         break;
-    //       case 'حظر المستخدم':
-    //         Provider.of<UserVM>(context, listen: false)
-    //             .blockUser(widget.post.postedUserId!, () {
-    //           if (widget.feedType == FeedType.global) {
-    //             Provider.of<FeedVM>(context, listen: false)
-    //                 .initAmityGlobalfeed();
-    //           } else if (widget.feedType == FeedType.community) {
-    //             Provider.of<CommuFeedVM>(context, listen: false)
-    //                 .initAmityCommunityFeed(
-    //                     (widget.post.target as CommunityTarget)
-    //                         .targetCommunityId!);
-    //           }
-    //         });
-    //
-    //         break;
-    //       default:
-    //     }
-    //   },
-    //   child: Icon(
-    //     Icons.more_horiz_rounded,
-    //     size: 24,
-    //     color: widget.feedType == FeedType.user
-    //         ? Provider.of<AmityUIConfiguration>(context)
-    //             .appColors
-    //             .userProfileTextColor
-    //         : Colors.grey,
-    //   ),
-    //   itemBuilder: (context) {
-    //     List<PopupMenuEntry<String>> menuItems = [];
-    //     // Add post owner options
-    //     if (isPostOwner) {
-    //       menuItems.addAll(postOwnerMenu.map((option) => PopupMenuItem(
-    //             value: option,
-    //             child: Builder(builder: (context) {
-    //               return Text(
-    //                 option,
-    //                 style: TextStyle(
-    //                   color: Provider.of<AmityUIConfiguration>(context)
-    //                       .appColors
-    //                       .base,
-    //                 ),
-    //               );
-    //             }),
-    //           )));
   }
 
   void handleMenuOption(_, String option, bool isFlaggedByMe) {
-    switch (option) {
-      case 'Report Post':
-      case 'Unreport Post':
-        log("isflag by me $isFlaggedByMe");
-        if (isFlaggedByMe) {
-          Provider.of<PostVM>(context, listen: false).unflagPost(widget.post);
-        } else {
-          Provider.of<PostVM>(context, listen: false).flagPost(widget.post);
+    if (option == "report.report_comment".tr() ||
+        option == "report.unReport".tr()) {
+      log("isflag by me $isFlaggedByMe");
+      if (isFlaggedByMe) {
+        Provider.of<PostVM>(context, listen: false).unflagPost(widget.post);
+      } else {
+        Provider.of<PostVM>(context, listen: false).flagPost(widget.post);
+      }
+    } else if (option == "external.edit".tr()) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<EditPostVM>(
+              create: (context) => EditPostVM(),
+              child: AmityEditPostScreen(
+                amityPost: widget.post,
+              ))));
+    } else if (option == "external.delete".tr()) {
+      showDeleteConfirmationDialog(context);
+    } else if (option == 'Block User') {
+      Provider.of<UserVM>(context, listen: false)
+          .blockUser(widget.post.postedUserId!, () {
+        if (widget.feedType == FeedType.global) {
+          Provider.of<FeedVM>(context, listen: false).reload();
+        } else if (widget.feedType == FeedType.community) {
+          Provider.of<CommuFeedVM>(context, listen: false)
+              .initAmityCommunityFeed(
+                  (widget.post.target as CommunityTarget).targetCommunityId!);
         }
-        break;
-      case 'Edit Post':
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<EditPostVM>(
-                create: (context) => EditPostVM(),
-                child: AmityEditPostScreen(
-                  amityPost: widget.post,
-                ))));
-        break;
-      case 'Delete Post':
-        showDeleteConfirmationDialog(context);
-        break;
-      case 'Block User':
-        Provider.of<UserVM>(context, listen: false)
-            .blockUser(widget.post.postedUserId!, () {
-          if (widget.feedType == FeedType.global) {
-            Provider.of<FeedVM>(context, listen: false).reload();
-          } else if (widget.feedType == FeedType.community) {
-            Provider.of<CommuFeedVM>(context, listen: false)
-                .initAmityCommunityFeed(
-                    (widget.post.target as CommunityTarget).targetCommunityId!);
-          }
-        });
-        break;
-      default:
+      });
     }
   }
 

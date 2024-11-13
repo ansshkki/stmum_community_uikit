@@ -395,7 +395,7 @@ class CommentItem extends BaseElement {
             context.read<CommentItemBloc>().add(
                   AddReactionToComment(
                     comment: comment,
-                    reactionType: "post.like".tr(),
+                    reactionType: "like",
                   ),
                 );
           }

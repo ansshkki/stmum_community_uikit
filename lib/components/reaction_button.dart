@@ -29,7 +29,7 @@ class ReactionWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        if (post.myReactions!.contains("post.like".tr())) {
+        if (post.myReactions!.contains("like")) {
           print(post.myReactions);
           HapticFeedback.heavyImpact();
           Provider.of<PostVM>(context, listen: false).removePostReaction(post);
@@ -48,7 +48,7 @@ class ReactionWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                post.myReactions!.contains("post.like".tr())
+                post.myReactions!.contains("like")
                     ? TextButton(
                         onPressed: () {
                           print(post.myReactions);

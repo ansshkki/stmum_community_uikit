@@ -4,7 +4,6 @@ import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.
 import 'package:amity_uikit_beta_service/view/social/global_feed.dart';
 import 'package:amity_uikit_beta_service/view/social/user_follow_screen.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
-import 'user_setting.dart';
 import 'package:amity_uikit_beta_service/viewmodel/follower_following_viewmodel.dart';
 import 'package:animation_wrappers/animations/fade_animation.dart';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
@@ -207,7 +206,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                           );
                                         },
                                         child: Text(
-                                            "community.member".plural(
+                                            "community.following".plural(
                                               snapshot.data!.followingCount!
                                                   .toInt(),
                                               format: NumberFormat.compact(
@@ -290,6 +289,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                           "/my-account/profile",
                                           arguments: {"fromSettings": false},
                                         );
+                                        if (context.mounted) {
+                                          Provider.of<AmityVM>(context,
+                                                  listen: false)
+                                              .refreshCurrentUserData();
+                                        }
                                         // await Navigator.of(context).push(
                                         //     MaterialPageRoute(
                                         //         builder: (context) =>

@@ -5,12 +5,12 @@ import 'package:amity_uikit_beta_service/view/UIKit/social/post_target_page.dart
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/create_postV2_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 // import 'package:amity_uikit_beta_service/viewmodel/create_post_viewmodel.dart';
 // import 'package:amity_uikit_beta_service/viewmodel/media_viewmodel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 // import 'package:shared/shared.dart';
 
 import '../../../provider/rate/rate_cubit.dart';
@@ -247,9 +247,10 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                     children: [
                       Expanded(
                         child: Text(
-                          "community.share".tr(args: [
-                            community?.displayName ?? "user.profile".tr()
-                          ]),
+                          community == null
+                              ? "user.profile".tr()
+                              : "community.share"
+                                  .tr(args: [community?.displayName ?? ""]),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
