@@ -4,4 +4,4 @@ class ENV {
   ENV(this.apikey, this.region);
 }
 
-ENV? env = ENV("b0eae05f39d3f1624863d81a540a1480820bdae0bd36662c", "eu");
+ENV? env = ENV(const String.fromEnvironment("AMITY_API_KEY"), "eu");
