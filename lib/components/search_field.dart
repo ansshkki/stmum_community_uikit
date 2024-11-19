@@ -39,23 +39,23 @@ class _SearchFieldState extends State<SearchField> {
         controller: _controller,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontSize: 14,
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.onInverseSurface,
           // height: 1,
         ),
         decoration: InputDecoration(
           hintText: "search.search".tr(),
           hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: 14,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Theme.of(context).colorScheme.onInverseSurface,
           ),
           filled: true,
-          fillColor: Theme.of(context).colorScheme.surfaceVariant,
+          fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
           prefixIcon: Container(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
               "assets/Icons/search.svg",
               package: "amity_uikit_beta_service",
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Theme.of(context).colorScheme.onInverseSurface,
             ),
           ),
           border: OutlineInputBorder(
