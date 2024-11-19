@@ -164,7 +164,7 @@ class MemberManagementVM extends ChangeNotifier {
   Future<void> reportUser(AmityUser user) async {
     await user.report().flag().then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("Report sent");
+      AmitySuccessDialog.showTimedDialog("report.reported_post".tr());
     }).onError((error, stackTrace) {
       AmityDialog().showAlertErrorDialog(
           title: "repo.unknown_error".tr(), message: error.toString()); //Error!
@@ -176,7 +176,7 @@ class MemberManagementVM extends ChangeNotifier {
   Future<void> undoReportUser(AmityUser user) async {
     await user.report().unflag().then((value) {
       print(value);
-      AmitySuccessDialog.showTimedDialog("Unreport sent");
+      AmitySuccessDialog.showTimedDialog("report.unReported_post".tr());
     }).onError((error, stackTrace) {
       AmityDialog().showAlertErrorDialog(
           title: "repo.unknown_error".tr(), message: error.toString()); //Error!

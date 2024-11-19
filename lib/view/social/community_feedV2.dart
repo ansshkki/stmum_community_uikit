@@ -485,11 +485,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                     ),
                   ),
                   Text(
-                      "community.members_pl".plural(
-                        community.membersCount ?? 0,
-                        format: NumberFormat.compact(
-                            locale: context.locale.toString()),
-                      ),
+                      "community.members".tr(),
                       style: const TextStyle(
                           fontSize: 13, color: Color(0xff898E9E)))
                 ],

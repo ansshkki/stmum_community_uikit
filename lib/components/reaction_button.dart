@@ -23,7 +23,7 @@ class ReactionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var buttonStyle = ButtonStyle(
       padding: WidgetStateProperty.all<EdgeInsets>(
-          const EdgeInsets.only(top: 6, bottom: 6, left: 0, right: 12)),
+          const EdgeInsets.only(top: 6, bottom: 6, left: 6, right: 6)),
       minimumSize: WidgetStateProperty.all<Size>(Size.zero),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
@@ -40,7 +40,7 @@ class ReactionWidget extends StatelessWidget {
         }
       },
       child: Container(
-        padding: const EdgeInsets.only(bottom: 6, top: 4),
+        padding: const EdgeInsetsDirectional.only(bottom: 6, top: 4, end: 8),
         color: Colors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -67,58 +67,53 @@ class ReactionWidget extends StatelessWidget {
                                       Provider.of<AmityUIConfiguration>(context)
                                           .primaryColor,
                                 ),
+                            const SizedBox(width: 4),
                             Text(
                               "post.useful".tr(),
                               style: TextStyle(
                                 color:
                                     Provider.of<AmityUIConfiguration>(context)
                                         .primaryColor,
-                                fontWeight: FontWeight.bold,
                                 fontSize: feedReactionCountSize,
                               ),
                             ),
                           ],
                         ),
                       )
-                    : Container(
-                        margin: const EdgeInsetsDirectional.only(end: 8),
-                        child: TextButton(
-                          onPressed: () {
-                            print(post.myReactions);
-                            HapticFeedback.heavyImpact();
-                            Provider.of<PostVM>(context, listen: false)
-                                .addPostReaction(post);
-                          },
-                          style: buttonStyle,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Provider.of<AmityUIConfiguration>(context)
-                                  .iconConfig
-                                  .likeIcon(
-                                    color: feedType == FeedType.user
-                                        ? Provider.of<AmityUIConfiguration>(
-                                                context)
-                                            .appColors
-                                            .userProfileTextColor
-                                        : Colors.grey,
-                                  ),
-                              const SizedBox(width: 4),
-                              Text(
-                                "post.useful".tr(),
-                                style: TextStyle(
+                    : TextButton(
+                        onPressed: () {
+                          print(post.myReactions);
+                          HapticFeedback.heavyImpact();
+                          Provider.of<PostVM>(context, listen: false)
+                              .addPostReaction(post);
+                        },
+                        style: buttonStyle,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Provider.of<AmityUIConfiguration>(context)
+                                .iconConfig
+                                .likeIcon(
                                   color: feedType == FeedType.user
                                       ? Provider.of<AmityUIConfiguration>(
                                               context)
                                           .appColors
                                           .userProfileTextColor
                                       : Colors.grey,
-                                  fontSize: feedReactionCountSize,
-                                  letterSpacing: 1,
                                 ),
+                            const SizedBox(width: 4),
+                            Text(
+                              "post.useful".tr(),
+                              style: TextStyle(
+                                color: feedType == FeedType.user
+                                    ? Provider.of<AmityUIConfiguration>(context)
+                                        .appColors
+                                        .userProfileTextColor
+                                    : Colors.grey,
+                                fontSize: feedReactionCountSize,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
               ],

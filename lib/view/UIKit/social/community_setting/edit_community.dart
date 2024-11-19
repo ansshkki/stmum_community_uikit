@@ -199,7 +199,7 @@ class AmityEditCommunityScreenState extends State<AmityEditCommunityScreen> {
                         const SizedBox(height: 16.0),
                         TextFieldWithCounter(
                           controller: _categoryController,
-                          title: "community_category".tr(),
+                          title: "community.category".tr(),
                           //Category
                           hintText: "community.select_category".tr(),
                           //Select category

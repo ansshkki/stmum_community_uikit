@@ -293,6 +293,7 @@ class CommentScreenState extends State<CommentScreen> {
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         // Text("${snapshot.data!.targetType!}"),
+                                        SizedBox(height: 4),
                                         PostWidget(
                                           isPostDetail: true,
                                           feedType: widget.feedType,
@@ -965,18 +966,21 @@ class _CommentComponentState extends State<CommentComponent> {
                                                                         0xff898E9E),
                                                                   ),
                                                                 )
-                                                              : Text(
-                                                                  "post.useful"
-                                                                      .tr(), //Like
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Color(
-                                                                        0xff898E9E),
+                                                              : Padding(
+                                                                padding: const EdgeInsetsDirectional.only(start: 4.0),
+                                                                child: Text(
+                                                                    "post.useful"
+                                                                        .tr(), //Like
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Color(
+                                                                          0xff898E9E),
+                                                                    ),
                                                                   ),
-                                                                ),
+                                                              ),
                                                         ],
                                                       )),
 

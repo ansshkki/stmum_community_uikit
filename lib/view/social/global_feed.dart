@@ -259,7 +259,7 @@ class _PostWidgetState
     final isFlaggedByMe = widget.post.isFlaggedByMe;
     List<String> postOwnerMenu = ["external.edit".tr(), "external.delete".tr()];
     List<String> otherPostMenu = [
-      isFlaggedByMe ? "report.unReport".tr() : "report.report_comment".tr(),
+      isFlaggedByMe ? "report.unReport".tr() : "report.report_post".tr(),
     ];
 
     return IconButton(
@@ -320,7 +320,7 @@ class _PostWidgetState
   }
 
   void handleMenuOption(_, String option, bool isFlaggedByMe) {
-    if (option == "report.report_comment".tr() ||
+    if (option == "report.report_post".tr() ||
         option == "report.unReport".tr()) {
       log("isflag by me $isFlaggedByMe");
       if (isFlaggedByMe) {
@@ -853,8 +853,8 @@ class _PostWidgetState
                                       feedReactionCountSize:
                                           feedReactionCountSize),
 
-                                  GestureDetector(
-                                    onTap: () {
+                                  TextButton(
+                                    onPressed: () {
                                       if (widget.isFromFeed) {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
@@ -870,6 +870,12 @@ class _PostWidgetState
                                             .checkRate("community");
                                       }
                                     },
+                                    style: ButtonStyle(
+                                      padding: WidgetStateProperty.all<EdgeInsets>(
+                                          const EdgeInsets.only(top: 6, bottom: 6, left: 6, right: 6)),
+                                      minimumSize: WidgetStateProperty.all<Size>(Size.zero),
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    ),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -882,13 +888,9 @@ class _PostWidgetState
                                         Text(
                                           "comment.comment".tr(), //Comment
                                           style: TextStyle(
-                                              color: Provider.of<
-                                                          AmityUIConfiguration>(
-                                                      context)
-                                                  .appColors
-                                                  .userProfileIconColor,
-                                              fontSize: feedReactionCountSize,
-                                              letterSpacing: 0.5),
+                                            color: Colors.grey,
+                                            fontSize: feedReactionCountSize,
+                                          ),
                                         ),
                                       ],
                                     ),

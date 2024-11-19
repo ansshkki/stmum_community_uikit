@@ -367,8 +367,8 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: Text(
                         member.user!.isFlaggedByMe
-                            ? "report.unReport".tr()
-                            : "report.report_comment"
+                            ? "report.unReport_user".tr()
+                            : "report.report_user"
                                 .tr(), //Undo Report //Report
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
@@ -434,12 +434,23 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     // ),
                     ListTile(
                       title: Text(
-                        "report.report".tr(), //Report
+                        member.user!.isFlaggedByMe
+                            ? "report.unReport_user".tr()
+                            : "report.report_user".tr(), //Report
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
-                      onTap: () {
-                        viewModel.reportUser(member.user!);
+                      onTap: () async {
                         Navigator.pop(context);
+                        if (member.user!.isFlaggedByMe) {
+                          await viewModel.undoReportUser(member.user!);
+                        } else {
+                          await viewModel.reportUser(member.user!);
+                        }
+                        viewModel.initModerators(
+                            communityId: viewModel.communityId);
+                        viewModel.initMember(
+                          communityId: viewModel.communityId,
+                        );
                       },
                     ),
                   ],
