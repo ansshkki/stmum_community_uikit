@@ -91,7 +91,7 @@ class RateRepository {
       }
 
       /// return all map
-      return json.decode(map);
+      return jsonDecode(map);
     } catch (e) {
       /// when there are no value OR when there checked.. so we init it
       return {
@@ -114,7 +114,7 @@ class RateRepository {
     /// set last value
     await sharedPreferences.setString(
       "rate_request_rout",
-      json.encode(map),
+      jsonEncode(map),
     );
   }
 }
