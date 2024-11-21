@@ -171,7 +171,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
             child: Text(
               "feed.no_community".tr(),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
             ),
           ),
@@ -180,7 +180,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
             child: Text(
               "feed.explore".tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
             ),
           ),

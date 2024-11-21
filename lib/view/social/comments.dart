@@ -471,7 +471,7 @@ class CommentTextField extends StatelessWidget {
                       hintText: "messages.help".tr(),
                       //Say something nice...
                       hintStyle: Theme.of(context).textTheme.labelMedium,
-                      fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                      fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
                       // Set the background color to grey
                       filled: true,
                       // Enable the fill color

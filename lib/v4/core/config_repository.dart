@@ -52,7 +52,7 @@ class ConfigRepository {
     try {
       final jsonString = await rootBundle.loadString(
           'packages/amity_uikit_beta_service/assets/config/$fileName.json');
-      return json.decode(jsonString);
+      return jsonDecode(jsonString);
     } catch (e) {
       return {};
     }
