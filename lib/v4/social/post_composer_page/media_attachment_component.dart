@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
 import 'package:file_picker/file_picker.dart';

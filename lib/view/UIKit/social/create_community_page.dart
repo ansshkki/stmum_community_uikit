@@ -9,7 +9,6 @@ import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart'
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 enum CommunityListType { my, recommend, trending }

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TabContent extends StatelessWidget {
-  const TabContent({Key? key}) : super(key: key);
+  const TabContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TabContent extends StatelessWidget {
 }
 
 class ExploreComponent extends NewBaseComponent {
-  const ExploreComponent({
+  ExploreComponent({
     super.key,
     required super.pageId,
     required super.componentId,

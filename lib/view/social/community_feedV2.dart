@@ -704,7 +704,6 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
 
 class _Item extends StatelessWidget {
   const _Item({
-    super.key,
     required this.text,
     required this.builder,
   });
@@ -734,7 +733,6 @@ class _Item extends StatelessWidget {
 
 class _StickyHeaderList extends StatelessWidget {
   const _StickyHeaderList({
-    super.key,
     this.index,
     this.profileSectionWidget,
     required this.theme,

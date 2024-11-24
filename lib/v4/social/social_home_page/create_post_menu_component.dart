@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AmityCreatePostMenuComponent extends NewBaseComponent {
-  const AmityCreatePostMenuComponent({super.key, super.pageId})
+  AmityCreatePostMenuComponent({super.key, super.pageId})
       : super(componentId: 'componentId');
 
   @override

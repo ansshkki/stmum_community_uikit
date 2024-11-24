@@ -388,11 +388,11 @@ class RecommendationSection extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                         text:
-                                            "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                            "post.title_pl".plural(community.postsCount ?? 0)),
                                     const TextSpan(text: " - "),
                                     TextSpan(
                                         text:
-                                            "${"community.members_pl".plural(community.membersCount ?? 0)}"),
+                                            "community.members_pl".plural(community.membersCount ?? 0)),
                                   ],
                                   style: const TextStyle(
                                     fontSize: 10,
@@ -511,11 +511,11 @@ class TrendingSection extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                       text:
-                                          "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                          "post.title_pl".plural(community.postsCount ?? 0)),
                                   const TextSpan(text: " - "),
                                   TextSpan(
                                       text:
-                                          "${"community.members_pl".plural(community.membersCount ?? 0)}"),
+                                          "community.members_pl".plural(community.membersCount ?? 0)),
                                 ],
                                 style: const TextStyle(
                                   fontSize: 10,
@@ -1126,11 +1126,11 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                     children: [
                                       TextSpan(
                                           text:
-                                              "${"post.title_pl".plural(community.postsCount ?? 0)}"),
+                                              "post.title_pl".plural(community.postsCount ?? 0)),
                                       const TextSpan(text: " - "),
                                       TextSpan(
                                           text:
-                                              "${"community.members_pl".plural(community.membersCount ?? 0)}"),
+                                              "community.members_pl".plural(community.membersCount ?? 0)),
                                     ],
                                     style: const TextStyle(
                                       fontSize: 10,

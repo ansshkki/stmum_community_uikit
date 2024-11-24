@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
@@ -490,10 +489,12 @@ Widget getProfileIcon(AmityStoryTarget? storyTarget) {
 class ShareButton extends BaseElement {
   final VoidCallback onClick;
   final AmityStoryTarget? storyTarget;
+  @override
   final String? componentId;
+  @override
   final String? pageId;
 
-  const ShareButton(
+  ShareButton(
       {super.key,
       required this.onClick,
       required this.storyTarget,

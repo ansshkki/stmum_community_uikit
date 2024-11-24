@@ -621,7 +621,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
       setState(() {
         isRecording = true;
       });
-    } on CameraException catch (e) {
+    } on CameraException {
       // _showCameraException(e);
       return;
     }
@@ -644,7 +644,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         isRecording = false;
       });
       return cameraController.stopVideoRecording();
-    } on CameraException catch (e) {
+    } on CameraException {
       // _showCameraException(e);
       return null;
     }
@@ -659,7 +659,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
 
     try {
       await controller!.setFlashMode(mode);
-    } on CameraException catch (e) {
+    } on CameraException {
       // _showCameraException(e);
       rethrow;
     }
@@ -672,7 +672,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
 
     try {
       await controller!.setFocusMode(mode);
-    } on CameraException catch (e) {
+    } on CameraException {
       // _showCameraException(e);
       rethrow;
     }
@@ -725,7 +725,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     try {
       final XFile file = await cameraController.takePicture();
       return file;
-    } on CameraException catch (e) {
+    } on CameraException {
       // _showCameraException(e);
       return null;
     }

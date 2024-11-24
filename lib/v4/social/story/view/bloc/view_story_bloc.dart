@@ -12,7 +12,7 @@ part 'view_story_state.dart';
 
 class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
   late StoryLiveCollection storyLiveCollection;
-  AmityStorySortingOrder _sortOption = AmityStorySortingOrder.FIRST_CREATED;
+  final AmityStorySortingOrder _sortOption = AmityStorySortingOrder.FIRST_CREATED;
   late StreamSubscription<List<AmityStory>> _subscription;
   late StreamSubscription<AmityStoryTarget> _subscriptionTarget;
 
@@ -294,8 +294,7 @@ class ViewStoryBloc extends Bloc<ViewStoryEvent, ViewStoryState> {
       (event, emit) {
         if (event.stories.isNotEmpty) {
           AmityCommunity? community = state.storyTarget != null
-              ? (state.storyTarget as AmityStoryTargetCommunity).community ??
-                  null
+              ? (state.storyTarget as AmityStoryTargetCommunity).community
               : null;
           emit(
             ActiveStoriesFetchedState(

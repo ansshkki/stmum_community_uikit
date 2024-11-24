@@ -58,7 +58,7 @@ class CommentCreatorBloc
                 .send();
           }
         } catch (error) {
-          if (error != null && error is AmityException) {
+          if (error is AmityException) {
             if (error.code ==
                 error.getErrorCode(AmityErrorCode.BAN_WORD_FOUND)) {
               event.toastBloc
@@ -91,7 +91,7 @@ class CommentCreatorBloc
                 .send();
           }
         } catch (error) {
-          if (error != null && error is AmityException) {
+          if (error is AmityException) {
             if (error.code ==
                 error.getErrorCode(AmityErrorCode.BAN_WORD_FOUND)) {
               event.toastBloc

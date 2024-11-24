@@ -20,7 +20,9 @@ class AmityStoryTargetElement extends BaseElement {
   String targetId;
   List<Color> colors = [];
   bool showLoading = false;
+  @override
   String? pageId;
+  @override
   String? componentId;
 
   AmityStoryTargetElement({

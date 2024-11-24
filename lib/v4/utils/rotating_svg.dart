@@ -5,7 +5,7 @@ class RotatingSvgPicture extends StatefulWidget {
   final String iconAsset;
   final bool shouldRotate;
 
-  const RotatingSvgPicture({
+  const RotatingSvgPicture({super.key, 
     required this.iconAsset,
     required this.shouldRotate,
   });

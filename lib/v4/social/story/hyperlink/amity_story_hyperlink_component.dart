@@ -40,7 +40,7 @@ class HyperLinkBottomSheetContent extends NewBaseComponent {
   final Function(HyperLink) onHyperLinkAdded;
   final Function() onHyperLinkRemoved;
 
-  const HyperLinkBottomSheetContent({
+  HyperLinkBottomSheetContent({
     super.key,
     this.hyperLink,
     required this.onHyperLinkAdded,
@@ -398,10 +398,10 @@ class _HyperLinkBottomSheetBuilderState
 class DoneButton extends BaseElement {
   final VoidCallback? onPressed;
 
-  const DoneButton(
-      {super.key, required this.onPressed, String? pageId, String? componentId})
+  DoneButton(
+      {super.key, required this.onPressed, super.pageId, super.componentId})
       : super(
-            pageId: pageId, componentId: componentId, elementId: "done_button");
+            elementId: "done_button");
 
   @override
   Widget buildElement(BuildContext context) {

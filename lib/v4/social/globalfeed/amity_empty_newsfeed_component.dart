@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AmityEmptyNewsFeedComponent extends BaseElement {
-  const AmityEmptyNewsFeedComponent({super.key, required super.elementId});
+  AmityEmptyNewsFeedComponent({super.key, required super.elementId});
 
   @override
   Widget buildElement(BuildContext context) {

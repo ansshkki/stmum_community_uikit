@@ -13,7 +13,7 @@ class AmityCommentListComponent extends NewBaseComponent {
   final ScrollController parentScrollController;
   final CommentAction commentAction;
 
-  const AmityCommentListComponent({
+  AmityCommentListComponent({
     super.key,
     super.pageId,
     required this.referenceId,

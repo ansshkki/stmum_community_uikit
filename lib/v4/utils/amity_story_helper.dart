@@ -22,7 +22,7 @@ class AmityStoryHelper {
       return AmitySocialClient.newStoryRepository().createVideoStory(
         targetType: targetType,
         targetId: targetId,
-        storyItems: hyperlink != null ? [hyperlink!] : [],
+        storyItems: hyperlink != null ? [hyperlink] : [],
         videoFile: (mediaType).file,
       );
     }

@@ -235,7 +235,7 @@ class CommunityWidget extends StatelessWidget {
                 ),
                 trailing: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
+                      backgroundColor: WidgetStateProperty.all<Color>(
                     Provider.of<AmityUIConfiguration>(context).primaryColor,
                   )),
                   onPressed: () async {

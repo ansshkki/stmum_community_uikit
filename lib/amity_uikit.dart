@@ -217,7 +217,7 @@ class AmityUIKit {
 class AmityUIKitProvider extends StatelessWidget {
   final Widget child;
 
-  const AmityUIKitProvider({Key? key, required this.child}) : super(key: key);
+  const AmityUIKitProvider({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

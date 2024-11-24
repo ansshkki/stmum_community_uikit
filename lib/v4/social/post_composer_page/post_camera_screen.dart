@@ -28,7 +28,6 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
   FileType? selectedFileType;
 
   _AmityPostCameraScreenState({
-    Key? key,
     this.selectedFileType,
   }) {
     selectedFileType = selectedFileType;

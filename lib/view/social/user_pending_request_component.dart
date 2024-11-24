@@ -90,7 +90,7 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
                             ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                 Provider.of<AmityUIConfiguration>(context)
                                     .primaryColor,
                               )),
@@ -106,7 +106,7 @@ class _AmityPendingScreenState extends State<AmityPendingScreen> {
                             ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all<Color>(
+                                      WidgetStateProperty.all<Color>(
                                           Colors.grey)),
                               onPressed: () {
                                 vm.declineFollowRequest(

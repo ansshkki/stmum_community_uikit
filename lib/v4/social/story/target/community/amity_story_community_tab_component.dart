@@ -18,6 +18,7 @@ import '../../view/amity_view_story_page_type.dart';
 
 class AmityStoryCommunityTabComponent extends NewBaseComponent {
   final String communityId;
+  @override
   String? pageId;
 
   AmityStoryCommunityTabComponent({

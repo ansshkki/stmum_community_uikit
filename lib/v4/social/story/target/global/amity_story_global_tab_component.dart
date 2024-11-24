@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AmityStoryGlobalTabComponent extends NewBaseComponent {
+  @override
   String? pageId;
 
   AmityStoryGlobalTabComponent({
@@ -93,7 +94,7 @@ class _AmityStoryGlobalTabBuilderState
                   if (target is AmityStoryTargetCommunity) {
                     community = target.community;
                   }
-                  if (target == null || community == null) {
+                  if (community == null) {
                     return const SizedBox();
                   }
                   return AmityStoryTargetElement(

@@ -1,8 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
-import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
 import 'package:amity_uikit_beta_service/v4/social/reaction/reaction_list.dart';
-import 'package:amity_uikit_beta_service/v4/utils/compact_string_converter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 class PostDetailInfo extends NewBaseComponent {
   final AmityPost post;
 
-  const PostDetailInfo({
+  PostDetailInfo({
     super.key,
     required this.post,
     required super.componentId,

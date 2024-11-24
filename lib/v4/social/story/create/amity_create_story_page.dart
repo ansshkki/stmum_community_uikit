@@ -14,7 +14,7 @@ class AmityCreateStoryPage extends NewBasePage {
   final AmityStoryTargetType targetType;
   final String targetId;
 
-  const AmityCreateStoryPage({
+  AmityCreateStoryPage({
     super.key,
     required this.targetType,
     required this.targetId,

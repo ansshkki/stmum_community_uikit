@@ -19,7 +19,7 @@ class AmityPostDetailPage extends NewBasePage {
   final AmityPost? post;
   final AmityPostAction? action;
 
-  const AmityPostDetailPage({
+  AmityPostDetailPage({
     super.key,
     required this.postId,
     this.post,
@@ -43,7 +43,7 @@ class AmityPostDetailPage extends NewBasePage {
   Widget buildPostDetail(BuildContext context, PostDetailState state) {
     if (state is PostDetailStateInitial) {
       context.read<PostDetailBloc>().add(
-          PostDetailLoad(postId: (state as PostDetailStateInitial).postId));
+          PostDetailLoad(postId: (state).postId));
       return Container(
           padding: const EdgeInsets.only(top: 74),
           decoration: BoxDecoration(color: theme.backgroundColor),

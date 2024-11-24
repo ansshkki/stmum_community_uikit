@@ -14,6 +14,7 @@ class AmityCommentTrayComponent extends NewBaseComponent {
   final AmityCommentReferenceType referenceType;
   final bool shouldAllowComments;
   final ScrollController scrollController;
+  @override
   String? pageId;
 
   AmityCommentTrayComponent({

@@ -14,7 +14,7 @@ class PostDetail extends NewBaseComponent {
   final AmityPost post;
   final AmityPostAction? action;
 
-  const PostDetail({
+  PostDetail({
     super.key,
     super.pageId,
     super.componentId = "post_detail",
