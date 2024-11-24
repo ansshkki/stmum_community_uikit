@@ -33,7 +33,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
             // Distinct post list
             posts.addAll(_controller.loadedItems);
 
-            add(GlobalFeedNotify(posts: []));
+            add(GlobalFeedNotify(posts: const []));
           }
         },
       );
@@ -56,7 +56,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
     on<GlobalFeedAddLocalPost>((event, emit) async {
       final post = event.post;
       localCreatedPost.insert(0, post);
-      add(GlobalFeedNotify(posts: []));
+      add(GlobalFeedNotify(posts: const []));
     });
 
     on<GlobalFeedInit>((event, emit) async {

@@ -493,7 +493,7 @@ class ShareButton extends BaseElement {
   final String? componentId;
   final String? pageId;
 
-  ShareButton(
+  const ShareButton(
       {super.key,
       required this.onClick,
       required this.storyTarget,

@@ -19,7 +19,7 @@ class AmityPostDetailPage extends NewBasePage {
   final AmityPost? post;
   final AmityPostAction? action;
 
-  AmityPostDetailPage({
+  const AmityPostDetailPage({
     super.key,
     required this.postId,
     this.post,

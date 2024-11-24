@@ -9,7 +9,7 @@ class AmitySocialHomeTopNavigationComponent extends NewBaseComponent {
   final AmitySocialHomePageTab selectedTab;
   final void Function()? searchButtonAction;
 
-  AmitySocialHomeTopNavigationComponent({
+  const AmitySocialHomeTopNavigationComponent({
     super.key,
     super.pageId,
     required super.componentId,

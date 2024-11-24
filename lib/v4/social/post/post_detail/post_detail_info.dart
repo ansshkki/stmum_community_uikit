@@ -10,7 +10,7 @@ import 'package:flutter_svg/svg.dart';
 class PostDetailInfo extends NewBaseComponent {
   final AmityPost post;
 
-  PostDetailInfo({
+  const PostDetailInfo({
     super.key,
     required this.post,
     required super.componentId,

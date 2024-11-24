@@ -28,7 +28,7 @@ class AmityStoryBodyRow extends StatefulWidget {
   final Function onSwipeDown;
   final Function(HyperLink)? onHyperlinkClick;
 
-  AmityStoryBodyRow(
+  const AmityStoryBodyRow(
       {super.key,
       required this.dataType,
       required this.data,
@@ -186,7 +186,7 @@ class AmityStoryBodyImageView extends StatefulWidget {
   final ImageStoryData data;
   final AmityStorySyncState syncState;
 
-  AmityStoryBodyImageView({
+  const AmityStoryBodyImageView({
     super.key,
     required this.data,
     required this.syncState,

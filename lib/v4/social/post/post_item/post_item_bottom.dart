@@ -13,7 +13,7 @@ class PostItemBottom extends NewBaseComponent {
   final bool hideReactionCount;
   final bool isOptimisticUi;
 
-  PostItemBottom({
+  const PostItemBottom({
     super.key,
     required this.post,
     required this.action,

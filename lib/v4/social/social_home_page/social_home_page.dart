@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SocialHomePage extends NewBasePage {
-  SocialHomePage({super.key, required super.pageId});
+  const SocialHomePage({super.key, required super.pageId});
 
   @override
   Widget buildPage(BuildContext context) {
@@ -58,11 +58,11 @@ class SocialHomePage extends NewBasePage {
               ),
               backgroundColor: theme.backgroundColor,
               body: Column(
-                children: [
+                children: const [
                   ScrollableTabs(
                     pageId: 'social_home_page',
                   ),
-                  const Expanded(child: TabContent()),
+                  Expanded(child: TabContent()),
                   AmityToast(elementId: "toast"),
                 ],
               ),

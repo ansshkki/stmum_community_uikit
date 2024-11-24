@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScrollableTabs extends NewBaseComponent {
-  ScrollableTabs({super.key, required super.pageId}) : super(componentId: '');
+  const ScrollableTabs({super.key, required super.pageId}) : super(componentId: '');
 
   @override
   Widget buildComponent(BuildContext context) {

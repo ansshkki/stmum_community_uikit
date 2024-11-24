@@ -17,7 +17,7 @@ class PostItem extends NewBaseComponent {
   final AmityPost post;
   final AmityPostAction? action;
 
-  PostItem({
+  const PostItem({
     super.key,
     super.pageId,
     required this.post,

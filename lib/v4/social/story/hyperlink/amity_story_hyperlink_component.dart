@@ -40,7 +40,7 @@ class HyperLinkBottomSheetContent extends NewBaseComponent {
   final Function(HyperLink) onHyperLinkAdded;
   final Function() onHyperLinkRemoved;
 
-  HyperLinkBottomSheetContent({
+  const HyperLinkBottomSheetContent({
     super.key,
     this.hyperLink,
     required this.onHyperLinkAdded,
@@ -398,7 +398,7 @@ class _HyperLinkBottomSheetBuilderState
 class DoneButton extends BaseElement {
   final VoidCallback? onPressed;
 
-  DoneButton(
+  const DoneButton(
       {super.key, required this.onPressed, String? pageId, String? componentId})
       : super(
             pageId: pageId, componentId: componentId, elementId: "done_button");

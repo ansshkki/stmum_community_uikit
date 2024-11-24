@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum AmityToastIcon { success, warning, loading }
 
 class AmityToast extends BaseElement {
-  AmityToast({super.key, required super.elementId});
+  const AmityToast({super.key, required super.elementId});
 
   @override
   Widget buildElement(BuildContext context) {

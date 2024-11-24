@@ -293,7 +293,7 @@ class CommentScreenState extends State<CommentScreen> {
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         // Text("${snapshot.data!.targetType!}"),
-                                        SizedBox(height: 4),
+                                        const SizedBox(height: 4),
                                         PostWidget(
                                           isPostDetail: true,
                                           feedType: widget.feedType,

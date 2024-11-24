@@ -389,7 +389,7 @@ class RecommendationSection extends StatelessWidget {
                                     TextSpan(
                                         text:
                                             "${"post.title_pl".plural(community.postsCount ?? 0)}"),
-                                    TextSpan(text: " - "),
+                                    const TextSpan(text: " - "),
                                     TextSpan(
                                         text:
                                             "${"community.members_pl".plural(community.membersCount ?? 0)}"),
@@ -512,7 +512,7 @@ class TrendingSection extends StatelessWidget {
                                   TextSpan(
                                       text:
                                           "${"post.title_pl".plural(community.postsCount ?? 0)}"),
-                                  TextSpan(text: " - "),
+                                  const TextSpan(text: " - "),
                                   TextSpan(
                                       text:
                                           "${"community.members_pl".plural(community.membersCount ?? 0)}"),
@@ -1127,7 +1127,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                       TextSpan(
                                           text:
                                               "${"post.title_pl".plural(community.postsCount ?? 0)}"),
-                                      TextSpan(text: " - "),
+                                      const TextSpan(text: " - "),
                                       TextSpan(
                                           text:
                                               "${"community.members_pl".plural(community.membersCount ?? 0)}"),

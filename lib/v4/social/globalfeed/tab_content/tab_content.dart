@@ -39,7 +39,7 @@ class TabContent extends StatelessWidget {
 }
 
 class ExploreComponent extends NewBaseComponent {
-  ExploreComponent({
+  const ExploreComponent({
     super.key,
     required super.pageId,
     required super.componentId,

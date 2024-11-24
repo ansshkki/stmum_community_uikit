@@ -12,7 +12,7 @@ class AmityPostContentComponent extends NewBaseComponent {
   final AmityPostContentComponentStyle style;
   final AmityPostAction? action;
 
-  AmityPostContentComponent({
+  const AmityPostContentComponent({
     super.key,
     super.pageId,
     required this.post,
