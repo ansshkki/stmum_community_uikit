@@ -20,6 +20,7 @@ import '../../../viewmodel/amity_viewmodel.dart';
 import '../../../viewmodel/community_feed_viewmodel.dart';
 import '../../../viewmodel/user_feed_viewmodel.dart';
 import '../../notification/notification_page.dart';
+import '../../social/comments.dart';
 import '../../user/user_profile_v2.dart';
 import 'create_group_button_sheet.dart';
 import 'create_post_screenV2.dart';
@@ -29,8 +30,15 @@ import 'my_community_feed.dart';
 
 class CommunityPage extends StatefulWidget {
   final bool isShowMyCommunity;
+  final String? initialCommunityId;
+  final String? initialPostId;
 
-  const CommunityPage({super.key, this.isShowMyCommunity = true});
+  const CommunityPage({
+    super.key,
+    this.isShowMyCommunity = true,
+    this.initialCommunityId,
+    this.initialPostId,
+  });
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();
@@ -54,6 +62,38 @@ class _CommunityPageState extends State<CommunityPage> {
     myCommunityList.initMyCommunityFeed();
 
     globalFeedProvider.initAmityGlobalFeed();
+
+    checkInitialRoute();
+  }
+
+  void checkInitialRoute() async {
+    if (widget.initialCommunityId != null) {
+      AmitySocialClient.newCommunityRepository()
+          .live
+          .getCommunity(widget.initialCommunityId!)
+          .first
+          .then((value) {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider(
+                  create: (context) => CommuFeedVM(),
+                  child: CommunityScreen(isFromFeed: true, community: value),
+                )));
+      });
+    } else if (widget.initialPostId != null) {
+      AmitySocialClient.newPostRepository()
+          .live
+          .getPost(widget.initialPostId!)
+          .first
+          .then((value) {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CommentScreen(
+                  amityPost: value,
+                  theme: Theme.of(context),
+                  isFromFeed: false,
+                  feedType: FeedType.community,
+                )));
+      });
+    }
   }
 
   @override
@@ -387,12 +427,12 @@ class RecommendationSection extends StatelessWidget {
                                 Text.rich(TextSpan(
                                   children: [
                                     TextSpan(
-                                        text:
-                                            "post.title_pl".plural(community.postsCount ?? 0)),
+                                        text: "post.title_pl"
+                                            .plural(community.postsCount ?? 0)),
                                     const TextSpan(text: " - "),
                                     TextSpan(
-                                        text:
-                                            "community.members_pl".plural(community.membersCount ?? 0)),
+                                        text: "community.members_pl".plural(
+                                            community.membersCount ?? 0)),
                                   ],
                                   style: const TextStyle(
                                     fontSize: 10,
@@ -510,12 +550,12 @@ class TrendingSection extends StatelessWidget {
                               Text.rich(TextSpan(
                                 children: [
                                   TextSpan(
-                                      text:
-                                          "post.title_pl".plural(community.postsCount ?? 0)),
+                                      text: "post.title_pl"
+                                          .plural(community.postsCount ?? 0)),
                                   const TextSpan(text: " - "),
                                   TextSpan(
-                                      text:
-                                          "community.members_pl".plural(community.membersCount ?? 0)),
+                                      text: "community.members_pl"
+                                          .plural(community.membersCount ?? 0)),
                                 ],
                                 style: const TextStyle(
                                   fontSize: 10,
@@ -1125,12 +1165,12 @@ class _CommunityListPageState extends State<CommunityListPage> {
                                   Text.rich(TextSpan(
                                     children: [
                                       TextSpan(
-                                          text:
-                                              "post.title_pl".plural(community.postsCount ?? 0)),
+                                          text: "post.title_pl".plural(
+                                              community.postsCount ?? 0)),
                                       const TextSpan(text: " - "),
                                       TextSpan(
-                                          text:
-                                              "community.members_pl".plural(community.membersCount ?? 0)),
+                                          text: "community.members_pl".plural(
+                                              community.membersCount ?? 0)),
                                     ],
                                     style: const TextStyle(
                                       fontSize: 10,
