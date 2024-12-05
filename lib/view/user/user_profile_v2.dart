@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../viewmodel/amity_viewmodel.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/user_feed_viewmodel.dart';
+import 'user_setting.dart';
 
 // ignore: must_be_immutable
 class UserProfileScreen extends StatefulWidget {
@@ -289,6 +290,8 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                           "/my-account/profile",
                                           arguments: {"fromSettings": false},
                                         );
+                                        await Future.delayed(
+                                            const Duration(seconds: 1));
                                         if (context.mounted) {
                                           Provider.of<AmityVM>(context,
                                                   listen: false)
@@ -785,33 +788,42 @@ class AppScaffold extends StatelessWidget {
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          // actions: [
-          //   Provider.of<UserFeedVM>(context).amityMyFollowInfo.id == null
-          //       ? const SizedBox()
-          //       : StreamBuilder<AmityUserFollowInfo>(
-          //           stream: Provider.of<UserFeedVM>(context)
-          //               .amityMyFollowInfo
-          //               .listen
-          //               .stream,
-          //           initialData:
-          //               Provider.of<UserFeedVM>(context).amityMyFollowInfo,
-          //           builder: (context, snapshot) {
-          //             return IconButton(
-          //               icon: Icon(Icons.more_horiz,
-          //                   color: Provider.of<AmityUIConfiguration>(context)
-          //                       .appColors
-          //                       .base),
-          //               onPressed: () {
-          //                 Navigator.of(context).push(MaterialPageRoute(
-          //                     builder: (_) => UserSettingPage(
-          //                           amityMyFollowInfo: snapshot.data!,
-          //                           amityUser: Provider.of<UserFeedVM>(context)
-          //                               .amityUser!,
-          //                         )));
-          //               },
-          //             );
-          //           }),
-          // ],
+          actions: [
+            if (AmityCoreClient.getCurrentUser().userId !=
+                Provider.of<UserFeedVM>(context).amityUser!.userId)
+              Provider.of<UserFeedVM>(context).amityMyFollowInfo.id == null
+                  ? const SizedBox()
+                  : StreamBuilder<AmityUserFollowInfo>(
+                      stream: Provider.of<UserFeedVM>(context)
+                          .amityMyFollowInfo
+                          .listen
+                          .stream,
+                      initialData:
+                          Provider.of<UserFeedVM>(context).amityMyFollowInfo,
+                      builder: (context, snapshot) {
+                        return IconButton(
+                          icon: Icon(Icons.more_horiz,
+                              color: Provider.of<AmityUIConfiguration>(context)
+                                  .appColors
+                                  .base),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => ChangeNotifierProvider.value(
+                                  value: Provider.of<UserFeedVM>(context,
+                                      listen: false),
+                                  builder: (_, __) => UserSettingPage(
+                                    amityMyFollowInfo: snapshot.data!,
+                                    amityUser: Provider.of<UserFeedVM>(context)
+                                        .amityUser!,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }),
+          ],
         ),
         body: RefreshIndicator(
           color: Provider.of<AmityUIConfiguration>(context).primaryColor,

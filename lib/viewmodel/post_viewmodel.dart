@@ -18,6 +18,8 @@ class PostVM extends ChangeNotifier {
   final AmityCommentSortOption _sortOption =
       AmityCommentSortOption.LAST_CREATED;
 
+  bool isReacting = false;
+
   void getPost(String postId, AmityPost initialPostData) {
     amityPost = initialPostData;
     AmitySocialClient.newPostRepository()
@@ -164,10 +166,15 @@ class PostVM extends ChangeNotifier {
   }
 
   void addPostReaction(AmityPost post) {
+    if (isReacting) return;
+
     HapticFeedback.heavyImpact();
-    post.react().addReaction('like').then((value) => {
-          //success
-        });
+    isReacting = true;
+    post.react().addReaction('like').then((value) {
+      isReacting = false;
+    }).catchError((e) {
+      isReacting = false;
+    });
   }
 
   void flagPost(AmityPost post) {
@@ -196,14 +203,17 @@ class PostVM extends ChangeNotifier {
   }
 
   void removePostReaction(AmityPost post) {
+    if (isReacting) return;
+
     HapticFeedback.heavyImpact();
     print("removePostReaction");
 
+    isReacting = true;
     post.react().removeReaction('like').then((value) {
-      // Handle success
+      isReacting = false;
     }).catchError((error) {
       print(error);
-      // Handle error
+      isReacting = false;
     });
   }
 
