@@ -22,6 +22,7 @@ import 'package:provider/provider.dart';
 
 import '../../components/custom_user_avatar.dart';
 import '../../provider/rate/rate_cubit.dart';
+import '../../viewmodel/amity_viewmodel.dart';
 import '../../viewmodel/community_feed_viewmodel.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/edit_post_viewmodel.dart';
@@ -466,8 +467,9 @@ class _PostWidgetState
                                               .userId
                                       ? widget.post.postedUser?.displayName ??
                                           "community.name".tr() //Display name
-                                      : AmityCoreClient.getCurrentUser()
-                                          .displayName,
+                                      : Provider.of<AmityVM>(context)
+                                          .currentAmityUser
+                                          ?.displayName,
                                   style: TextStyle(
                                       color: Provider.of<AmityUIConfiguration>(
                                               context)
