@@ -4,7 +4,7 @@ version: 3.0.6
 homepage: https://github.com/AmityCo/Amity-Social-UIKit-Flutter-Opensource
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
+  sdk: ^3.6.0
   flutter: ">=3.0.0"
 
 dependencies:
