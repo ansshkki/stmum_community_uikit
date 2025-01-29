@@ -99,6 +99,9 @@ class FeedVM extends ChangeNotifier {
           _amityGlobalFeedPosts.addAll(posts);
           isLoading = false;
           notifyListeners();
+        } else {
+          isLoading = false;
+          notifyListeners();
         }
       });
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
