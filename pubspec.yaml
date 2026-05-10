@@ -28,7 +28,7 @@ dependencies:
   video_player: ^2.9.2
   easy_localization: ^3.0.7
   # extended_image: ^6.2.1
-  intl: ^0.19.0
+  intl: ^0.20.2
   image_picker: ^1.1.2
   socket_io_client: ^1.0.0
   get_time_ago: ^2.0.0
