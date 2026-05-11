@@ -62,7 +62,6 @@ class AmityUIKit {
     Stopwatch stopwatch = Stopwatch()..start();
     AmityRegionalHttpEndpoint? amityEndpoint;
     AmityRegionalMqttEndpoint? amityMqttEndpoint;
-    AmityRegionalSocketEndpoint? amitySocketEndpoint;
 
     switch (region) {
       case AmityEndpointRegion.custom:
@@ -72,8 +71,6 @@ class AmityUIKit {
           amityEndpoint = AmityRegionalHttpEndpoint.custom(customEndpoint);
           amityMqttEndpoint =
               AmityRegionalMqttEndpoint.custom(customMqttEndpoint);
-          amitySocketEndpoint =
-              AmityRegionalSocketEndpoint.custom(customSocketEndpoint);
         } else {
           log("please provide custom Endpoint");
         }
@@ -83,7 +80,6 @@ class AmityUIKit {
         {
           amityEndpoint = AmityRegionalHttpEndpoint.SG;
           amityMqttEndpoint = AmityRegionalMqttEndpoint.SG;
-          amitySocketEndpoint = AmityRegionalSocketEndpoint.SG;
         }
 
         break;
@@ -91,7 +87,6 @@ class AmityUIKit {
         {
           amityEndpoint = AmityRegionalHttpEndpoint.EU;
           amityMqttEndpoint = AmityRegionalMqttEndpoint.EU;
-          amitySocketEndpoint = AmityRegionalSocketEndpoint.EU;
         }
 
         break;
@@ -99,7 +94,6 @@ class AmityUIKit {
         {
           amityEndpoint = AmityRegionalHttpEndpoint.US;
           amityMqttEndpoint = AmityRegionalMqttEndpoint.US;
-          amitySocketEndpoint = AmityRegionalSocketEndpoint.US;
         }
     }
 
@@ -110,8 +104,7 @@ class AmityUIKit {
             apiKey: apikey,
             showLogs: true,
             httpEndpoint: amityEndpoint!,
-            mqttEndpoint: amityMqttEndpoint!,
-            socketEndpoint: amitySocketEndpoint!),
+            mqttEndpoint: amityMqttEndpoint!),
         sycInitialization: true);
     stopwatch.stop();
     log('setupAmityClient execution time: ${stopwatch.elapsedMilliseconds} ms');

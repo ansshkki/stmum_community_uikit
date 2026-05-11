@@ -12,7 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart';
+// import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:http/http.dart' as http;
 import 'package:linkify/linkify.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,7 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
   List<String> imageURLs = [];
   String? videoUrl;
   bool isLoading = true;
-  Map<String, PreviewData> datas = {};
+  // Map<String, PreviewData> datas = {};
 
   @override
   void initState() {

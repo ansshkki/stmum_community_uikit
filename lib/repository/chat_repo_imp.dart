@@ -19,7 +19,7 @@ class AmityChatRepoImp implements AmityChatRepo {
     socket = io.io('wss://api.${env!.region}.amity.co/?token=$accessToken',
         io.OptionBuilder().setTransports(["websocket"]).build());
     socket.onConnectError((data) => log("onConnectError:$data"));
-    socket.onConnecting((data) => log("connecting..."));
+    // socket.onConnecting((data) => log("connecting..."));
 
     socket.onConnect((_) {
       log('connected');

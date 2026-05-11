@@ -301,10 +301,10 @@ class PostComposerPage extends NewBasePage {
         typeText = "media.videos".tr();
 
         pickVideos() async {
-          FilePickerResult? result = await FilePicker.platform.pickFiles(
+          FilePickerResult? result = await FilePicker.pickFiles(
             type: type,
             allowMultiple: true,
-            allowCompression: true,
+            // allowCompression: true,
             withData: false,
             withReadStream: true,
             lockParentWindow: true,

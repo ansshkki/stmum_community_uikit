@@ -293,7 +293,7 @@ class CreatePostVMV2 with ChangeNotifier {
           selectFiles([video], MyFileType.video);
         }
       } else if (action == PickerAction.filePicker) {
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
+        FilePickerResult? result = await FilePicker.pickFiles(
           allowMultiple: true,
           type: FileType.any,
         );

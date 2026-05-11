@@ -96,7 +96,7 @@ class MediaPickerVM with ChangeNotifier {
   Future<void> pickFile() async {
     try {
       FilePickerResult? result =
-          await FilePicker.platform.pickFiles(allowMultiple: true);
+          await FilePicker.pickFiles(allowMultiple: true);
 
       if (result != null && result.files.isNotEmpty) {
         for (var file in result.files) {

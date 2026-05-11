@@ -87,12 +87,12 @@ class ChatRoomVM extends ChangeNotifier {
       notifyListeners();
     }).onError((error, stackTrace) async {
       log("error from channel");
-      await AmityDialog()
-          .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
     messageLiveCollection = AmityChatClient.newMessageRepository()
         .getMessages(channelId)
-        .getLiveCollection(pageSize: 20);
+        .getLiveCollection();
 
     messageLiveCollection.getStreamController().stream.listen((event) {
       print("evemt triggered");
@@ -126,8 +126,8 @@ class ChatRoomVM extends ChangeNotifier {
     }).onError((error, stackTrace) async {
       // Error on pagination controller
       log("error from send message");
-      await AmityDialog()
-          .showAlertErrorDialog(title: "repo.unknown_error".tr(), message: error.toString()); //Error!
+      await AmityDialog().showAlertErrorDialog(
+          title: "repo.unknown_error".tr(), message: error.toString()); //Error!
     });
   }
 
